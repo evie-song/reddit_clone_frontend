@@ -1,0 +1,86 @@
+.container {
+    padding: 12px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+
+.headerImg {
+    background-image: url(https://styles.redditmedia.com/t5_2qhn3/styles/bannerBackgroundImage_37chx04bdax01.jpg?width=4000&format=pjpg&s=cf0fb1bc3bedc89f87fade622f936189618cc522);
+    border-radius: 3px 3px 0 0;
+    height: 34px;
+    margin: -12px -12px 10px;
+    background-size: cover;
+}
+
+.titleDiv {
+    display: flex;
+    align-items: center;
+}
+
+.creationDiv {
+    display: flex;
+}
+
+.lineBreak {
+    margin: 16px 0;
+    border-bottom: 1px rgb(239 239 239) solid;
+}
+
+.titleName {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    margin-left: 4px;
+}
+
+.description {
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    overflow-wrap: break-word;
+}
+
+.creationDiv {
+    display: flex;
+    align-items: center;
+}
+
+.creationDate {
+    font-size: 14px;
+    color: rgb(124, 124, 124);
+    line-height: 18px;
+    font-weight: 400s;
+}
+
+.infoNum {
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 500;
+}
+
+.infoDesc {
+    font-size: 12px;
+    color: rgb(124, 124, 124);
+    font-weight: 300;
+    line-height: 16px;
+}
+
+.onlineDot {
+    color: rgb(70, 209, 96);
+    font-size: 8px;
+}
+
+.optionDiv {
+    padding: 0 12px;    
+}
+
+.optionTitle {
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 12px;
+    letter-spacing: 0.5px;
+}

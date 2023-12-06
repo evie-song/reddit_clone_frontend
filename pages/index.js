@@ -1,131 +1,142 @@
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
+import Layout, { siteTitle } from '../components/layout/layout';
+import NewPostWidget from '../components/main-column-body/new-post-widget';
+import PremiumWidget from '../components/right-column-body/premium-widget';
+import HomeWidget from '../components/right-column-body/home-widget';
+import PostWidgetContainer from '../components/main-column-body/post-widget-container';
+import PopupWindow from '../components/popup-window';
+import { id, tr } from 'date-fns/locale';
+import { useReducer, useState } from 'react';
+import PopupPostPage from '../components/post-page/popup-post-page';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]';
 
-export default function Home() {
+
+export async function getServerSideProps() {
+  const res = await fetch("http://localhost:5142/api/post/getall");
+  const data = await res.json();
+  return {
+      props: {
+          data: data.data,
+      },
+  }
+}
+
+export default function Home({ data }) {
+
+  const [posts, setPosts] = useState(data)
+  const [popupIsOpen, setPopupIsOpen] = useState(false)
+  const [selectedPostId, setSelectedPostId] = useState(0)
+
+  const router = useRouter()
+
+  function handlePostClick(id) {
+    setSelectedPostId(id)
+    setPopupIsOpen(true);
+    // when popup window is open, make body page unsrollable.
+    document.body.classList.add('popup-open');
+  }
+
+  function closePopup() {
+    setPopupIsOpen(false);
+    // when popup window is closed, make body page srollable again.
+    document.body.classList.remove('popup-open');
+    router.push('/');
+  }
+
+  async function handleUpvoteClick(id) {
+    try { 
+        const res = await fetch(`/api/Post/upvote/${id}`, {
+            method: 'PUT'})
+        const data = await res.json();
+    } catch (error) {
+        console.error('error updating the vote count', error)
+        throw error
+    }
+    
+    setPosts((prevState) => {
+      return prevState.map((item) => {
+        if (item.id === id) {
+          const oldVote = item.upVote
+          const newVote = oldVote + 1
+          return {...item, upVote: newVote };
+        }
+        return item;
+      });
+    });
+
+  }
+
+  async function handleDownvoteClick(id) {
+    try { 
+        const res = await fetch(`/api/Post/downvote/${id}`, {
+            method: 'PUT'})
+        const data = await res.json();
+    } catch (error) {
+        console.error('error updating the vote count', error)
+        throw error
+    }
+
+    setPosts((prevState) => {
+      return prevState.map((item) => {
+        if (item.id === id) {
+          const oldVote = item.downVote
+          const newVote = oldVote + 1
+          return {...item, downVote: newVote };
+        }
+        return item;
+      });
+    });
+  }
+
+
+
   return (
-    <div className={styles.container}>
+    <Layout home>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>{siteTitle}</title>
       </Head>
-
-      <main>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+      <div className='canvas'>
+        <div className='display-body'>
+          <div className='center-column'>
+            <NewPostWidget/>
+            <PopupWindow isOpen={popupIsOpen}>
+              <PopupPostPage 
+                post={posts.find(post => post.id === selectedPostId)} 
+                onClose={closePopup}
+                onUpVoteClick={() => handleUpvoteClick(selectedPostId)}
+                onDownVoteClick={() => handleDownvoteClick(selectedPostId)}
+              />
+            </PopupWindow>
+            <div className='margin-y-8'>
+              {posts.map((post) => {
+                return(
+                  <Link href={`?id=${post.id}`} as={`posts/${post.id}`}  >
+                    <div 
+                      key={post.id} 
+                      onClick={() => handlePostClick(post.id)}
+                    >
+                      <PostWidgetContainer 
+                        post={post} 
+                        onUpVoteClick={() => handleUpvoteClick(post.id)}
+                        onDownVoteClick={() => handleDownvoteClick(post.id)}
+                      />
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+          <div className='right-column'>
+              <PremiumWidget />
+            <div>
+              <HomeWidget />
+            </div>
+          </div>
         </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
-        </a>
-      </footer>
-
-      <style jsx>{`
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        footer img {
-          margin-left: 0.5rem;
-        }
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          color: inherit;
-        }
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family:
-            Menlo,
-            Monaco,
-            Lucida Console,
-            Liberation Mono,
-            DejaVu Sans Mono,
-            Bitstream Vera Sans Mono,
-            Courier New,
-            monospace;
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family:
-            -apple-system,
-            BlinkMacSystemFont,
-            Segoe UI,
-            Roboto,
-            Oxygen,
-            Ubuntu,
-            Cantarell,
-            Fira Sans,
-            Droid Sans,
-            Helvetica Neue,
-            sans-serif;
-        }
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
+      </div>
+    </Layout>
   );
 }

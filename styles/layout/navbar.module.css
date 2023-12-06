@@ -1,0 +1,24 @@
+.navbar {
+    height: 48px;
+    z-index: 80;
+    background: white;
+    padding: 2px 20px;
+    border-bottom: 1px solid rgb(237, 239, 241);
+}
+
+.redditIcon {
+height: 32px;
+width: 32px;
+margin-right: 10px;
+}
+
+.redditLogo {
+font-size: 16px;
+height: 18px;
+line-height: 16px;
+margin-right: 20px;
+}
+
+.headerIconWrapper {
+margin-right: 6px;
+}

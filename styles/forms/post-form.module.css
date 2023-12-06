@@ -1,0 +1,260 @@
+.container {
+    width: 740px;
+    /* border: 1px solid yellow */
+}
+
+.headerContainer {
+    padding: 4px;
+    margin: 16px 0;
+    border-bottom: 1px solid #edeff1;
+    display: flex;
+}
+
+.headerTitle {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 22px;
+    flex-grow: 1;
+}
+
+.draftBtn {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 24px;
+    text-transform: uppercase;
+    margin-left: 10px;
+    color: #0079d3;
+    display: flex;
+    font-family: Noto Sans,Arial,sans-serif;
+    min-height: 32px;
+    min-width: 32px;
+    padding: 4px 16px;
+    align-items: center;
+    border-radius: 9999px;
+    box-sizing: border-box;
+    justify-content: center;
+    text-align: center;
+    width: auto;
+}
+
+.draftCount {
+    margin-left: 4px;
+    padding: 1px 3px;
+    background-color: rgb(135, 138, 140);
+    border-radius: 2px;
+    font-size: 12px;
+    line-height: 16px;
+    color: white;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+}
+
+.communityDiv {
+    margin-bottom: 8px;
+    width: 300px;
+    position: relative;
+}
+
+.communityContainer {
+    display: flex;
+    align-items: center;
+    padding: 0 8px;
+    border: 1px solid rgb(237, 239, 241);
+    background-color: white;
+    height: 40px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.communityChoiceWrapper {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    background-color: white;
+    border: 1px solid rgb(237, 239, 241);
+    padding: 8px;
+}
+
+.communityChoiceHeader {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    font-family: IBMPlexSans, Arial, sans-serif;
+    letter-spacing: .5px;
+    line-height: 24px;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 0 8px;
+}
+
+.communityTitle {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    color: rgb(28, 28, 28);
+}
+
+.communityMember {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    color: #c3c4c5;
+}
+
+.circle {
+    height: 22px;
+    width: 22px;
+    font-size: 22px;
+    line-height: 22px;
+    box-sizing: border-box;
+    border-radius: 22px;
+    border: 1px dashed #878A8C;
+}
+
+.communityName {
+    flex-grow: 1;
+    padding-left: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    color: rgb(28, 28, 28);
+
+}
+
+.dropdownIcon {
+    font-weight: 100;
+  }
+
+.formContainer {
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: white;    
+}
+
+.formSelect {
+    margin: 0 0 12px;
+    height: 51px;
+}
+
+.formType {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+    cursor: pointer;
+    padding: 15px 17px;
+    border-style: solid;
+    border-color: #EDEFF1;
+    align-items: center;
+    border-width: 0 1px 1px 0;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    color: #8e9194;
+}
+
+.formTypeIcon {
+    font-size: 20px;
+    font-weight: 400;
+    height: 20px;
+    line-height: 20px;
+    vertical-align: middle;
+    width: 20px;
+    margin-right: 8px;
+}
+
+.formWrapper {
+    margin: 16px;
+}
+
+.titleInput {
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    height: 39px;
+    padding: 8px 68px 8px 16px;
+    border: 1px solid #EDEFF1;
+    width: 100%;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+}
+
+.titleInputCount {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 12px;
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    color: #878A8C;
+}
+
+.contentInput {
+    padding: 8px 16px;
+    min-height: 122px;
+    overflow: hidden;
+    width: 100%;
+    overflow-wrap: break-word;
+    border: 1px solid #EDEFF1;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    margin-bottom: 16px;
+}
+
+.tagBtn,
+.submitBtn {
+    margin-right: 4px;
+    padding: 4px 16px;
+    border: 1px solid #878A8C;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 17px;
+    min-height: 32px;
+    min-width: 32px;
+    align-items: center;
+    border-radius: 9999px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    color: rgba(135, 138, 140, 0.5);
+}
+
+.addTagIcon {
+    margin-right: 4px;
+}
+
+.summitContainer {
+    display: flex;
+    justify-content: end;
+    padding-bottom: 16px;
+}
+
+.optionContainer {
+    padding: 16px 16px 21px;
+    border-top: 1px solid #F6F7F8;
+    background-color: #f6f7f8;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+}
+
+.notificationCheckbox {
+    width: 20px;
+    height: 20px;
+    border-color: #878A8C;
+    margin-right: 8px;    
+
+}
+
+.show {
+    display: unset;
+}
+
+.hide {
+    display: none;
+}

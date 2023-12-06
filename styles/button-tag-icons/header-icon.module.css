@@ -1,0 +1,18 @@
+.headerIconContainer {
+    border-radius: 4px;
+    position: relative;
+  }
+  
+  .headerIconHovered {
+    background: #e8e8e8;
+  }
+  
+  .notificationBox {
+    position: fixed;
+    margin-top: 40px;
+    font-size: 12px;
+    background: black;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }

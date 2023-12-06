@@ -1,0 +1,21 @@
+.container {
+    padding: 6px 16px;
+    border-radius: 45px;
+    font-size: 14px;
+    line-height: 14px;
+    margin-left: 12px;
+    margin-right: 20px;
+  }
+  
+  .container i {
+    margin-right: 4px;
+    font-size: 20px;
+  }
+  
+  .isHovered {
+    background: #d4d7d9;
+  }
+
+  .notHovered {
+    background: #edeff1;
+  }

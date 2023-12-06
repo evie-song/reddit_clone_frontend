@@ -1,0 +1,6 @@
+.container {
+    margin: 12px 0;
+    border-radius: 6px;
+    border: 1px solid #cccccc;
+    overflow: hidden;
+}

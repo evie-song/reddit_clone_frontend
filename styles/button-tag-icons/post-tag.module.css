@@ -1,0 +1,10 @@
+.container {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    padding: 2px 8px;
+    margin: 2px 8px;
+    border-radius: 20px;
+    display: inline-flex;
+    vertical-align: text-top;
+}

@@ -1,0 +1,36 @@
+
+.homeButton {
+    width: 172px;
+    margin-left: 8px;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 500;
+}
+
+.isHovered {
+    border: 1px solid #edeff1;
+  }
+  
+  .notHovered {
+    border: 1px solid transparent;
+  }
+
+  .container {
+    padding: 4px 8px;
+    box-sizing: border-box;
+    border-radius: 4px;
+  }
+
+  .homeIcon {
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-weight: 400;
+    font-size: 26px !important;
+    margin-right: 5px;
+  }
+
+  .dropdownIcon {
+    font-weight: 100;
+  }
+

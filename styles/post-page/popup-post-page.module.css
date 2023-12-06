@@ -1,0 +1,19 @@
+.backgroundLayer {
+    height: 100%;
+    width: 100%;
+    background-color: #333434;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1280px;
+    width: calc(100% - 160px);
+    margin: 0 auto;
+    max-width: 1280px;
+    overflow: scroll;
+    height: 100%;
+}

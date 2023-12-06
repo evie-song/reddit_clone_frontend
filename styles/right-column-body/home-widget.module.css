@@ -1,0 +1,50 @@
+.container {
+    padding: 12px;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(204, 204, 204);
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+.headerImg {
+    background-image: url(https://www.redditstatic.com/desktop2x/img/id-cards/home-banner@2x.png);
+    border-radius: 3px 3px 0 0;
+    height: 34px;
+    margin: -12px -12px 10px;
+    background-size: cover;
+}
+
+.titleDiv {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    margin-top: -23px;
+}
+
+.titleImg {
+    background: url(https://www.redditstatic.com/desktop2x/img/id-cards/snoo-home@2x.png);
+    background-size: 40px 68px;
+    height: 68px;
+    width: 40px;
+}
+
+.titleName {
+    margin-left: 10px;
+    margin-top: 30px;
+    color:rgb(28, 28, 28);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    font-family: IBMPlexSans, Arial, sans-serif;
+}
+
+.description {
+    color:rgb(28, 28, 28);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.lineBreak {
+    margin: 16px 0;
+    border-bottom: 1px rgb(239 239 239) solid;
+}

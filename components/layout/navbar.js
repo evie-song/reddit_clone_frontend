@@ -6,7 +6,7 @@ import AdvertiseIcon from './advertise-icon';
 import UserContainer from './user-container';
 import HomeDropdown from './home-dropdown';
 
-export default function NavBar(){
+export default function NavBar({handleSigninToggle}){
     return (
         <div className={`${styles.navbar} position-fixed top-0 start-0 end-0 d-flex justify-content-between align-items-center`}>
             <Link href="/" className={`${styles.logoContainer} d-flex align-items-center`}>
@@ -44,7 +44,7 @@ export default function NavBar(){
                   <HeaderIcon iconName="add" linkUrl="/" iconText="Create Post" padding="6px" fontSize="20px" />
                 </div>
                 <AdvertiseIcon />
-                <UserContainer />
+                <UserContainer handleSigninToggle={handleSigninToggle}/>
             </div>
         </div>
     )

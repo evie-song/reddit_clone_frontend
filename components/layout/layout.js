@@ -4,11 +4,31 @@ import styles from '../../styles/layout/layout.module.css';
 import Link from 'next/link';
 import { ApiError } from 'next/dist/server/api-utils';
 import NavBar from './navbar';
+import { useState } from 'react';
+import PopupWindow from '../popup-window';
+import Signin from '../../pages/auth/signin';
+import Signup from '../../pages/auth/signup'; 
 
 const name = 'Evie Song';
-export const siteTitle = 'Next.js Sample Website';
+export const siteTitle = 'Reddit Clone';
 
 export default function Layout({ children, home }) {
+  const [loginPopupIsOpen, setLoginPopupIsOpen] = useState(false)
+  const [signinOrSignup, setSigninOrSignup] = useState('signin')
+
+  const  toggleSigninOrSignup = (option) => {
+    setSigninOrSignup(option);
+  };
+
+  const handleSigninToggle = (isOpen) => {
+    setLoginPopupIsOpen(isOpen);
+    if (isOpen == true) {
+      document.body.classList.add('popup-open');
+    } else {
+      document.body.classList.remove('popup-open');
+    }
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -27,8 +47,13 @@ export default function Layout({ children, home }) {
           <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <NavBar/>
-      <main>{children}</main>
+      <NavBar handleSigninToggle={handleSigninToggle}/>
+      <main>
+        <PopupWindow isOpen={loginPopupIsOpen}>
+          <Signin onClose={handleSigninToggle} toggleSigninOrSignup={toggleSigninOrSignup} signinOrSignup={signinOrSignup} />
+        </PopupWindow>
+        {children}
+      </main>
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">← Back to home</Link>

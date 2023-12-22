@@ -1,0 +1,44 @@
+.wrapper {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.container {
+	width: 528px;
+	height: 560px;
+	background-color: white;
+	margin: auto;
+	border-radius: 16px;
+	padding: 80px;
+	position: relative;
+}
+
+.title {
+	font-size: 24px;
+	font-weight: 700;
+	line-height: 28px;
+	margin-bottom: 8px;
+}
+
+.disclaimer {
+	font-size: 14px;
+	line-height: 20px;
+	margin-top: 8px;
+	margin-bottom: 24px;
+}
+
+.switchPath {
+	font-size: 16px;
+	margin-bottom: 48px;
+}
+
+.closeButton {
+	position: absolute;
+	right: 30px;
+	top: 30px;
+	background-color: #eaedef;
+	border-radius: 45px;
+}
+

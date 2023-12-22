@@ -38,9 +38,9 @@ export default function Submit({communityData}) {
             // Handle errors (e.g., display error messages)
             console.log("failed")
         }
-        } catch (error) {
-        // Handle network or other errors
-        }
+    } catch (error) {
+    // Handle network or other errors
+    }
     };
 
     return (
@@ -52,11 +52,7 @@ export default function Submit({communityData}) {
                 <div>
                     <p>Posting To Reddit</p>
                 </div>
-                
-
             </div>
-
         </Layout>
-
     );
     }

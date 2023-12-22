@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]';
+import Signin from './auth/signin';
 
 
 export async function getServerSideProps() {
@@ -27,20 +28,20 @@ export async function getServerSideProps() {
 export default function Home({ data }) {
 
   const [posts, setPosts] = useState(data)
-  const [popupIsOpen, setPopupIsOpen] = useState(false)
+  const [postPopupIsOpen, setPostPopupIsOpen] = useState(false)
   const [selectedPostId, setSelectedPostId] = useState(0)
 
   const router = useRouter()
 
   function handlePostClick(id) {
     setSelectedPostId(id)
-    setPopupIsOpen(true);
+    setPostPopupIsOpen(true);
     // when popup window is open, make body page unsrollable.
     document.body.classList.add('popup-open');
   }
 
-  function closePopup() {
-    setPopupIsOpen(false);
+  function closePostPopup() {
+    setPostPopupIsOpen(false);
     // when popup window is closed, make body page srollable again.
     document.body.classList.remove('popup-open');
     router.push('/');
@@ -91,8 +92,6 @@ export default function Home({ data }) {
     });
   }
 
-
-
   return (
     <Layout home>
       <Head>
@@ -102,10 +101,10 @@ export default function Home({ data }) {
         <div className='display-body'>
           <div className='center-column'>
             <NewPostWidget/>
-            <PopupWindow isOpen={popupIsOpen}>
+            <PopupWindow isOpen={postPopupIsOpen}>
               <PopupPostPage 
                 post={posts.find(post => post.id === selectedPostId)} 
-                onClose={closePopup}
+                onClose={closePostPopup}
                 onUpVoteClick={() => handleUpvoteClick(selectedPostId)}
                 onDownVoteClick={() => handleDownvoteClick(selectedPostId)}
               />

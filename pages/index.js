@@ -6,13 +6,15 @@ import HomeWidget from '../components/right-column-body/home-widget';
 import PostWidgetContainer from '../components/main-column-body/post-widget-container';
 import PopupWindow from '../components/popup-window';
 import { id, tr } from 'date-fns/locale';
-import { useReducer, useState } from 'react';
+import { useContext, useReducer, useState } from 'react';
 import PopupPostPage from '../components/post-page/popup-post-page';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]';
 import Signin from './auth/signin';
+import { AuthContext } from '../context/AuthContext';
+import PostCollection from '../components/post-collection';
 
 
 export async function getServerSideProps() {
@@ -30,6 +32,7 @@ export default function Home({ data }) {
   const [posts, setPosts] = useState(data)
   const [postPopupIsOpen, setPostPopupIsOpen] = useState(false)
   const [selectedPostId, setSelectedPostId] = useState(0)
+  const {user} = useContext(AuthContext)
 
   const router = useRouter()
 
@@ -110,28 +113,23 @@ export default function Home({ data }) {
               />
             </PopupWindow>
             <div className='margin-y-8'>
-              {posts.map((post) => {
-                return(
-                  <Link href={`?id=${post.id}`} as={`posts/${post.id}`}  >
-                    <div 
-                      key={post.id} 
-                      onClick={() => handlePostClick(post.id)}
-                    >
-                      <PostWidgetContainer 
-                        post={post} 
-                        onUpVoteClick={() => handleUpvoteClick(post.id)}
-                        onDownVoteClick={() => handleDownvoteClick(post.id)}
-                      />
-                    </div>
-                  </Link>
-                )
-              })}
+              <PostCollection posts={posts} handleDownvoteClick={handleDownvoteClick} handleUpvoteClick={handleUpvoteClick} handlePostClick={handlePostClick} />
             </div>
           </div>
           <div className='right-column'>
               <PremiumWidget />
             <div>
               <HomeWidget />
+            </div>
+            <div>
+              Test Area
+              <br/>
+              { user? `${user.username} ${user.userId} ${user.userEmail}` : "User not logged in"}
+              <br/>
+              Saved Posts:
+              <br/>
+
+              
             </div>
           </div>
         </div>

@@ -1,27 +1,31 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from '../../styles/forms/post-form.module.css';
 import MaterialIcon from '../button-tag-icons/material-icon';
-import { useSession } from 'next-auth/react';
+import { userAgent } from 'next/server';
+import { AuthContext } from '../../context/AuthContext';
 
 export default function PostForm({ addPost, communityData }) {
-    const { data: session} = useSession();
     
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [communityTitle, setCommunityTitle] = useState('Choose a community')
     const [communityId, setCommunityId] = useState('');
     const [showCommunityDropdown, setShowCommunityDropdown] = useState(false)
+    const {user} = useContext(AuthContext)
 
     const communities = communityData;
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(user)
 
         // Create a new Post object
         const newPost = {
             title,
             content,
             communityId: parseInt(communityId),
+            userId: user.userId,
+            applicationUserId: user.userId,
         };
 
         // Send a POST request to your API
@@ -49,11 +53,11 @@ export default function PostForm({ addPost, communityData }) {
         };
     }, [showCommunityDropdown])
 
-    if (session) {
+    // if (user) {
         return (
             <div className={styles.container}>
                 <div className={styles.headerContainer}>
-                    <div className={styles.headerTitle}>Create a Post</div>
+                    <div className={styles.headerTitle}>Create a Post {user.userId}</div>
                     <div className={styles.draftBtn}>
                         <div className={styles.draftTitle}>DRAFT</div>
                         <div className={styles.draftCount}>0</div>
@@ -185,11 +189,11 @@ export default function PostForm({ addPost, communityData }) {
             </div>
             
         );
-    } else {
-        return (
-            <div>
-                Not logged in
-            </div>
-        )
-    }
+    // } else {
+    //     return (
+    //         <div>
+    //             Not logged in
+    //         </div>
+    //     )
+    // }
 }

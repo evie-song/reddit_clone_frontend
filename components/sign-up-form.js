@@ -55,9 +55,7 @@ const SignUpForm = () => {
         
         {error && <p>{error}</p>}
 
-        <div className={styles.switchPath}>
-          Already a redditor? <Link href={"signin"} style={{color: "#0045ac"}}>Log In</Link>
-        </div>
+        
 
 
         <div className="login-button" type="submit">

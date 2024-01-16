@@ -4,10 +4,11 @@ import styles from '../../styles/layout/layout.module.css';
 import Link from 'next/link';
 import { ApiError } from 'next/dist/server/api-utils';
 import NavBar from './navbar';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import PopupWindow from '../popup-window';
 import Signin from '../../pages/auth/signin';
 import Signup from '../../pages/auth/signup'; 
+import { AuthContext } from '../../context/AuthContext';
 
 const name = 'Evie Song';
 export const siteTitle = 'Reddit Clone';
@@ -15,6 +16,8 @@ export const siteTitle = 'Reddit Clone';
 export default function Layout({ children, home }) {
   const [loginPopupIsOpen, setLoginPopupIsOpen] = useState(false)
   const [signinOrSignup, setSigninOrSignup] = useState('signin')
+
+  const {signInAlert, setSigninAlert} = useContext(AuthContext)
 
   const  toggleSigninOrSignup = (option) => {
     setSigninOrSignup(option);
@@ -26,6 +29,7 @@ export default function Layout({ children, home }) {
       document.body.classList.add('popup-open');
     } else {
       document.body.classList.remove('popup-open');
+      setSigninAlert('');
     }
   };
 

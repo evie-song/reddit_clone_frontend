@@ -5,7 +5,8 @@ export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState();
-
+    const [signinAlert, setSigninAlert] = useState(null);
+    
     useEffect(() => {
         const userFromCookies = Cookies.get('user')
 
@@ -24,11 +25,16 @@ export const AuthProvider = ({ children }) => {
                 body: JSON.stringify(credentials)
             })
             if (res.ok) {
-                const defaultUser = {username: 'defaultuser', userId: 123, userEmail: 'user@email.com'}
-                setUser(defaultUser)
-                Cookies.set('user', JSON.stringify(defaultUser))
+                const userData = await res.json()
+                console.log(userData)
+                const user = {username: userData.username, userId: userData.userId, userEmail: userData.email}
+                setUser(user)
+                Cookies.set('user', JSON.stringify(user))
+                return true;
             } else {
-                console.log('login failed')
+                console.log('login failed');
+                setSigninAlert('Login faliled');
+                return false;
             };
     
         } catch (error) {
@@ -72,7 +78,7 @@ export const AuthProvider = ({ children }) => {
 
 
     return (
-        <AuthContext.Provider value={{user, signin, logout, register}}>
+        <AuthContext.Provider value={{user, signinAlert, signin, logout, register, setSigninAlert}}>
             {children}
         </AuthContext.Provider>
     )

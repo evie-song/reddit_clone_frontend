@@ -12,8 +12,7 @@ export default function Signin({onClose, toggleSigninOrSignup, signinOrSignup}) 
     return (
         <div className={styles.backgroundLayer}>
             <div style={{height: "100%"}}>
-                {(signinOrSignup == 'signin') && <SignInForm onClose={onClose} switchToSignup={toggleSigninOrSignup} />}
-                {(signinOrSignup == 'signup') && <SignUpForm onClose={onClose} switchToSignup={toggleSigninOrSignup} />}
+                <SignInForm onClose={onClose} switchToSignup={toggleSigninOrSignup} signinOrSignup={signinOrSignup}/>
             </div>
         </div>
     

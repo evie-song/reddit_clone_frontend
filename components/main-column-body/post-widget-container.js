@@ -9,7 +9,6 @@ export default function PostWidgetContainer({post, onUpVoteClick, onDownVoteClic
     if (isHovered) {
         containerStyle = {borderColor : "#666462"}
     }
-
     return (
     <div 
         className={`post-widget-wrapper ${styles.container}`}

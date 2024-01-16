@@ -2,6 +2,7 @@ import styles from '../../styles/layout/user-container.module.css';
 import Link from 'next/link';
 import { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import FullLengthButton from '../button-tag-icons/full-length-button';
 
 export default function UserContainer({handleSigninToggle}) {
     const [isHovered, setIsHovered] = useState(false);
@@ -15,9 +16,13 @@ export default function UserContainer({handleSigninToggle}) {
     if (!user) {
         return (
             <div>
-                {/* <Link href={"auth/signin"} > */}
-                    <button onClick={() => handleSigninToggle(true)}>Sign In</button>
-                {/* </Link> */}
+                <div onClick={() => handleSigninToggle(true)} >
+                    <FullLengthButton
+                        backgroundColor="#D93A00" 
+                        color="white" 
+                        border="none" 
+                        text="Log In" />
+                </div>
             </div>
         )
     }
@@ -33,14 +38,20 @@ export default function UserContainer({handleSigninToggle}) {
                 <div className='d-flex align-items-center'>
                     <i className={`${styles.userIcon} material-icons`}>person_pin</i>
                     <div className='font-14 d-flex flex-column'>
-                        <span className={styles.userName}>eviesong</span>
+                        <span className={styles.userName}>{user.username}</span>
                         <span className={styles.userKarma}>1 karma</span>
                     </div>
                 </div>
-                
-                <i className='material-icons'>keyboard_arrow_down</i>
+                {/* <i className='material-icons'>keyboard_arrow_down</i> */}
+                <div onClick={handleLogout}>
+                    <FullLengthButton 
+                        backgroundColor="#D93A00" 
+                        color="white" 
+                        border="none" 
+                        text="Log Out"
+                    />
+                </div>
             </Link>
-            <button onClick={handleLogout}>Log Out</button>
         </div>
         
         

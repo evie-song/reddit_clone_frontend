@@ -230,3 +230,7 @@ body {
 #__next {
   height: 100%;
 }
+
+.color-saved .material-icons{
+  color: red !important;
+}

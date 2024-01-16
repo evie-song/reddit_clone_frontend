@@ -12,3 +12,5 @@ export default function PopupPostPage({ post, onClose, onUpVoteClick, onDownVote
         </div>
     )
 }
+
+

@@ -1,16 +1,24 @@
 import HeaderIcon from '../button-tag-icons/header-icon';
 import MaterialIcon from '../button-tag-icons/material-icon';
 import styles from '../../styles/main-column-body/new-post-widget.module.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
+import { AuthContext } from '../../context/AuthContext';
 
-export default function NewPostWidget() {
+export default function NewPostWidget({ onSigninToggle }) {
   const [isHovered, setIsHovered] = useState(false)
   const router = useRouter()
 
+  const { user } = useContext(AuthContext)
+
+
   function handleClick() {
-    setIsHovered(false);
-    router.push('/posts/submit')
+    if (!user) {
+      onSigninToggle(true)
+    } else {
+      setIsHovered(false);
+      router.push('/posts/submit')
+    }
   }
 
   return (

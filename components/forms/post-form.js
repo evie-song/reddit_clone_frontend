@@ -57,7 +57,7 @@ export default function PostForm({ addPost, communityData }) {
         return (
             <div className={styles.container}>
                 <div className={styles.headerContainer}>
-                    <div className={styles.headerTitle}>Create a Post {user.userId}</div>
+                    <div className={styles.headerTitle}>Create a Post </div>
                     <div className={styles.draftBtn}>
                         <div className={styles.draftTitle}>DRAFT</div>
                         <div className={styles.draftCount}>0</div>

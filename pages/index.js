@@ -15,6 +15,7 @@ import { authOptions } from './api/auth/[...nextauth]';
 import Signin from './auth/signin';
 import { AuthContext } from '../context/AuthContext';
 import PostCollection from '../components/post-collection';
+import IndexBody from '../components/index-body';
 
 
 export async function getServerSideProps() {
@@ -30,110 +31,13 @@ export async function getServerSideProps() {
 export default function Home({ data }) {
 
   const [posts, setPosts] = useState(data)
-  const [postPopupIsOpen, setPostPopupIsOpen] = useState(false)
-  const [selectedPostId, setSelectedPostId] = useState(0)
-  const {user} = useContext(AuthContext)
-
-  const router = useRouter()
-
-  function handlePostClick(id) {
-    setSelectedPostId(id)
-    setPostPopupIsOpen(true);
-    // when popup window is open, make body page unsrollable.
-    document.body.classList.add('popup-open');
-  }
-
-  function closePostPopup() {
-    setPostPopupIsOpen(false);
-    // when popup window is closed, make body page srollable again.
-    document.body.classList.remove('popup-open');
-    router.push('/');
-  }
-
-  async function handleUpvoteClick(id) {
-    try { 
-        const res = await fetch(`/api/Post/upvote/${id}`, {
-            method: 'PUT'})
-        const data = await res.json();
-    } catch (error) {
-        console.error('error updating the vote count', error)
-        throw error
-    }
-    
-    setPosts((prevState) => {
-      return prevState.map((item) => {
-        if (item.id === id) {
-          const oldVote = item.upVote
-          const newVote = oldVote + 1
-          return {...item, upVote: newVote };
-        }
-        return item;
-      });
-    });
-
-  }
-
-  async function handleDownvoteClick(id) {
-    try { 
-        const res = await fetch(`/api/Post/downvote/${id}`, {
-            method: 'PUT'})
-        const data = await res.json();
-    } catch (error) {
-        console.error('error updating the vote count', error)
-        throw error
-    }
-
-    setPosts((prevState) => {
-      return prevState.map((item) => {
-        if (item.id === id) {
-          const oldVote = item.downVote
-          const newVote = oldVote + 1
-          return {...item, downVote: newVote };
-        }
-        return item;
-      });
-    });
-  }
 
   return (
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <div className='canvas'>
-        <div className='display-body'>
-          <div className='center-column'>
-            <NewPostWidget/>
-            <PopupWindow isOpen={postPopupIsOpen}>
-              <PopupPostPage 
-                post={posts.find(post => post.id === selectedPostId)} 
-                onClose={closePostPopup}
-                onUpVoteClick={() => handleUpvoteClick(selectedPostId)}
-                onDownVoteClick={() => handleDownvoteClick(selectedPostId)}
-              />
-            </PopupWindow>
-            <div className='margin-y-8'>
-              <PostCollection posts={posts} handleDownvoteClick={handleDownvoteClick} handleUpvoteClick={handleUpvoteClick} handlePostClick={handlePostClick} />
-            </div>
-          </div>
-          <div className='right-column'>
-              <PremiumWidget />
-            <div>
-              <HomeWidget />
-            </div>
-            <div>
-              Test Area
-              <br/>
-              { user? `${user.username} ${user.userId} ${user.userEmail}` : "User not logged in"}
-              <br/>
-              Saved Posts:
-              <br/>
-
-              
-            </div>
-          </div>
-        </div>
-      </div>
+      <IndexBody posts={posts}  />
     </Layout>
   );
 }

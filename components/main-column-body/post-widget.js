@@ -9,7 +9,7 @@ import DownvoteButton from '../button-tag-icons/downvote-button';
 import UserContainer from '../layout/user-container';
 import { AuthContext } from '../../context/AuthContext';
 
-export default function PostWidget({ post, onUpVoteClick, onDownVoteClick }) {
+export default function PostWidget({ post, onUpVoteClick, onDownVoteClick, handleSaveClick, handleUnsaveClick }) {
     const { user } = useContext(AuthContext)
 
     // console.log(post)
@@ -54,13 +54,19 @@ export default function PostWidget({ post, onUpVoteClick, onDownVoteClick }) {
         return timeAgo;
     }
 
-    // click post div to direct to individual post page.
-    // const router = useRouter();
-    // function directToPost(post_id) {
-    //     router.push(`/posts/${post_id}`)
-    // }
-    // console.log(post)
+    const handleSaveBtnClick = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        handleSaveClick();
+    }
 
+    const handleUnsaveBtnClick = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        handleUnsaveClick();
+    }
+
+    
 
     return (
         <div 
@@ -98,8 +104,16 @@ export default function PostWidget({ post, onUpVoteClick, onDownVoteClick }) {
                 <div className={`${styles.postActionContainer}`}>
                     <HeaderIcon marginRight="4px" iconName="mode_comment" linkUrl="" fontSize="20px" padding="4px" addText="Comments" additionalClass="padding-right-4 padding-y-4"/>
                     <HeaderIcon marginRight="4px" iconName="share" linkUrl="" fontSize="20px" padding="4px" addText="Share" additionalClass="padding-right-4 padding-y-4"/>
-                    {post.isSaved && <HeaderIcon marginRight="4px" iconName="favorite" linkUrl="" fontSize="20px" padding="4px" addText="Unsave" additionalClass="padding-right-4 padding-y-4 color-saved"/>}
-                    {!post.isSaved && <HeaderIcon marginRight="4px" iconName="favorite_border" linkUrl="" fontSize="20px" padding="4px" addText="Save" additionalClass="padding-right-4 padding-y-4"/>}
+                    {post.isSaved && 
+                        <div onClick={(event) => handleUnsaveBtnClick(event)}>
+                            <HeaderIcon marginRight="4px" iconName="favorite" linkUrl="" fontSize="20px" padding="4px" addText="Unsave" additionalClass="padding-right-4 padding-y-4 color-saved"/>
+                        </div>
+                    }
+                    {!post.isSaved && 
+                        <div onClick={(event) => handleSaveBtnClick(event)}>   
+                            <HeaderIcon marginRight="4px" iconName="favorite_border" linkUrl="" fontSize="20px" padding="4px" addText="Save" additionalClass="padding-right-4 padding-y-4"/>
+                        </div>
+                    }
                     <HeaderIcon marginRight="4px" iconName="more_horiz" linkUrl="" fontSize="20px" padding="4px" additionalClass="padding-y-4"/>
                 </div>
             </div>

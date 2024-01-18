@@ -2,7 +2,7 @@ import PostWidget from "./post-widget";
 import styles from "../../styles/main-column-body/post-widget-container.module.css"
 import { useState } from "react";
 
-export default function PostWidgetContainer({post, onUpVoteClick, onDownVoteClick}) {
+export default function PostWidgetContainer({post, onUpVoteClick, onDownVoteClick, handleSaveClick, handleUnsaveClick}) {
     const [isHovered, setIsHovered] = useState(false)
 
     let containerStyle = {}
@@ -16,7 +16,7 @@ export default function PostWidgetContainer({post, onUpVoteClick, onDownVoteClic
         onMouseLeave={() => setIsHovered(false)}
         style={containerStyle}
     >
-        <PostWidget post={post} onUpVoteClick={onUpVoteClick} onDownVoteClick={onDownVoteClick}/>
+        <PostWidget post={post} onUpVoteClick={onUpVoteClick} onDownVoteClick={onDownVoteClick} handleSaveClick={handleSaveClick} handleUnsaveClick={handleUnsaveClick}/>
     </div>
     )
 

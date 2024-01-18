@@ -9,6 +9,8 @@ import PopupWindow from '../popup-window';
 import Signin from '../../pages/auth/signin';
 import Signup from '../../pages/auth/signup'; 
 import { AuthContext } from '../../context/AuthContext';
+import React from 'react';
+
 
 const name = 'Evie Song';
 export const siteTitle = 'Reddit Clone';
@@ -33,6 +35,10 @@ export default function Layout({ children, home }) {
     }
   };
 
+  const childrenWithProps = React.Children.map(children, (child) => {
+    return React.cloneElement(child, { onSigninToggle: handleSigninToggle })
+  })
+
   return (
     <div className={styles.container}>
       <Head>
@@ -56,7 +62,7 @@ export default function Layout({ children, home }) {
         <PopupWindow isOpen={loginPopupIsOpen}>
           <Signin onClose={handleSigninToggle} toggleSigninOrSignup={toggleSigninOrSignup} signinOrSignup={signinOrSignup} />
         </PopupWindow>
-        {children}
+        {childrenWithProps}
       </main>
       {!home && (
         <div className={styles.backToHome}>

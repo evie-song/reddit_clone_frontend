@@ -64,11 +64,11 @@ export default function Layout({ children, home }) {
         </PopupWindow>
         {childrenWithProps}
       </main>
-      {!home && (
+      {/* {!home && (
         <div className={styles.backToHome}>
           <Link href="/">← Back to home</Link>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

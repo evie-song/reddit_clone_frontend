@@ -1,0 +1,88 @@
+.container {
+  padding: 12px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(204, 204, 204);
+  border-radius: 4px;
+  margin-bottom: 16px;
+  width: 312px;
+  height: 432px;
+}
+
+.headerImg {
+  background-color: #34a8ff;
+  border-radius: 3px 3px 0 0;
+  height: 94px;
+  margin: -12px -12px 10px;
+  background-size: cover;
+}
+
+.body {
+  margin-top: -94px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.avatarDiv {
+  height: 160px;
+  width: 125px;
+  text-align: center;
+  position: relative;
+  margin: auto;
+}
+
+.username {
+  margin: 4px 0;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 26px;
+  color: #222222;
+}
+
+.usernameSmall {
+	font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+		margin: 4px 0;
+		color: #7c7c7c;
+}
+
+.smallTitle {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  color: #222222;
+	margin-bottom: 4px;
+}
+
+.smallDesc {
+	font-size: 12px;
+	color: #7c7c7c;
+	margin-left: 4px;
+	font-weight: 400;
+	line-height: 16px;
+}
+
+.smallDescWrapper {
+	display: flex;
+	align-items: center;
+}
+
+.smallDescWrapper i {
+	color: #24a0ed;
+
+}
+
+.addLinkBtn {
+	font-size: 12px;
+	font-weight: 700;
+	line-height: 16px;
+	border-radius: 45px;
+	background-color: #edeff1;
+	color: #1c1c1c;
+	display: flex;
+	align-items: center;
+	padding: 10px 12px;
+	margin-bottom: 10px;
+	cursor: pointer;
+}

@@ -1,6 +1,7 @@
 import PostForm from "../../components/forms/post-form";
 import Layout from "../../components/layout/layout";
 import { useRouter } from "next/router";
+import UserWidget from "../../components/user-page/user-widget";
 
 export async function getServerSideProps() {
     const res = await fetch("http://localhost:5142/api/Community/Getall");
@@ -49,8 +50,8 @@ export default function Submit({communityData}) {
                 <div>
                     <PostForm addPost={addPost} communityData={communities}/>
                 </div>
-                <div>
-                    <p>Posting To Reddit</p>
+                <div className="right-column margin-top-28" >
+                    <UserWidget />
                 </div>
             </div>
         </Layout>

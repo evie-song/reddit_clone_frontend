@@ -1,0 +1,41 @@
+
+
+.body {
+	position: fixed;
+	top: 48px;
+	left: 0;
+	height: calc(100% - 48px);
+	width: 100%;
+	overflow:scroll;
+}
+
+.header {
+	display: flex;
+	height: 40px;
+	background-color: white;
+	padding: 0 24px;
+	align-items: center;
+}
+
+.headerTitle {
+	padding: 0 8px;
+	margin-right: 5px;
+	text-transform: uppercase;
+	color: rgb(26, 26, 27);
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
+}
+
+.postContainer {
+
+}
+
+.mainBody {
+	padding: 20px 24px;
+}
+
+.rightColumn {
+	margin-left: 24px;
+}
+

@@ -1,0 +1,25 @@
+.title {
+	padding: 0 8px;
+	margin: 0 5px;
+	text-transform: uppercase;
+	color: rgb(26, 26, 27);
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 18px;
+	/* border-bottom: 1px solid transparent ; */
+	height: 100%;
+	align-items: center;
+	display: flex;
+}
+
+.isHovered {
+	color: rgb(0, 121, 211);
+}
+
+.isNotHovered {
+	
+}
+
+.selected {
+
+}

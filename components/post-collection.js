@@ -12,6 +12,7 @@ const PostCollection = ({ posts, onSigninToggle }) => {
   const { user } = useContext(AuthContext);
   const [customPosts, setCustomPosts] = useState([]);
 
+	const [voteActionOccurred, setVoteActionOccurred] = useState(false);
   const [saveActionOccurred, setSaveActionOccurred] = useState(false);
   const [postPopupIsOpen, setPostPopupIsOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState(0);
@@ -35,7 +36,11 @@ const PostCollection = ({ posts, onSigninToggle }) => {
     if (saveActionOccurred) {
       setSaveActionOccurred(false);
     }
-  }, [user, saveActionOccurred]);
+
+		if (voteActionOccurred) {
+      setVoteActionOccurred(false);
+    }
+  }, [user, saveActionOccurred, voteActionOccurred]);
 
   function handlePostClick(id) {
     setSelectedPostId(id);
@@ -52,51 +57,72 @@ const PostCollection = ({ posts, onSigninToggle }) => {
     window.history.pushState({}, "", "/");
   }
 
-  async function handleUpvoteClick(id) {
-    try {
-      const res = await fetch(`/api/Post/upvote/${id}`, {
-        method: "PUT",
-      });
-      const data = await res.json();
-    } catch (error) {
-      console.error("error updating the vote count", error);
-      throw error;
-    }
+  // async function handleUpvoteClick(id) {
+  //   try {
+  //     const res = await fetch(`/api/Post/upvote/${id}`, {
+  //       method: "PUT",
+  //     });
+  //     const data = await res.json();
+  //   } catch (error) {
+  //     console.error("error updating the vote count", error);
+  //     throw error;
+  //   }
 
-    setCustomPosts((prevState) => {
-      return prevState.map((item) => {
-        if (item.id === id) {
-          const oldVote = item.upVote;
-          const newVote = oldVote + 1;
-          return { ...item, upVote: newVote };
-        }
-        return item;
-      });
-    });
-  }
+  //   setCustomPosts((prevState) => {
+  //     return prevState.map((item) => {
+  //       if (item.id === id) {
+  //         const oldVote = item.upVote;
+  //         const newVote = oldVote + 1;
+  //         return { ...item, upVote: newVote };
+  //       }
+  //       return item;
+  //     });
+  //   });
+  // }
 
-  async function handleDownvoteClick(id) {
-    try {
-      const res = await fetch(`/api/Post/downvote/${id}`, {
-        method: "PUT",
-      });
-      const data = await res.json();
-    } catch (error) {
-      console.error("error updating the vote count", error);
-      throw error;
-    }
+  // async function handleDownvoteClick(id) {
+  //   try {
+  //     const res = await fetch(`/api/Post/downvote/${id}`, {
+  //       method: "PUT",
+  //     });
+  //     const data = await res.json();
+  //   } catch (error) {
+  //     console.error("error updating the vote count", error);
+  //     throw error;
+  //   }
 
-    setCustomPosts((prevState) => {
-      return prevState.map((item) => {
-        if (item.id === id) {
-          const oldVote = item.downVote;
-          const newVote = oldVote + 1;
-          return { ...item, downVote: newVote };
-        }
-        return item;
-      });
-    });
-  }
+  //   setCustomPosts((prevState) => {
+  //     return prevState.map((item) => {
+  //       if (item.id === id) {
+  //         const oldVote = item.downVote;
+  //         const newVote = oldVote + 1;
+  //         return { ...item, downVote: newVote };
+  //       }
+  //       return item;
+  //     });
+  //   });
+  // }
+
+	const handleVoteClick = async (id, value) => {
+		if (!user) {
+      onSigninToggle(true);
+    } else {
+			try {
+        const payload = { postId: id, applicationUserId: user.userId, voteValue: value };
+        const res = await fetch("/api/VoteRegistration/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        setVoteActionOccurred(true);
+      } catch (error) {
+        console.error("error updating the vote count", error);
+        throw error;
+      }
+		}
+
+	}
 
   const handleSaveClick = async (id) => {
     if (!user) {
@@ -144,8 +170,8 @@ const PostCollection = ({ posts, onSigninToggle }) => {
         <PopupPostPage
           post={customPosts.find((post) => post.id === selectedPostId)}
           onClose={closePostPopup}
-          onUpVoteClick={() => handleUpvoteClick(selectedPostId)}
-          onDownVoteClick={() => handleDownvoteClick(selectedPostId)}
+          onUpVoteClick={() => handleVoteClick(selectedPostId, 1)}
+          onDownVoteClick={() => handleVoteClick(selectedPostId, -1)}
           handleSaveClick={() => handleSaveClick(selectedPostId)}
           handleUnsaveClick={() => handleUnsaveClick(selectedPostId)}
         />
@@ -158,8 +184,8 @@ const PostCollection = ({ posts, onSigninToggle }) => {
               <PostWidgetContainer>
                 <PostWidget
                   post={post}
-                  onUpVoteClick={() => handleUpvoteClick(post.id)}
-                  onDownVoteClick={() => handleDownvoteClick(post.id)}
+                  onUpVoteClick={() => handleVoteClick(post.id, 1)}
+                  onDownVoteClick={() => handleVoteClick(post.id, -1)}
                   handleSaveClick={() => handleSaveClick(post.id)}
                   handleUnsaveClick={() => handleUnsaveClick(post.id)}
                 />

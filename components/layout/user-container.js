@@ -30,7 +30,7 @@ export default function UserContainer({handleSigninToggle}) {
     return (
         <div>
             <Link 
-                href="/" 
+                href={`/user/${user.userId}` }
                 className={`${styles.container} d-flex justify-content-between align-items-center ${isHovered? styles.isHovered : styles.notHovered}`}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}

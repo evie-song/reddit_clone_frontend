@@ -25,6 +25,7 @@ const PostCollection = ({ posts, onSigninToggle }) => {
         const url = "/api/post/getbyuser/" + user.userId;
         const res = await fetch(url, { method: "GET" });
         const data = await res.json();
+				// console.log(data.data);
         setCustomPosts(data.data);
       } else {
         setCustomPosts(posts);
@@ -138,7 +139,7 @@ const PostCollection = ({ posts, onSigninToggle }) => {
         const data = await res.json();
         setSaveActionOccurred(true);
       } catch (error) {
-        console.error("error updating the vote count", error);
+        console.error("error saving the post", error);
         throw error;
       }
     }
@@ -158,7 +159,7 @@ const PostCollection = ({ posts, onSigninToggle }) => {
         const data = await res.json();
         setSaveActionOccurred(true);
       } catch (error) {
-        console.error("error updating the vote count", error);
+        console.error("error unsaving the post", error);
         throw error;
       }
     }

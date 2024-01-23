@@ -20,7 +20,6 @@ const ShortPostWidget = ({
   const { user } = useContext(AuthContext);
   const [showContent, setShowContent] = useState(false);
 
-
   const sampleData = {
     channel_name: "r/SantaBarbara",
     post_tag: {
@@ -46,22 +45,30 @@ const ShortPostWidget = ({
   const handleShowContentClick = (event) => {
     event.stopPropagation();
     event.preventDefault();
-    setShowContent(true)
-  }
+    setShowContent(true);
+  };
 
   const handleHideContentClick = (event) => {
     event.stopPropagation();
     event.preventDefault();
-    setShowContent(false)
-  }  
+    setShowContent(false);
+  };
   return (
     <div className={`${styles.container}`}>
       <div className={`${styles.voteContainer} vote-container`}>
-        <UpvoteButton onUpVoteClick={onUpVoteClick} />
-        <div className={styles.voteCount}>
+        <div className={post.upVoted && styles.upVoted}>
+          <UpvoteButton onUpVoteClick={onUpVoteClick} />
+        </div>
+        <div
+          className={`${styles.voteCount} ${post.upVoted && styles.upVoted} ${
+            post.downVoted && styles.downVoted
+          }`}
+        >
           <span>{post.upVote - post.downVote}</span>
         </div>
-        <DownvoteButton onDownVoteClick={onDownVoteClick} />
+        <div className={post.downVoted && styles.downVoted}>
+          <DownvoteButton onDownVoteClick={onDownVoteClick} />
+        </div>
       </div>
 
       <div className={`${styles.postWrapper}`}>
@@ -99,7 +106,11 @@ const ShortPostWidget = ({
             </div>
             <div className={`${styles.postActionContainer}`}>
               {!showContent && (
-                <div onClick={(event) => {handleShowContentClick(event)}}>
+                <div
+                  onClick={(event) => {
+                    handleShowContentClick(event);
+                  }}
+                >
                   <HeaderIcon
                     marginRight="4px"
                     iconName="unfold_more"
@@ -113,7 +124,11 @@ const ShortPostWidget = ({
               )}
 
               {showContent && (
-                <div onClick={(event) => {handleHideContentClick(event)}}>
+                <div
+                  onClick={(event) => {
+                    handleHideContentClick(event);
+                  }}
+                >
                   <HeaderIcon
                     marginRight="4px"
                     iconName="unfold_less"

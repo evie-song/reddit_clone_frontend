@@ -1,20 +1,192 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "../../styles/user-page/user-page.module.css";
 import PostWidgetContainer from "../main-column-body/post-widget-container";
 import HeaderTitle from "./header-title";
 import ShortPostWidget from "./short-post-widget";
 import UserWidget from "./user-widget";
+import { AuthContext } from "../../context/AuthContext";
+import { id } from "date-fns/locale";
 
-const UserPage = ({ userData, onSigninToggle }) => {
+const UserPage = ({ filter, onSigninToggle }) => {
   const [userPosts, setUserPosts] = useState([]);
+  const { user } = useContext(AuthContext);
+  // const [voteActionOccurred, setVoteActionOccurred] = useState(false);
+  // const [saveActionOccurred, setSaveActionOccurred] = useState(false);
 
-  console.log(userData);
+  // filter values can be "saved", "upvoted", "downvoted"
+  const [postFilter, setPostFilter] = useState(filter);
+
   useEffect(() => {
-    setUserPosts(userData);
-    // console.log(userPosts)
+    if (user) {
+      const getPostData = async () => {
+        const url = "/api/ApplicationUser/" + user.userId + "/" + postFilter;
+        const res = await fetch(url, { method: "GET" });
+        const data = await res.json();
+        // console.log(data);
+        setUserPosts(data);
+      };
+
+      getPostData();
+    }
   }, []);
 
-  // console.log(userPosts);
+  useEffect(() => {
+    if (user) {
+      const getPostData = async () => {
+        const url = "/api/ApplicationUser/" + user.userId + "/" + postFilter;
+        const res = await fetch(url, { method: "GET" });
+        const data = await res.json();
+        // console.log(data);
+        setUserPosts(data);
+      };
+
+      getPostData();
+
+      // if (saveActionOccurred) {
+      //   setSaveActionOccurred(false);
+      // }
+
+      // if (voteActionOccurred) {
+      //   setVoteActionOccurred(false);
+      // }
+    }
+  }, [user, postFilter]);
+
+  const handleVoteClick = async (id, value) => {
+    if (!user) {
+      onSigninToggle(true);
+    } else {
+      try {
+        const payload = {
+          postId: id,
+          applicationUserId: user.userId,
+          voteValue: value,
+        };
+        const res = await fetch("/api/VoteRegistration/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        // setVoteActionOccurred(true);
+      } catch (error) {
+        console.error("error updating the vote count", error);
+        throw error;
+      }
+
+      setUserPosts((prevState) => {
+        return prevState.map((item) => {
+          if (item.id === id) {
+            const prevDownVote = item.downVote;
+            const prevDownVoted = item.downVoted;
+            const prevUpVote = item.upVote;
+            const prevUpVoted = item.upVoted;
+
+            if (value == 1) {
+              if (prevDownVoted == false && prevUpVoted == false) {
+                return { ...item, upVote: prevUpVote + 1, upVoted: true };
+              } else if (prevDownVote == true) {
+                return {
+                  ...item,
+                  downVote: prevDownVote - 1,
+                  upVote: prevUpVote + 1,
+                  upVoted: true,
+                  downVoted: false,
+                };
+              } else if (prevUpVote == true) {
+                return { ...item, upVoted: false, upVote: prevUpVote - 1 };
+              }
+            } else if (value == -1) {
+              if (prevDownVoted == false && prevUpVoted == false) {
+                return { ...item, downVote: prevDownVote + 1, downVoted: true };
+              } else if (prevUpVote == true) {
+                return {
+                  ...item,
+                  downVote: prevDownVote + 1,
+                  upVote: prevUpVote - 1,
+                  upVoted: false,
+                  downVoted: true,
+                };
+              } else if (prevDownVote == true) {
+                return {
+                  ...item,
+                  downVoted: false,
+                  downVote: prevDownVote - 1,
+                };
+              }
+            }
+          }
+          return item;
+        });
+      });
+    }
+  };
+
+  const handleSaveClick = async (id) => {
+    if (!user) {
+      onSigninToggle(true);
+    } else {
+      try {
+        const payload = { postId: id, applicationUserId: user.userId };
+        const res = await fetch("/api/savedpost", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        // setSaveActionOccurred(true);
+      } catch (error) {
+        console.error("error saving the post", error);
+        throw error;
+      }
+
+      setUserPosts((prevState) => {
+        return prevState.map((item) => {
+          if (item.id === id) {
+            return { ...item, isSaved: true };
+          }
+          return item;
+        });
+      });
+    }
+  };
+
+  const handleUnsaveClick = async (id) => {
+    if (!user) {
+      onSigninToggle(true);
+    } else {
+      try {
+        const payload = { postId: id, applicationUserId: user.userId };
+        const res = await fetch("/api/savedpost", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+        // setSaveActionOccurred(true);
+      } catch (error) {
+        console.error("error unsaving the post", error);
+        throw error;
+      }
+
+      setUserPosts((prevState) => {
+        return prevState.map((item) => {
+          if (item.id === id) {
+            return { ...item, isSaved: false };
+          }
+          return item;
+        });
+      });
+    }
+  };
+
+  const handleTitleClick = (title) => {
+    if (postFilter != title) {
+      setPostFilter(title);
+      window.history.pushState({}, "", `/user/${user.userId}/${title}`);
+    }
+  };
+
   return (
     <div>
       <div className={styles.body}>
@@ -23,19 +195,59 @@ const UserPage = ({ userData, onSigninToggle }) => {
           <HeaderTitle name="Posts" />
           <HeaderTitle name="Comments" />
           <HeaderTitle name="History" />
-          <HeaderTitle name="Saved" customClass={"header-title-selected"} />
+          <div
+            className={styles.headerTitleWrapper}
+            onClick={() => {
+              handleTitleClick("saved");
+            }}
+          >
+            <HeaderTitle
+              name="Saved"
+              customClass={postFilter == "saved" ? "header-title-selected" : ""}
+            />
+          </div>
           <HeaderTitle name="Hidden" />
-          <HeaderTitle name="Upvoted" />
-          <HeaderTitle name="downvoted" />
+          <div
+            className={styles.headerTitleWrapper}
+            onClick={() => {
+              handleTitleClick("upvoted");
+            }}
+          >
+            <HeaderTitle
+              name="Upvoted"
+              customClass={
+                postFilter == "upvoted" ? "header-title-selected" : ""
+              }
+            />
+          </div>
+          <div
+            className={styles.headerTitleWrapper}
+            onClick={() => {
+              handleTitleClick("downvoted");
+            }}
+          >
+            <HeaderTitle
+              name="downvoted"
+              customClass={
+                postFilter == "downvoted" ? "header-title-selected" : ""
+              }
+            />
+          </div>
         </div>
 
         <div className={`d-flex justify-content-between ${styles.mainBody}`}>
-          <div className= {`${styles.postContainer} flex-grow-1`}>
+          <div className={`${styles.postContainer} flex-grow-1`}>
             {userPosts.map((post) => {
               return (
-                <div style={{ marginBottom: "3px" }}>
+                <div key={post.id} style={{ marginBottom: "3px" }}>
                   <PostWidgetContainer>
-                    <ShortPostWidget post={post} />
+                    <ShortPostWidget
+                      post={post}
+                      onUpVoteClick={() => handleVoteClick(post.id, 1)}
+                      onDownVoteClick={() => handleVoteClick(post.id, -1)}
+                      handleSaveClick={() => handleSaveClick(post.id)}
+                      handleUnsaveClick={() => handleUnsaveClick(post.id)}
+                    />
                   </PostWidgetContainer>
                 </div>
               );

@@ -39,3 +39,7 @@
 	margin-left: 24px;
 }
 
+.headerTitleWrapper {
+	height: 100%;
+	cursor: pointer;
+}

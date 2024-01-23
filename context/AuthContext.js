@@ -1,11 +1,13 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import Cookies from "js-cookie";
+import { useRouter } from "next/router";
 
 export const AuthContext = createContext()
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState();
     const [signinAlert, setSigninAlert] = useState(null);
+    const router = useRouter();
     
     useEffect(() => {
         const userFromCookies = Cookies.get('user')
@@ -64,8 +66,10 @@ export const AuthProvider = ({ children }) => {
     };
  
     const logout = async () => {
+        router.push('/')
         setUser(null)
         Cookies.remove('user')
+        console.log('test')
         // Make a request to your backend API to invalidate the user session
         // Example: const response = await fetch('/api/logout');
         // Handle the response and reset the user state

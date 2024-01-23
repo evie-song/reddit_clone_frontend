@@ -9,7 +9,9 @@ export default function UserContainer({handleSigninToggle}) {
 
     const {user, logout} = useContext(AuthContext)
 
-    const handleLogout = () => {
+    const handleLogout = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
         logout()
     }
 
@@ -30,7 +32,7 @@ export default function UserContainer({handleSigninToggle}) {
     return (
         <div>
             <Link 
-                href={`/user/${user.userId}` }
+                href={`/user/${user.userId}/saved` }
                 className={`${styles.container} d-flex justify-content-between align-items-center ${isHovered? styles.isHovered : styles.notHovered}`}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
@@ -43,7 +45,7 @@ export default function UserContainer({handleSigninToggle}) {
                     </div>
                 </div>
                 {/* <i className='material-icons'>keyboard_arrow_down</i> */}
-                <div onClick={handleLogout}>
+                <div onClick={(event) => {handleLogout(event)}}>
                     <FullLengthButton 
                         backgroundColor="#D93A00" 
                         color="white" 

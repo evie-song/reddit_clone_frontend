@@ -13,9 +13,7 @@ import CalculateDate from "../utils/helper-methods";
 
 export default function PostWidget({ post, onUpVoteClick, onDownVoteClick, handleSaveClick, handleUnsaveClick }) {
     const { user } = useContext(AuthContext)
-
-    // console.log(post)
-
+    
     const sampleData = {
         channel_name : "r/SantaBarbara",
         post_tag: {
@@ -44,11 +42,15 @@ export default function PostWidget({ post, onUpVoteClick, onDownVoteClick, handl
             // onClick={() => directToPost(post.id)}
         >
             <div className={`${styles.voteContainer} vote-container`}>
-                <UpvoteButton onUpVoteClick={onUpVoteClick} />
-                <div className={styles.voteCount}>
+                <div className={post.upVoted && styles.upVoted }>
+                    <UpvoteButton onUpVoteClick={onUpVoteClick} />
+                </div>
+                <div className={`${styles.voteCount} ${post.upVoted && styles.upVoted} ${post.downVoted && styles.downVoted }`}>
                     <span>{post.upVote - post.downVote}</span>
                 </div>
-                <DownvoteButton onDownVoteClick={onDownVoteClick} />
+                <div className={post.downVoted && styles.downVoted }>
+                    <DownvoteButton onDownVoteClick={onDownVoteClick} />
+                </div>
             </div>
             <div className={`${styles.postWrapper}`}>
                 <div className={`${styles.postContentWrapper}`}>

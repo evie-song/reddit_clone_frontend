@@ -1,5 +1,4 @@
-import HeaderIcon from "./header-icon";
-import MaterialIcon from "./material-icon";
+import VoteButton from "./vote-button";
 
 export default function UpvoteButton({ onUpVoteClick }) {
     function handleClick(event) {
@@ -10,7 +9,9 @@ export default function UpvoteButton({ onUpVoteClick }) {
 
     return(
         <div onClick={(event) => {handleClick(event)}}>
-            <HeaderIcon iconName="arrow_upward" linkUrl="" fontSize="20px" padding="2px" />
+            <VoteButton>
+                <span class="glyphicon glyphicon-arrow-up"></span>
+            </VoteButton>
         </div>
     )
 }

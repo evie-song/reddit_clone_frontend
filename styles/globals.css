@@ -247,3 +247,25 @@ body {
 .margin-top-28 {
   margin-top: 28px;
 }
+
+.glyphicon {
+  top: 0 !important;
+  /* color: white; */
+}
+
+.no-permission-font {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 32px;
+  margin: 16px 0;
+}
+
+.whole-page-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  /* width: 100%; */
+  /* height: 100%; */
+}

@@ -55,7 +55,5 @@ export default function UserContainer({handleSigninToggle}) {
                 </div>
             </Link>
         </div>
-        
-        
     )
 }

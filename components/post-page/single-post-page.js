@@ -32,7 +32,6 @@ export default function SinglePostPage({ post, onSigninToggle }) {
         const url = "/api/post/" + postId + "/" + user.userId;
         const res = await fetch(url, { method: "GET" });
         const data = await res.json();
-        console.log(data);
         setCustomPost(data.data);
       } else {
         setCustomPost(post);
@@ -113,6 +112,8 @@ export default function SinglePostPage({ post, onSigninToggle }) {
       }
     }
   };
+
+	console.log(customPost)
 
   return (
     <div className={styles.backgroundLayer}>

@@ -8,7 +8,6 @@ import CommentDisplay from '../comment/comment-display';
 
 export default function PostPageContent({ post, onUpVoteClick, onDownVoteClick, handleSaveClick, handleUnsaveClick }) {
 
-    // console.log(post)
     const {user} = useContext(AuthContext)
     return (
         <div className={styles.body}>
@@ -16,10 +15,11 @@ export default function PostPageContent({ post, onUpVoteClick, onDownVoteClick, 
                 <div className={styles.mainColumnBody}>
                     <PostWidget post={post} onUpVoteClick={onUpVoteClick} onDownVoteClick={onDownVoteClick} handleSaveClick={handleSaveClick} handleUnsaveClick={handleUnsaveClick}/>
                     {user && <CommentEditor postId={post.id}/>}
-                    <CommentDisplay />
-                    <CommentDisplay />
-                    <CommentDisplay />
-                    <CommentDisplay />
+                    {post.comments && post.comments.map((comment) => {
+                        return (
+                            <CommentDisplay comment={comment} />
+                        )
+                    })}
                 </div>
             </div>
             <div className={styles.rightColumn}>

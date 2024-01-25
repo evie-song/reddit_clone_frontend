@@ -13,7 +13,7 @@ import CalculateDate from "../utils/helper-methods";
 
 export default function PostWidget({ post, onUpVoteClick, onDownVoteClick, handleSaveClick, handleUnsaveClick }) {
     const { user } = useContext(AuthContext)
-    
+
     const sampleData = {
         channel_name : "r/SantaBarbara",
         post_tag: {
@@ -74,7 +74,7 @@ export default function PostWidget({ post, onUpVoteClick, onDownVoteClick, handl
                     </div>
                 </div>
                 <div className={`${styles.postActionContainer}`}>
-                    <HeaderIcon marginRight="4px" iconName="mode_comment" linkUrl="" fontSize="20px" padding="4px" addText="Comments" additionalClass="padding-right-4 padding-y-4"/>
+                    <HeaderIcon marginRight="4px" iconName="mode_comment" linkUrl="" fontSize="20px" padding="4px" addText={`${post.commentCount} Comments`} additionalClass="padding-right-4 padding-y-4"/>
                     <HeaderIcon marginRight="4px" iconName="share" linkUrl="" fontSize="20px" padding="4px" addText="Share" additionalClass="padding-right-4 padding-y-4"/>
                     {post.isSaved && 
                         <div onClick={(event) => handleUnsaveBtnClick(event)}>

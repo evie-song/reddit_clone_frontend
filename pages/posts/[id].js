@@ -3,7 +3,7 @@ import Head from 'next/head';
 import SinglePostPage from '../../components/post-page/single-post-page';
 
 export default function Post({ post }) {
-    console.log(post)
+    // console.log(post)
   return (<
     Layout>
         <Head>

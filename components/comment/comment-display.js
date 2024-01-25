@@ -3,8 +3,10 @@ import MaterialIcon from "../button-tag-icons/material-icon";
 import HeaderIcon from "../button-tag-icons/header-icon";
 import UpvoteButton from "../button-tag-icons/upvote-button";
 import DownvoteButton from "../button-tag-icons/downvote-button";
+import CalculateDate from "../utils/helper-methods";
 
-const CommentDisplay = ({ message }) => {
+const CommentDisplay = ({ comment }) => {
+	// console.log(comment)
   return (
     <div className={styles.collectionContainer}>
       <div className={styles.contaienr}>
@@ -14,11 +16,11 @@ const CommentDisplay = ({ message }) => {
         </div>
         <div className={`flex-grow-1 d-flex flex-column ${styles.body}`}>
           <div className={styles.header}>
-						<div className={styles.username}>eviesong</div>
+						<div className={styles.username}>{comment.username}</div>
 						<div className={`margin-x-4 ${styles.date}`}>&middot;</div>
-						<div className={styles.date}>1 day ago</div>
+						<div className={styles.date}>{CalculateDate(comment.createdAt)}</div>
 					</div>
-          <div className={styles.content}>content</div>
+          <div className={styles.content}>{comment.content}</div>
           <div className={styles.actionContainer}>
 					<div className={`d-flex align-items-center justify-content-between ${styles.voteContainer}`}>
                 <div className={styles.divider}></div>

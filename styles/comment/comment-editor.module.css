@@ -1,5 +1,4 @@
 .container {
-	margin: 24px 40px 24px 48px;
 	/* width: 100%; */
 }
 
@@ -12,7 +11,7 @@
 
 }
 
-.wrapper:focus-within {
+.inputBorder {
 	border-color: rgb(26, 26, 27);
 }
 
@@ -64,3 +63,4 @@
 .submitBtn:hover {
 	filter: brightness(95%);
 }
+

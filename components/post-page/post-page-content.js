@@ -14,10 +14,14 @@ export default function PostPageContent({ post, onUpVoteClick, onDownVoteClick, 
             <div className={styles.mainColumn}>
                 <div className={styles.mainColumnBody}>
                     <PostWidget post={post} onUpVoteClick={onUpVoteClick} onDownVoteClick={onDownVoteClick} handleSaveClick={handleSaveClick} handleUnsaveClick={handleUnsaveClick}/>
-                    {user && <CommentEditor postId={post.id}/>}
+                    {user && 
+                    <div style={{margin: "24px 40px 24px 48px"}}><CommentEditor postId={post.id}/></div>}
                     {post.comments && post.comments.map((comment) => {
                         return (
-                            <CommentDisplay comment={comment} />
+                            <div style={{margin: "16px 16px 0 10px"}}>
+                                <CommentDisplay comment={comment} isChildComment={true} />
+                            </div>
+
                         )
                     })}
                 </div>

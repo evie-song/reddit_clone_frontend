@@ -1,19 +1,22 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import styles from "../../styles/comment/comment-editor.module.css";
 import FullLengthButton from "../button-tag-icons/full-length-button";
 
 const CommentEditor = ({ postId, commentId }) => {
+	const [isfocused, setIsFocused] = useState(false)
   const [content, setContent] = useState("");
   const { user } = useContext(AuthContext);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
+	
 
     const payload = {
       postId,
-      commentId,
+      baseCommentId: commentId,
       applicationUserId: user.userId,
       content,
     };
@@ -28,7 +31,9 @@ const CommentEditor = ({ postId, commentId }) => {
 
       if (response.ok) {
         console.log("success");
-        router.push("/");
+        setContent("");
+				setIsFocused(false);
+        // router.push("/");
       } else {
         console.log("failed");
       }
@@ -40,10 +45,10 @@ const CommentEditor = ({ postId, commentId }) => {
   return (
     <div className={styles.container}>
       <div className={styles.userDiv}>
-				Comment as  <span className={styles.username}>{user.username}</span>
-			</div>
+        Comment as <span className={styles.username}>{user.username}</span>
+      </div>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <div className={styles.wrapper}>
+        <div className={`${styles.wrapper} ${isfocused && styles.inputBorder}`} >
           <div>
             <input type="hidden" value={postId} name="postId" />
             {commentId && (
@@ -51,6 +56,8 @@ const CommentEditor = ({ postId, commentId }) => {
             )}
             <input type="hidden" value={user.userId} name="applicationUserId" />
             <textarea
+							onFocus={() => setIsFocused(true)}
+							onBlur={() => setIsFocused(false)}
               name="content"
               placeholder="What are your thoughts?"
               value={content}
@@ -60,10 +67,10 @@ const CommentEditor = ({ postId, commentId }) => {
             ></textarea>
           </div>
           <div className={styles.optionContainer}>
-						<div></div>
-            <buttom type="submit" className={styles.submitBtn}>
-							Comment
-						</buttom>
+            <div></div>
+            <button type="submit" className={styles.submitBtn}>
+              Comment
+            </button>
           </div>
         </div>
       </form>

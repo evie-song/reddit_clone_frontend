@@ -1,25 +1,28 @@
 import Layout from "../../../components/layout/layout";
 import Head from "next/head";
 import UserPage from "../../../components/user-page/user-page";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import NoPermission from "../../../components/no-permission";
 
-export default function Post() {
-  
+export default function UserSaved() {
 
-  const {user} = useContext(AuthContext)
+  const { user, isLoading } = useContext(AuthContext);
 
-  useEffect(() => {
+  if (isLoading) {
+    return (<div></div>)
+  }
 
-  }, [user])
-  
+  if (!user) {
+    return (<NoPermission />)
+  }
+
   return (
     <Layout>
       <Head>
         <title> User page</title>
       </Head>
-      {user? <UserPage filter={"saved"}/> : <NoPermission />}
+      <UserPage filter={"saved"} />
     </Layout>
   );
 }

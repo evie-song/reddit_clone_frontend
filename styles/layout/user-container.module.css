@@ -38,3 +38,68 @@
   .notHovered {
     border: 1px solid transparent;
   }
+
+  .userOptionContainer {
+    position: fixed;
+    min-height: 100px;
+    width: 252px;
+    right: 10px;
+    top: 50px;
+    border: 1px solid rgb(237, 239, 241);
+    background-color: rgb(255, 255, 255);
+    border-radius: 4px;
+
+  }
+
+  .section {
+    padding: 12px 0;
+
+  }
+
+  .sectionBorder {
+    border-bottom: 1px solid rgb(237, 239, 241);
+  }
+
+  .sectionHeader {
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    height: 40px;
+  }
+
+  .sectionHeaderIcon {
+    margin-right: 12px;
+    color: rgb(120, 124, 126);
+  }
+
+  .sectionHeaderTitle {
+    flex-grow: 1;
+    color: rgb(120, 124, 126);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+  }
+
+  .optionLine {
+    padding-left: 52px;
+    padding-right: 16px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+  }
+
+  .optionLine:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+
+  }
+
+  .optionTitle {
+    color: rgb(28, 28, 28);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    text-decoration: none !important;
+  }

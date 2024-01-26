@@ -4,7 +4,7 @@ import styles from '../../styles/layout/layout.module.css';
 import Link from 'next/link';
 import { ApiError } from 'next/dist/server/api-utils';
 import NavBar from './navbar';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import PopupWindow from '../popup-window';
 import Signin from '../../pages/auth/signin';
 import Signup from '../../pages/auth/signup'; 
@@ -19,7 +19,7 @@ export default function Layout({ children, home }) {
   const [loginPopupIsOpen, setLoginPopupIsOpen] = useState(false)
   const [signinOrSignup, setSigninOrSignup] = useState('signin')
 
-  const {signInAlert, setSigninAlert} = useContext(AuthContext)
+  const {signInAlert, setSigninAlert, showUserOptions, setShowUserOptions} = useContext(AuthContext)
 
   const  toggleSigninOrSignup = (option) => {
     setSigninOrSignup(option);
@@ -34,6 +34,25 @@ export default function Layout({ children, home }) {
       setSigninAlert('');
     }
   };
+
+  const handleClickOutsideUserOption = (event) => {
+    console.log('click')
+    // console.log(showUserOptions)
+    // setShowUserOptions(false)
+
+    if (!event.target.closest('.user-option-window')) {
+      setShowUserOptions(false)
+      console.log('test')
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutsideUserOption);
+    return () => {
+      document.removeEventListener('click', handleClickOutsideUserOption);
+    };
+  }, []);
+
 
   const childrenWithProps = React.Children.map(children, (child) => {
     return React.cloneElement(child, { onSigninToggle: handleSigninToggle })

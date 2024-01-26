@@ -16,7 +16,14 @@ const PostCollection = ({ posts, onSigninToggle }) => {
   const [saveActionOccurred, setSaveActionOccurred] = useState(false);
   const [postPopupIsOpen, setPostPopupIsOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState(0);
+	const [newCommentOccurred, setNewCommentOccurred] = useState(false);
+
+
   const router = useRouter();
+
+	const toggleNewCommentStatus = (status) => {
+		setNewCommentOccurred(status);
+	}
 
   // update the posts data to show saved and vote status after user is logged in.
   useEffect(() => {
@@ -41,7 +48,10 @@ const PostCollection = ({ posts, onSigninToggle }) => {
 		if (voteActionOccurred) {
       setVoteActionOccurred(false);
     }
-  }, [user, saveActionOccurred, voteActionOccurred]);
+		if (newCommentOccurred) {
+			setNewCommentOccurred(false);
+		}
+  }, [user, saveActionOccurred, voteActionOccurred, newCommentOccurred]);
 
   function handlePostClick(id) {
     setSelectedPostId(id);
@@ -175,6 +185,8 @@ const PostCollection = ({ posts, onSigninToggle }) => {
           onDownVoteClick={() => handleVoteClick(selectedPostId, -1)}
           handleSaveClick={() => handleSaveClick(selectedPostId)}
           handleUnsaveClick={() => handleUnsaveClick(selectedPostId)}
+					toggleNewCommentStatus={toggleNewCommentStatus}
+
         />
       </PopupWindow>
       <div className="margin-y-8">

@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import NoPermission from "../../../components/no-permission";
 
-export default function UserDownvoted() {
+export default function UserPosts() {
 	const { user, isLoading } = useContext(AuthContext);
 
   if (isLoading) {
@@ -15,12 +15,13 @@ export default function UserDownvoted() {
   if (!user) {
     return (<NoPermission />)
   }
+
   return (
     <Layout>
       <Head>
         <title> User </title>
       </Head>
-      <UserPage filter={"downvoted"}/>
+      <UserPage filter={"posts"}/>
     </Layout>
   );
 }

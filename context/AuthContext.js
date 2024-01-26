@@ -8,6 +8,8 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState();
     const [signinAlert, setSigninAlert] = useState(null);
     const router = useRouter();
+    const [showUserOptions, setShowUserOptions] = useState(false)
+    const [isLoading, setIsLoading] = useState(true);
     
     useEffect(() => {
         const userFromCookies = Cookies.get('user')
@@ -15,6 +17,8 @@ export const AuthProvider = ({ children }) => {
         if (userFromCookies) {
             setUser(JSON.parse(userFromCookies))
         }
+
+        setIsLoading(false)
     }, [])
 
     const signin = async (credentials) => {
@@ -66,7 +70,7 @@ export const AuthProvider = ({ children }) => {
     };
  
     const logout = async () => {
-        router.push('/')
+        // router.push('/')
         setUser(null)
         Cookies.remove('user')
         console.log('test')
@@ -82,7 +86,7 @@ export const AuthProvider = ({ children }) => {
 
 
     return (
-        <AuthContext.Provider value={{user, signinAlert, signin, logout, register, setSigninAlert}}>
+        <AuthContext.Provider value={{user, signinAlert, signin, logout, register, setSigninAlert, showUserOptions, setShowUserOptions, isLoading}}>
             {children}
         </AuthContext.Provider>
     )

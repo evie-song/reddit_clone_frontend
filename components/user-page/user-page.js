@@ -10,10 +10,8 @@ import { id } from "date-fns/locale";
 const UserPage = ({ filter, onSigninToggle }) => {
   const [userPosts, setUserPosts] = useState([]);
   const { user } = useContext(AuthContext);
-  // const [voteActionOccurred, setVoteActionOccurred] = useState(false);
-  // const [saveActionOccurred, setSaveActionOccurred] = useState(false);
 
-  // filter values can be "saved", "upvoted", "downvoted"
+  // filter values can be "saved", "upvoted", "downvoted" "posts"
   const [postFilter, setPostFilter] = useState(filter);
 
   useEffect(() => {
@@ -27,6 +25,10 @@ const UserPage = ({ filter, onSigninToggle }) => {
       };
 
       getPostData();
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = "visible"; // Reset body overflow
+      };
     }
   }, []);
 
@@ -41,14 +43,6 @@ const UserPage = ({ filter, onSigninToggle }) => {
       };
 
       getPostData();
-
-      // if (saveActionOccurred) {
-      //   setSaveActionOccurred(false);
-      // }
-
-      // if (voteActionOccurred) {
-      //   setVoteActionOccurred(false);
-      // }
     }
   }, [user, postFilter]);
 
@@ -192,7 +186,17 @@ const UserPage = ({ filter, onSigninToggle }) => {
       <div className={styles.body}>
         <div className={styles.header}>
           <HeaderTitle name="Overview" />
-          <HeaderTitle name="Posts" />
+          <div
+            className={styles.headerTitleWrapper}
+            onClick={() => {
+              handleTitleClick("posts");
+            }}
+          >
+            <HeaderTitle
+              name="Posts"
+              customClass={postFilter == "posts" ? "header-title-selected" : ""}
+            />
+          </div>
           <HeaderTitle name="Comments" />
           <HeaderTitle name="History" />
           <div

@@ -3,7 +3,7 @@ import { AuthContext } from "../../context/AuthContext";
 import styles from "../../styles/comment/comment-editor.module.css";
 import FullLengthButton from "../button-tag-icons/full-length-button";
 
-const CommentEditor = ({ postId, commentId }) => {
+const CommentEditor = ({ postId, commentId, toggleNewCommentStatus }) => {
 	const [isfocused, setIsFocused] = useState(false)
   const [content, setContent] = useState("");
   const { user } = useContext(AuthContext);
@@ -13,7 +13,6 @@ const CommentEditor = ({ postId, commentId }) => {
     e.preventDefault();
     e.stopPropagation();
 	
-
     const payload = {
       postId,
       baseCommentId: commentId,
@@ -33,7 +32,7 @@ const CommentEditor = ({ postId, commentId }) => {
         console.log("success");
         setContent("");
 				setIsFocused(false);
-        // router.push("/");
+				toggleNewCommentStatus()
       } else {
         console.log("failed");
       }

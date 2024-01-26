@@ -7,8 +7,13 @@ export default function SinglePostPage({ post, onSigninToggle }) {
   const [customPost, setCustomPost] = useState("");
   const [voteActionOccurred, setVoteActionOccurred] = useState(false);
   const [saveActionOccurred, setSaveActionOccurred] = useState(false);
+	const [newCommentOccurred, setNewCommentOccurred] = useState(false);
   const { user } = useContext(AuthContext);
   const postId = post.id;
+
+	const toggleNewCommentStatus = (status) => {
+		setNewCommentOccurred(status);
+	}
 
   useEffect(() => {
     const getPostData = async () => {
@@ -24,6 +29,13 @@ export default function SinglePostPage({ post, onSigninToggle }) {
     };
 
     getPostData();
+		document.body.style.overflow = "hidden";
+		return () => {
+      document.body.style.overflow = "visible"; // Reset body overflow
+    };
+
+
+
   }, []);
 
   useEffect(() => {
@@ -47,7 +59,11 @@ export default function SinglePostPage({ post, onSigninToggle }) {
     if (voteActionOccurred) {
       setVoteActionOccurred(false);
     }
-  }, [user, saveActionOccurred, voteActionOccurred]);
+
+		if (newCommentOccurred) {
+			setNewCommentOccurred(false);
+		}
+  }, [user, saveActionOccurred, voteActionOccurred, newCommentOccurred]);
 
   const handleVoteClick = async (id, value) => {
     if (!user) {
@@ -113,6 +129,7 @@ export default function SinglePostPage({ post, onSigninToggle }) {
     }
   };
 
+
 	console.log(customPost)
 
   return (
@@ -128,6 +145,7 @@ export default function SinglePostPage({ post, onSigninToggle }) {
           }}
           handleSaveClick={() => handleSaveClick(customPost.id)}
           handleUnsaveClick={() => handleUnsaveClick(customPost.id)}
+					toggleNewCommentStatus={toggleNewCommentStatus}
         />
       </div>
     </div>

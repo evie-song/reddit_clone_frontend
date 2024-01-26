@@ -1,10 +1,11 @@
 .backgroundLayer {
-    height: 100%;
+	height: calc(100% - 48px);
     width: 100%;
     position: fixed;
     top: 48px;
     left: 0;
     z-index: 100;
+    overflow:scroll;
 }
 
 .container {
@@ -13,6 +14,5 @@
     width: calc(100% - 160px);
     margin: 0 auto;
     max-width: 1280px;
-    overflow: scroll;
     height: 100%;
 }

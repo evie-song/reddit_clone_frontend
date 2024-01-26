@@ -6,7 +6,7 @@ import { AuthContext } from '../../context/AuthContext';
 import CommentEditor from '../comment/comment-editor';
 import CommentDisplay from '../comment/comment-display';
 
-export default function PostPageContent({ post, onUpVoteClick, onDownVoteClick, handleSaveClick, handleUnsaveClick }) {
+export default function PostPageContent({ post, onUpVoteClick, onDownVoteClick, handleSaveClick, handleUnsaveClick, toggleNewCommentStatus }) {
 
     const {user} = useContext(AuthContext)
     return (
@@ -15,11 +15,11 @@ export default function PostPageContent({ post, onUpVoteClick, onDownVoteClick, 
                 <div className={styles.mainColumnBody}>
                     <PostWidget post={post} onUpVoteClick={onUpVoteClick} onDownVoteClick={onDownVoteClick} handleSaveClick={handleSaveClick} handleUnsaveClick={handleUnsaveClick}/>
                     {user && 
-                    <div style={{margin: "24px 40px 24px 48px"}}><CommentEditor postId={post.id}/></div>}
+                    <div style={{margin: "24px 40px 24px 48px"}}><CommentEditor postId={post.id} toggleNewCommentStatus={()=> toggleNewCommentStatus(true)}/></div>}
                     {post.comments && post.comments.map((comment) => {
                         return (
                             <div style={{margin: "16px 16px 0 10px"}}>
-                                <CommentDisplay comment={comment} isChildComment={true} />
+                                <CommentDisplay comment={comment} isChildComment={true} toggleNewCommentStatus={()=> toggleNewCommentStatus(true)}/>
                             </div>
 
                         )

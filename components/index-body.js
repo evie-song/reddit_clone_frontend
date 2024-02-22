@@ -21,7 +21,7 @@ const IndexBody = ({ posts, onSigninToggle }) => {
 					<div>
 						<HomeWidget />
 					</div>
-					<div>
+					<div className="d-none">
 						Test Area
 						<br/>
 						{ user? `${user.username} ${user.userId} ${user.userEmail}` : "User not logged in"}

@@ -5,15 +5,23 @@ import UpvoteButton from "../button-tag-icons/upvote-button";
 import DownvoteButton from "../button-tag-icons/downvote-button";
 import CalculateDate from "../utils/helper-methods";
 import CommentEditor from "./comment-editor";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
-const CommentDisplay = ({ comment, isChildComment, toggleNewCommentStatus }) => {
+const CommentDisplay = ({
+  comment,
+  isChildComment,
+  toggleNewCommentStatus,
+}) => {
+  const { user } = useContext(AuthContext);
   const [showEditor, setShowEditor] = useState(false);
 
-	const handleCommentSubmit = () => {
-		setShowEditor(false)
-		toggleNewCommentStatus()
-	}
+  const handleCommentSubmit = () => {
+    setShowEditor(false);
+    toggleNewCommentStatus();
+  };
+
+  console.log(comment);
 
   // console.log(comment.childComments);
   return (
@@ -40,13 +48,13 @@ const CommentDisplay = ({ comment, isChildComment, toggleNewCommentStatus }) => 
               <div className={styles.voteBtn}>
                 <UpvoteButton />
               </div>
-              <span className={styles.voteCount}>100</span>
+              <span className={styles.voteCount}>101</span>
               <div className={styles.voteBtn}>
                 <DownvoteButton />
               </div>
               <div className={styles.divider}></div>
             </div>
-            <div onClick={()=> setShowEditor(!showEditor)}>
+            <div onClick={() => setShowEditor(!showEditor)}>
               <HeaderIcon
                 marginRight=""
                 iconName="mode_comment"
@@ -85,16 +93,28 @@ const CommentDisplay = ({ comment, isChildComment, toggleNewCommentStatus }) => 
               additionalClass="padding-y-4"
             />
           </div>
-          <div className={`${!showEditor && "d-none"} ${showEditor && styles.subEditor}`}>
-						{/* <div className="threadline"></div> */}
-            <CommentEditor postId={comment.postId} commentId={comment.id} toggleNewCommentStatus={handleCommentSubmit}/>
-          </div>
+          {user && (
+            <div
+              className={`${!showEditor && "d-none"} ${
+                showEditor && styles.subEditor
+              }`}
+            >
+              <CommentEditor
+                postId={comment.postId}
+                commentId={comment.id}
+                toggleNewCommentStatus={handleCommentSubmit}
+              />
+            </div>
+          )}
           <div className={styles.childCommentsContainer}>
             {comment.childComments.length !== 0
               ? comment.childComments.map((cc) => {
                   return (
                     <div style={{ marginLeft: "-12px" }}>
-                      <CommentDisplay comment={cc} toggleNewCommentStatus={handleCommentSubmit}/>
+                      <CommentDisplay
+                        comment={cc}
+                        toggleNewCommentStatus={handleCommentSubmit}
+                      />
                     </div>
                   );
                 })

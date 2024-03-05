@@ -7,11 +7,14 @@ import CalculateDate from "../utils/helper-methods";
 import CommentEditor from "./comment-editor";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { handleCommentVote } from "../utils/comment-helper";
+
 
 const CommentDisplay = ({
   comment,
   isChildComment,
   toggleNewCommentStatus,
+  toggleNewCommentActionStatus,
 }) => {
   const { user } = useContext(AuthContext);
   const [showEditor, setShowEditor] = useState(false);
@@ -21,9 +24,11 @@ const CommentDisplay = ({
     toggleNewCommentStatus();
   };
 
-  console.log(comment);
+  const handleVoteClick = async (value) => {
+    await handleCommentVote(comment.id, value, user.userId );
+    toggleNewCommentActionStatus();
+  }
 
-  // console.log(comment.childComments);
   return (
     <div className={isChildComment && styles.childCommentsMargin}>
       <div className={styles.collectionContainer}>
@@ -46,11 +51,12 @@ const CommentDisplay = ({
             >
               <div className={styles.divider}></div>
               <div className={styles.voteBtn}>
-                <UpvoteButton />
+                <UpvoteButton onUpVoteClick={() => handleVoteClick(1)}/>
+
               </div>
-              <span className={styles.voteCount}>101</span>
+              <span className={styles.voteCount}>{comment.totalVoteCount}</span>
               <div className={styles.voteBtn}>
-                <DownvoteButton />
+                <DownvoteButton onDownVoteClick={() => handleVoteClick(-1)}/>
               </div>
               <div className={styles.divider}></div>
             </div>
@@ -114,6 +120,8 @@ const CommentDisplay = ({
                       <CommentDisplay
                         comment={cc}
                         toggleNewCommentStatus={handleCommentSubmit}
+                        handleCommentVote={handleCommentVote}
+                        toggleNewCommentActionStatus={toggleNewCommentActionStatus}
                       />
                     </div>
                   );

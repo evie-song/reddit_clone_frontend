@@ -36,13 +36,11 @@ export default function Layout({ children, home }) {
   };
 
   const handleClickOutsideUserOption = (event) => {
-    console.log('click')
     // console.log(showUserOptions)
     // setShowUserOptions(false)
 
     if (!event.target.closest('.user-option-window')) {
       setShowUserOptions(false)
-      console.log('test')
     }
   }
 

@@ -68,52 +68,6 @@ const PostCollection = ({ posts, onSigninToggle }) => {
     window.history.pushState({}, "", "/");
   }
 
-  // async function handleUpvoteClick(id) {
-  //   try {
-  //     const res = await fetch(`/api/Post/upvote/${id}`, {
-  //       method: "PUT",
-  //     });
-  //     const data = await res.json();
-  //   } catch (error) {
-  //     console.error("error updating the vote count", error);
-  //     throw error;
-  //   }
-
-  //   setCustomPosts((prevState) => {
-  //     return prevState.map((item) => {
-  //       if (item.id === id) {
-  //         const oldVote = item.upVote;
-  //         const newVote = oldVote + 1;
-  //         return { ...item, upVote: newVote };
-  //       }
-  //       return item;
-  //     });
-  //   });
-  // }
-
-  // async function handleDownvoteClick(id) {
-  //   try {
-  //     const res = await fetch(`/api/Post/downvote/${id}`, {
-  //       method: "PUT",
-  //     });
-  //     const data = await res.json();
-  //   } catch (error) {
-  //     console.error("error updating the vote count", error);
-  //     throw error;
-  //   }
-
-  //   setCustomPosts((prevState) => {
-  //     return prevState.map((item) => {
-  //       if (item.id === id) {
-  //         const oldVote = item.downVote;
-  //         const newVote = oldVote + 1;
-  //         return { ...item, downVote: newVote };
-  //       }
-  //       return item;
-  //     });
-  //   });
-  // }
-
 	const handleVoteClick = async (id, value) => {
 		if (!user) {
       onSigninToggle(true);
@@ -132,7 +86,6 @@ const PostCollection = ({ posts, onSigninToggle }) => {
         throw error;
       }
 		}
-
 	}
 
   const handleSaveClick = async (id) => {

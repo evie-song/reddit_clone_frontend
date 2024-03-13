@@ -3,11 +3,14 @@ import MaterialIcon from "../button-tag-icons/material-icon";
 import HeaderIcon from "../button-tag-icons/header-icon";
 import UpvoteButton from "../button-tag-icons/upvote-button";
 import DownvoteButton from "../button-tag-icons/downvote-button";
-import CalculateDate from "../utils/helper-methods";
+import CalculateDate from "../utils/utils-helper";
 import CommentEditor from "./comment-editor";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import { handleCommentVote } from "../utils/comment-helper";
+import { handleCommentVote } from "../utils/app-helper";
+import { UserContext } from "../../context/UserContext";
+import Cookies from "js-cookie";
+import { getUserInfo } from "../utils/app-helper";
 
 
 const CommentDisplay = ({
@@ -18,9 +21,22 @@ const CommentDisplay = ({
 }) => {
   
   const [voteCount, setVoteCount] = useState(comment.totalVoteCount)
-  
-  const { user } = useContext(AuthContext);
   const [showEditor, setShowEditor] = useState(false);
+
+  const { user } = useContext(AuthContext);
+  const {  votedComments, setUserInfo, updateVotedComments } = useContext(UserContext)
+
+  const voteStatus = votedComments[comment.id] ? votedComments[comment.id] : 0
+
+  let voteClass;
+
+  if (voteStatus === 1) {
+    voteClass = 'upvoted';
+  } else if (voteStatus === -1) {
+    voteClass = 'downvoted';
+  } else {
+    voteClass = 'not-voted';
+  }
 
   const handleCommentSubmit = () => {
     setShowEditor(false);
@@ -28,8 +44,28 @@ const CommentDisplay = ({
   };
 
   const handleVoteClick = async (value) => {
+    // update the comment vote on the backend
     await handleCommentVote(comment.id, value, user.userId );
-    toggleNewCommentActionStatus();
+
+    // update local state value for voteCount
+    let newVote, newStatus
+    if (voteStatus == 0) {
+      newVote = voteCount + value
+      newStatus = value
+    } else {
+      if (voteStatus == value) {
+        newVote = voteCount - value
+        newStatus = 0
+      } else {
+        newVote = voteCount + value * 2
+        newStatus = voteStatus * -1
+      }
+    } 
+    setVoteCount(newVote)
+
+    // call the helper method to update votedComments state and "userInfo" cookie value.
+    updateVotedComments(comment.id, newStatus)
+
   }
 
   return (
@@ -50,14 +86,13 @@ const CommentDisplay = ({
           <div className={styles.content}>{comment.content}</div>
           <div className={styles.actionContainer}>
             <div
-              className={`d-flex align-items-center justify-content-between ${styles.voteContainer}`}
+              className={`d-flex align-items-center justify-content-between ${styles.voteContainer} ${voteClass}`}
             >
               <div className={styles.divider}></div>
-              <div className={styles.voteBtn}>
+              <div className={`${styles.voteBtn}`}>
                 <UpvoteButton onUpVoteClick={() => handleVoteClick(1)}/>
-
               </div>
-              <span className={styles.voteCount}>{comment.totalVoteCount}</span>
+              <span className={`${styles.voteCount} ${voteClass}`}>{voteCount}</span>
               <div className={styles.voteBtn}>
                 <DownvoteButton onDownVoteClick={() => handleVoteClick(-1)}/>
               </div>

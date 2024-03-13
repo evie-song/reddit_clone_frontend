@@ -50,13 +50,3 @@
 .closeBtn {
     cursor: pointer;
 }
-
-.upVoted {
-    color: #ff4501 !important;
-}
-
-.downVoted {
-    color: #7193ff !important;
-}
-
-

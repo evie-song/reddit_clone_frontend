@@ -50,11 +50,14 @@
 	color: #878a8c;
 }
 
+.actionContainer .voteCount {
+	color:rgb(26, 26, 27);
+}
+
 .voteCount {
 	font-size: 12px;
 	line-height: 15px;
 	font-weight: 700;
-	color:rgb(26, 26, 27) !important;
 	margin-right: 4px;
 }
 

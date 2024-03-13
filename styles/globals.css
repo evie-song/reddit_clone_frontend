@@ -277,3 +277,13 @@ body {
 a {
   text-decoration: none !important;
 }
+
+.upvoted, 
+.upvoted .upvote-icon {
+  color: #ff4501 !important;
+}
+
+.downvoted,
+.downvoted .downvote-icon{
+  color: #7193ff !important;
+}

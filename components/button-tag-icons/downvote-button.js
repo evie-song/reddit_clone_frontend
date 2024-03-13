@@ -10,7 +10,7 @@ export default function DownvoteButton({ onDownVoteClick }) {
   return (
     <div onClick={(event) => handleClick(event)} >
       <VoteButton>
-        <span class="glyphicon glyphicon-arrow-down"></span>
+        <span class="downvote-icon glyphicon glyphicon-arrow-down"></span>
       </VoteButton>
     </div>
   );

@@ -10,11 +10,11 @@ export default function PostHeader({ post, onClose, onUpVoteClick, onDownVoteCli
         <div className={styles.container}>
             <div className='d-flex align-items-center justify-content-between'>
                 <div className={styles.divider}></div>
-                <div className={post.upVoted && styles.upVoted}>
+                <div className={post.upVoted && "upvoted"}>
                     <UpvoteButton onUpVoteClick={onUpVoteClick} />
                 </div>
                 <span className={styles.voteCount}>{post.upVote - post.downVote}</span>
-                <div className={post.downVoted && styles.downVoted}>
+                <div className={post.downVoted && "downvoted"}>
                     <DownvoteButton onDownVoteClick={onDownVoteClick} />
                 </div>
                 <div className={styles.divider}></div>

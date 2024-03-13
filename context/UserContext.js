@@ -4,27 +4,57 @@ import { createContext, useState } from "react";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
+  // helper method to retrieve data from Cookies.
   const getUserInfoFromCookies = () => {
-    if (Cookies.get("userInfo")) {
-      return JSON.parse(Cookies.get("userInfo"));
-    } else return null;
+    const userInfo = Cookies.get("userInfo");
+    return userInfo ? JSON.parse(userInfo) : null;
   };
 
-  // get initial data from cookies
+  // get initial data from cookies if exist
   const [savedPosts, setSavedPosts] = useState(
-    getUserInfoFromCookies ? getUserInfoFromCookies.savedPostIds : null
+    () => getUserInfoFromCookies()?.savedPostIds || []
+  );
+
+  const [votedPosts, setVotedPosts] = useState(
+    getUserInfoFromCookies() ? getUserInfoFromCookies().votedPosts : {}
+  );
+
+  const [votedComments, setVotedComments] = useState(
+    getUserInfoFromCookies() ? getUserInfoFromCookies().votedComments : {}
   );
 
   const setUserInfo = (data) => {
     // set states and cookies
     Cookies.set("userInfo", JSON.stringify(data));
     setSavedPosts(data.savedPostIds);
-		console.log(data)
-    console.log(data.savedPostIds);
+    setVotedPosts(data.votedPosts);
+    setVotedComments(data.votedComments);
+  };
+
+	// update the votedComments state and the userInfo cookie value. 
+  const updateVotedComments = (commentId, voteStatus) => {
+    // Update the state
+    setVotedComments((prevVotedComments) => ({
+      ...prevVotedComments,
+      [commentId]: voteStatus,
+    }));
+
+		// Update the value in the cookies
+		console.log(Cookies.get("userInfo"))
+    cookieValue.votedComments[commentId] = voteStatus;
+    Cookies.set('userInfo', JSON.stringify(cookieValue))
   };
 
   return (
-    <UserContext.Provider value={{ savedPosts, setUserInfo }}>
+    <UserContext.Provider
+      value={{
+        savedPosts,
+        setUserInfo,
+        votedComments,
+        votedPosts,
+        updateVotedComments,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

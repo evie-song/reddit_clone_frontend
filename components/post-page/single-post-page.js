@@ -139,9 +139,6 @@ export default function SinglePostPage({ post, onSigninToggle }) {
     }
   };
 
-
-	console.log(customPost)
-
   return (
     <div className={styles.backgroundLayer}>
       <div className={styles.container}>

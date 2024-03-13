@@ -8,7 +8,7 @@ import UpvoteButton from '../button-tag-icons/upvote-button';
 import DownvoteButton from '../button-tag-icons/downvote-button';
 import UserContainer from '../layout/user-container';
 import { AuthContext } from '../../context/AuthContext';
-import CalculateDate from "../utils/helper-methods";
+import CalculateDate from "../utils/utils-helper";
 import { UserContext } from '../../context/UserContext';
 
 
@@ -44,13 +44,13 @@ export default function PostWidget({ post, onUpVoteClick, onDownVoteClick, handl
             // onClick={() => directToPost(post.id)}
         >
             <div className={`${styles.voteContainer} vote-container`}>
-                <div className={post.upVoted && styles.upVoted }>
+                <div className={post.upVoted && "upvoted" }>
                     <UpvoteButton onUpVoteClick={onUpVoteClick} />
                 </div>
-                <div className={`${styles.voteCount} ${post.upVoted && styles.upVoted} ${post.downVoted && styles.downVoted }`}>
+                <div className={`${styles.voteCount} ${post.upVoted && "upvoted"} ${post.downVoted && "downvoted" }`}>
                     <span>{post.upVote - post.downVote}</span>
                 </div>
-                <div className={post.downVoted && styles.downVoted }>
+                <div className={post.downVoted && "downvoted" }>
                     <DownvoteButton onDownVoteClick={onDownVoteClick} />
                 </div>
             </div>

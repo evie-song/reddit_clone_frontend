@@ -32,11 +32,10 @@ export const AuthProvider = ({ children }) => {
             })
             if (res.ok) {
                 const userData = await res.json()
-                console.log(userData)
                 const user = {username: userData.username, userId: userData.userId, userEmail: userData.email}
                 setUser(user)
                 Cookies.set('user', JSON.stringify(user))
-                return true;
+                return userData.userId;
             } else {
                 console.log('login failed');
                 setSigninAlert('Login faliled');
@@ -73,7 +72,6 @@ export const AuthProvider = ({ children }) => {
         // router.push('/')
         setUser(null)
         Cookies.remove('user')
-        console.log('test')
         // Make a request to your backend API to invalidate the user session
         // Example: const response = await fetch('/api/logout');
         // Handle the response and reset the user state

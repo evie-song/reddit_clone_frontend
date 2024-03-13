@@ -16,6 +16,9 @@ const CommentDisplay = ({
   toggleNewCommentStatus,
   toggleNewCommentActionStatus,
 }) => {
+  
+  const [voteCount, setVoteCount] = useState(comment.totalVoteCount)
+  
   const { user } = useContext(AuthContext);
   const [showEditor, setShowEditor] = useState(false);
 

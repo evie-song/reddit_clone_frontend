@@ -9,10 +9,12 @@ import DownvoteButton from '../button-tag-icons/downvote-button';
 import UserContainer from '../layout/user-container';
 import { AuthContext } from '../../context/AuthContext';
 import CalculateDate from "../utils/helper-methods";
+import { UserContext } from '../../context/UserContext';
 
 
 export default function PostWidget({ post, onUpVoteClick, onDownVoteClick, handleSaveClick, handleUnsaveClick }) {
     const { user } = useContext(AuthContext)
+    const { savedPosts } = useContext(UserContext)
 
     const sampleData = {
         channel_name : "r/SantaBarbara",

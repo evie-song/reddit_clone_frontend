@@ -45,6 +45,20 @@ export const UserProvider = ({ children }) => {
     Cookies.set('userInfo', JSON.stringify(cookieValue))
   };
 
+  // update the votedPosts state and the userInfo cookie value
+  const updateVotedPosts = (postId, voteStatus) => {
+    // Update the state
+    setVotedPosts((prevVotedPosts) => ({
+      ...prevVotedPosts,
+      [postId]: voteStatus,
+    }));
+
+		// Update the value in the cookies
+    const cookieValue = JSON.parse(Cookies.get('userInfo'));
+    cookieValue.votedPosts[postId] = voteStatus;
+    Cookies.set('userInfo', JSON.stringify(cookieValue))
+  };
+
   return (
     <UserContext.Provider
       value={{
@@ -53,6 +67,7 @@ export const UserProvider = ({ children }) => {
         votedComments,
         votedPosts,
         updateVotedComments,
+        updateVotedPosts,
       }}
     >
       {children}

@@ -4,18 +4,43 @@ import MaterialIcon from "../button-tag-icons/material-icon";
 import PostTag from "../button-tag-icons/post-tag";
 import UpvoteButton from "../button-tag-icons/upvote-button";
 import DownvoteButton from "../button-tag-icons/downvote-button";
+import { UserContext } from '../../context/UserContext';
+import { calculateVoteCountAndStatus, getVoteClass } from "../utils/utils-helper";
+import { handlePostVote } from '../utils/app-helper';
+import { useState, useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
-export default function PostHeader({ post, onClose, onUpVoteClick, onDownVoteClick}) {
+export default function PostHeader({ updateVoteCountInCollection, post, onClose, onUpVoteClick, onDownVoteClick}) {
+
+    const { votedPosts, updateVotedPosts } = useContext(UserContext)
+    const {user} = useContext(AuthContext)
+
+    const voteStatus = votedPosts[post.id] ? votedPosts[post.id] : 0
+    const voteClass = getVoteClass(voteStatus)
+
+    const handlePostVoteClick = async (value) => {
+        // fetch the backend
+        await handlePostVote(post.id, value, user.userId)
+
+        // set local vote count
+        const {newVote, newStatus} = calculateVoteCountAndStatus(post.totalVote, voteStatus, value)
+
+        // update the context votedPosts
+        updateVotedPosts(post.id, newStatus)
+
+        updateVoteCountInCollection?.(post.id, newVote)
+    }
+
     return (
         <div className={styles.container}>
-            <div className='d-flex align-items-center justify-content-between'>
+            <div className={`d-flex align-items-center justify-content-between ${voteClass}`}>
                 <div className={styles.divider}></div>
-                <div className={post.upVoted ? "upvoted" : undefined}>
-                    <UpvoteButton onUpVoteClick={onUpVoteClick} />
+                <div >
+                    <UpvoteButton onUpVoteClick={()=> handlePostVoteClick(1)} />
                 </div>
-                <span className={styles.voteCount}>{post.upVote - post.downVote}</span>
-                <div className={post.downVoted ? "downvoted" : undefined}>
-                    <DownvoteButton onDownVoteClick={onDownVoteClick} />
+                <span className={`${styles.voteCount} vote-count`}>{post.totalVote}</span>
+                <div >
+                    <DownvoteButton onDownVoteClick={() => handlePostVoteClick(-1)} />
                 </div>
                 <div className={styles.divider}></div>
             </div>

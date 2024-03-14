@@ -7,6 +7,8 @@ import PopupPostPage from "./post-page/popup-post-page";
 import { useRouter } from "next/navigation";
 import { id } from "date-fns/locale";
 import PostWidget from "./main-column-body/post-widget";
+import { handlePostVote } from "./utils/app-helper";
+import { calculateVoteCountAndStatus } from "./utils/utils-helper";
 
 const PostCollection = ({ posts, onSigninToggle }) => {
   const { user } = useContext(AuthContext);
@@ -44,7 +46,6 @@ const PostCollection = ({ posts, onSigninToggle }) => {
     if (saveActionOccurred) {
       setSaveActionOccurred(false);
     }
-
 		if (voteActionOccurred) {
       setVoteActionOccurred(false);
     }
@@ -68,25 +69,23 @@ const PostCollection = ({ posts, onSigninToggle }) => {
     window.history.pushState({}, "", "/");
   }
 
-	const handleVoteClick = async (id, value) => {
-		if (!user) {
-      onSigninToggle(true);
-    } else {
-			try {
-        const payload = { postId: id, applicationUserId: user.userId, voteValue: value };
-        const res = await fetch("/api/VoteRegistration/", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await res.json();
-        setVoteActionOccurred(true);
-      } catch (error) {
-        console.error("error updating the vote count", error);
-        throw error;
-      }
-		}
-	}
+	// const handleVoteClick = async (id, value) => {
+	// 	if (!user) {
+  //     onSigninToggle(true);
+	// 	}
+	// }
+
+  const updateVoteCountInCollection = (id, vote) => {
+    
+    const updatedPosts = customPosts.map(post => {
+      if (post.id == id) {
+        return {...post, ["totalVote"]: vote}
+      } 
+      return post;
+    })
+    setCustomPosts(updatedPosts)
+  }
+
 
   const handleSaveClick = async (id) => {
     if (!user) {
@@ -134,8 +133,7 @@ const PostCollection = ({ posts, onSigninToggle }) => {
         <PopupPostPage
           post={customPosts.find((post) => post.id === selectedPostId)}
           onClose={closePostPopup}
-          onUpVoteClick={() => handleVoteClick(selectedPostId, 1)}
-          onDownVoteClick={() => handleVoteClick(selectedPostId, -1)}
+          updateVoteCountInCollection = {updateVoteCountInCollection}
           handleSaveClick={() => handleSaveClick(selectedPostId)}
           handleUnsaveClick={() => handleUnsaveClick(selectedPostId)}
 					toggleNewCommentStatus={toggleNewCommentStatus}
@@ -149,9 +147,8 @@ const PostCollection = ({ posts, onSigninToggle }) => {
             <div style={{margin: "12px 0"}} key={post.id} onClick={() => handlePostClick(post.id)}>
               <PostWidgetContainer>
                 <PostWidget
+                  updateVoteCountInCollection = {updateVoteCountInCollection}
                   post={post}
-                  onUpVoteClick={() => handleVoteClick(post.id, 1)}
-                  onDownVoteClick={() => handleVoteClick(post.id, -1)}
                   handleSaveClick={() => handleSaveClick(post.id)}
                   handleUnsaveClick={() => handleUnsaveClick(post.id)}
                 />

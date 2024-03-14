@@ -5,7 +5,6 @@ import { AuthContext } from "../../context/AuthContext";
 
 export default function SinglePostPage({ post, onSigninToggle }) {
   const [customPost, setCustomPost] = useState("");
-  const [voteActionOccurred, setVoteActionOccurred] = useState(false);
   const [saveActionOccurred, setSaveActionOccurred] = useState(false);
   const [newCommentOccurred, setNewCommentOccurred] = useState(false);
   const [newCommentActionOccurred, setNewCommentActionOccurred] =
@@ -27,11 +26,9 @@ export default function SinglePostPage({ post, onSigninToggle }) {
         const url = "/api/post/" + postId + "/" + user.userId;
         const res = await fetch(url, { method: "GET" });
         const data = await res.json();
-        console.log(data);
         setCustomPost(data.data);
       } else {
         setCustomPost(post);
-        console.log("no user");
       }
     };
 
@@ -61,10 +58,6 @@ export default function SinglePostPage({ post, onSigninToggle }) {
       setSaveActionOccurred(false);
     }
 
-    if (voteActionOccurred) {
-      setVoteActionOccurred(false);
-    }
-
     if (newCommentOccurred) {
       setNewCommentOccurred(false);
     }
@@ -75,34 +68,9 @@ export default function SinglePostPage({ post, onSigninToggle }) {
   }, [
     user,
     saveActionOccurred,
-    voteActionOccurred,
     newCommentOccurred,
     newCommentActionOccurred,
   ]);
-
-  const handleVoteClick = async (id, value) => {
-    if (!user) {
-      onSigninToggle(true);
-    } else {
-      try {
-        const payload = {
-          postId: id,
-          applicationUserId: user.userId,
-          voteValue: value,
-        };
-        const res = await fetch("/api/VoteRegistration/", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await res.json();
-        setVoteActionOccurred(true);
-      } catch (error) {
-        console.error("error updating the vote count", error);
-        throw error;
-      }
-    }
-  };
 
   const handleSaveClick = async (id) => {
     if (!user) {
@@ -147,19 +115,15 @@ export default function SinglePostPage({ post, onSigninToggle }) {
   return (
     <div className={styles.backgroundLayer}>
       <div className={styles.container}>
-        <PostPageContent
-          post={customPost}
-          onUpVoteClick={() => {
-            handleVoteClick(customPost.id, 1);
-          }}
-          onDownVoteClick={() => {
-            handleVoteClick(customPost.id, -1);
-          }}
-          handleSaveClick={() => handleSaveClick(customPost.id)}
-          handleUnsaveClick={() => handleUnsaveClick(customPost.id)}
-          toggleNewCommentStatus={toggleNewCommentStatus}
-          toggleNewCommentActionStatus={toggleNewCommentActionStatus}
-        />
+        { customPost && (
+          <PostPageContent
+            post={customPost}
+            handleSaveClick={() => handleSaveClick(customPost.id)}
+            handleUnsaveClick={() => handleUnsaveClick(customPost.id)}
+            toggleNewCommentStatus={toggleNewCommentStatus}
+            toggleNewCommentActionStatus={toggleNewCommentActionStatus}
+          />
+        )}
       </div>
     </div>
   );

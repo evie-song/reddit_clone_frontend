@@ -20,6 +20,27 @@ export const handleCommentVote = async (
   }
 };
 
+export const handlePostVote = async (
+  postId,
+  voteValue,
+  applicationUserId
+) => {
+  try {
+    const payload = { postId, voteValue, applicationUserId };
+    const res = await fetch("/api/VoteRegistration/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    if (res.ok) {
+      const data = await res.json();
+    }
+  } catch (error) {
+    console.error("error updating the vote count", error);
+    throw error;
+  }
+};
+
 export const getUserInfo = async (userId) => {
   const res = await fetch(`/api/ApplicationUser/userInfo/${userId}`);
   if (res.ok) {
@@ -27,4 +48,3 @@ export const getUserInfo = async (userId) => {
     return userInfo;
   }
 };
-

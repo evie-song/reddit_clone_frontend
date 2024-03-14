@@ -1,4 +1,4 @@
-function CalculateDate(date) {
+export const CalculateDate = (date) => {
 	const dateString = date;
 	const postDate = new Date(dateString);
 	const currentDate = new Date();
@@ -29,4 +29,31 @@ function CalculateDate(date) {
 	return timeAgo;
 }
 
-export default CalculateDate;
+export const getVoteClass = (voteStatus) => {
+	if (voteStatus == 1) {
+		return 'upvoted';
+	} else if (voteStatus == -1) {
+		return 'downvoted';
+	} else {
+		return 'not-voted';
+	}
+}
+
+export const calculateVoteCountAndStatus = (voteCount, voteStatus, value) => {
+	let newVote, newStatus;
+
+  if (voteStatus === 0) {
+    newVote = voteCount + value;
+    newStatus = value;
+  } else {
+    if (voteStatus === value) {
+      newVote = voteCount - value;
+      newStatus = 0;
+    } else {
+      newVote = voteCount + value * 2;
+      newStatus = voteStatus * -1;
+    }
+  }
+
+  return { newVote, newStatus };
+}

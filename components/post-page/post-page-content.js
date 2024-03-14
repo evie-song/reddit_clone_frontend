@@ -8,12 +8,11 @@ import CommentDisplay from "../comment/comment-display";
 
 export default function PostPageContent({
   post,
-  onUpVoteClick,
-  onDownVoteClick,
   handleSaveClick,
   handleUnsaveClick,
   toggleNewCommentStatus,
   toggleNewCommentActionStatus,
+  updateVoteCountInCollection,
 }) {
   const { user } = useContext(AuthContext);
 
@@ -22,9 +21,8 @@ export default function PostPageContent({
       <div className={styles.mainColumn}>
         <div className={styles.mainColumnBody}>
           <PostWidget
+            updateVoteCountInCollection={updateVoteCountInCollection}
             post={post}
-            onUpVoteClick={onUpVoteClick}
-            onDownVoteClick={onDownVoteClick}
             handleSaveClick={handleSaveClick}
             handleUnsaveClick={handleUnsaveClick}
           />
@@ -32,7 +30,7 @@ export default function PostPageContent({
             <div style={{ margin: "24px 40px 24px 48px" }}>
               <CommentEditor
                 postId={post.id}
-                toggleNewCommentStatus={() => toggleNewCommentStatus(true)} 
+                toggleNewCommentStatus={() => toggleNewCommentStatus(true)}
               />
             </div>
           )}
@@ -44,7 +42,9 @@ export default function PostPageContent({
                     comment={comment}
                     isChildComment={true}
                     toggleNewCommentStatus={() => toggleNewCommentStatus(true)}
-                    toggleNewCommentActionStatus = {() => toggleNewCommentActionStatus(true)}
+                    toggleNewCommentActionStatus={() =>
+                      toggleNewCommentActionStatus(true)
+                    }
                   />
                 </div>
               );

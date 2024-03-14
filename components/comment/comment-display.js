@@ -3,15 +3,13 @@ import MaterialIcon from "../button-tag-icons/material-icon";
 import HeaderIcon from "../button-tag-icons/header-icon";
 import UpvoteButton from "../button-tag-icons/upvote-button";
 import DownvoteButton from "../button-tag-icons/downvote-button";
-import CalculateDate from "../utils/utils-helper";
+import { CalculateDate, calculateVoteCountAndStatus } from "../utils/utils-helper";
 import CommentEditor from "./comment-editor";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { handleCommentVote } from "../utils/app-helper";
 import { UserContext } from "../../context/UserContext";
-import Cookies from "js-cookie";
-import { getUserInfo } from "../utils/app-helper";
-
+import { getVoteClass } from "../utils/utils-helper";
 
 const CommentDisplay = ({
   comment,
@@ -21,6 +19,7 @@ const CommentDisplay = ({
 }) => {
   
   const [voteCount, setVoteCount] = useState(comment.totalVoteCount)
+
   const [showEditor, setShowEditor] = useState(false);
 
   const { user } = useContext(AuthContext);
@@ -28,18 +27,7 @@ const CommentDisplay = ({
 
   const voteStatus = votedComments[comment.id] ? votedComments[comment.id] : 0
 
-  const getVoteClass = () => {
-
-    if (voteStatus == 1) {
-      return 'upvoted';
-    } else if (voteStatus == -1) {
-      return 'downvoted';
-    } else {
-      return 'not-voted';
-    }
-  }
-
-  console.log(comment.id, voteStatus, comment.content, getVoteClass())
+  const voteClass = getVoteClass(voteStatus);
 
   const handleCommentSubmit = () => {
     setShowEditor(false);
@@ -51,22 +39,10 @@ const CommentDisplay = ({
     await handleCommentVote(comment.id, value, user.userId );
 
     // update local state value for voteCount
-    let newVote, newStatus
-
-    if (voteStatus == 0) {
-      newVote = voteCount + value
-      newStatus = value
-    } else {
-      if (voteStatus == value) {
-        newVote = voteCount - value
-        newStatus = 0
-      } else {
-        newVote = voteCount + value * 2
-        newStatus = voteStatus * -1
-      }
-    } 
+    const {newVote, newStatus} = calculateVoteCountAndStatus(voteCount, voteStatus, value)
     setVoteCount(newVote)
 
+    // 
     updateVotedComments(comment.id, newStatus)
   }
 
@@ -88,13 +64,13 @@ const CommentDisplay = ({
           <div className={styles.content}>{comment.content}</div>
           <div className={styles.actionContainer}>
             <div
-              className={`d-flex align-items-center justify-content-between ${styles.voteContainer} ${getVoteClass()}`}
+              className={`d-flex align-items-center justify-content-between ${styles.voteContainer} ${voteClass}`}
             >
               <div className={styles.divider}></div>
               <div className={`${styles.voteBtn}`}>
                 <UpvoteButton onUpVoteClick={() => handleVoteClick(1)}/>
               </div>
-              <span className={`${styles.voteCount}`}>{voteCount}</span>
+              <span className={`${styles.voteCount} vote-count`}>{voteCount}</span>
               <div className={styles.voteBtn}>
                 <DownvoteButton onDownVoteClick={() => handleVoteClick(-1)}/>
               </div>

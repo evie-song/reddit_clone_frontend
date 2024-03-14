@@ -278,12 +278,15 @@ a {
   text-decoration: none !important;
 }
 
-.upvoted, 
+.upvoted .vote-count,
 .upvoted .upvote-icon {
   color: #ff4501 !important;
 }
 
-.downvoted,
+.downvoted .vote-count,
 .downvoted .downvote-icon{
   color: #7193ff !important;
 }
+
+
+

@@ -8,7 +8,7 @@ import UpvoteButton from "../button-tag-icons/upvote-button";
 import DownvoteButton from "../button-tag-icons/downvote-button";
 import UserContainer from "../layout/user-container";
 import { AuthContext } from "../../context/AuthContext";
-import CalculateDate from "../utils/utils-helper";
+import {CalculateDate} from "../utils/utils-helper";
 
 const ShortPostWidget = ({
   post,

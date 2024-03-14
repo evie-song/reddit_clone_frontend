@@ -26,13 +26,3 @@ export default function UserSaved() {
     </Layout>
   );
 }
-
-// export async function getServerSideProps({ params }) {
-//   const res = await fetch(`http://localhost:5142/api/ApplicationUser/${params.id}/saved`);
-//   const data = await res.json();
-//   return {
-//     props: {
-//       userData: data,
-//     },
-//   };
-// }

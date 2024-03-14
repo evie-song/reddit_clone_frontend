@@ -44,13 +44,13 @@ export default function PostWidget({ post, onUpVoteClick, onDownVoteClick, handl
             // onClick={() => directToPost(post.id)}
         >
             <div className={`${styles.voteContainer} vote-container`}>
-                <div className={post.upVoted && "upvoted" }>
+                <div className={post.upVoted ? "upvoted" : undefined}>
                     <UpvoteButton onUpVoteClick={onUpVoteClick} />
                 </div>
-                <div className={`${styles.voteCount} ${post.upVoted && "upvoted"} ${post.downVoted && "downvoted" }`}>
+                <div className={`${styles.voteCount} ${post.upVoted ? "upvoted" : undefined} ${post.downVoted ? "downvoted" : undefined }`}>
                     <span>{post.upVote - post.downVote}</span>
                 </div>
-                <div className={post.downVoted && "downvoted" }>
+                <div className={post.downVoted ? "downvoted" :undefined }>
                     <DownvoteButton onDownVoteClick={onDownVoteClick} />
                 </div>
             </div>

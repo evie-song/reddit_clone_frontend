@@ -39,7 +39,7 @@ export default function PostPageContent({
           {post.comments &&
             post.comments.map((comment) => {
               return (
-                <div style={{ margin: "16px 16px 0 10px" }}>
+                <div style={{ margin: "16px 16px 0 10px" }} key={comment.id}>
                   <CommentDisplay
                     comment={comment}
                     isChildComment={true}

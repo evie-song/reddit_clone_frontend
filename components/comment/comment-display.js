@@ -28,15 +28,18 @@ const CommentDisplay = ({
 
   const voteStatus = votedComments[comment.id] ? votedComments[comment.id] : 0
 
-  let voteClass;
+  const getVoteClass = () => {
 
-  if (voteStatus === 1) {
-    voteClass = 'upvoted';
-  } else if (voteStatus === -1) {
-    voteClass = 'downvoted';
-  } else {
-    voteClass = 'not-voted';
+    if (voteStatus == 1) {
+      return 'upvoted';
+    } else if (voteStatus == -1) {
+      return 'downvoted';
+    } else {
+      return 'not-voted';
+    }
   }
+
+  console.log(comment.id, voteStatus, comment.content, getVoteClass())
 
   const handleCommentSubmit = () => {
     setShowEditor(false);
@@ -49,6 +52,7 @@ const CommentDisplay = ({
 
     // update local state value for voteCount
     let newVote, newStatus
+
     if (voteStatus == 0) {
       newVote = voteCount + value
       newStatus = value
@@ -63,9 +67,7 @@ const CommentDisplay = ({
     } 
     setVoteCount(newVote)
 
-    // call the helper method to update votedComments state and "userInfo" cookie value.
     updateVotedComments(comment.id, newStatus)
-
   }
 
   return (
@@ -86,13 +88,13 @@ const CommentDisplay = ({
           <div className={styles.content}>{comment.content}</div>
           <div className={styles.actionContainer}>
             <div
-              className={`d-flex align-items-center justify-content-between ${styles.voteContainer} ${voteClass}`}
+              className={`d-flex align-items-center justify-content-between ${styles.voteContainer} ${getVoteClass()}`}
             >
               <div className={styles.divider}></div>
               <div className={`${styles.voteBtn}`}>
                 <UpvoteButton onUpVoteClick={() => handleVoteClick(1)}/>
               </div>
-              <span className={`${styles.voteCount} ${voteClass}`}>{voteCount}</span>
+              <span className={`${styles.voteCount}`}>{voteCount}</span>
               <div className={styles.voteBtn}>
                 <DownvoteButton onDownVoteClick={() => handleVoteClick(-1)}/>
               </div>
@@ -154,7 +156,7 @@ const CommentDisplay = ({
             {comment.childComments.length !== 0
               ? comment.childComments.map((cc) => {
                   return (
-                    <div style={{ marginLeft: "-12px" }}>
+                    <div style={{ marginLeft: "-12px" }} key={cc.id}>
                       <CommentDisplay
                         comment={cc}
                         toggleNewCommentStatus={handleCommentSubmit}

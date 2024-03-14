@@ -7,18 +7,19 @@ export default function SinglePostPage({ post, onSigninToggle }) {
   const [customPost, setCustomPost] = useState("");
   const [voteActionOccurred, setVoteActionOccurred] = useState(false);
   const [saveActionOccurred, setSaveActionOccurred] = useState(false);
-	const [newCommentOccurred, setNewCommentOccurred] = useState(false);
-  const [newCommentActionOccurred, setNewCommentActionOccurred] = useState(false);
+  const [newCommentOccurred, setNewCommentOccurred] = useState(false);
+  const [newCommentActionOccurred, setNewCommentActionOccurred] =
+    useState(false);
   const { user } = useContext(AuthContext);
   const postId = post.id;
 
-	const toggleNewCommentStatus = (status) => {
-		setNewCommentOccurred(status);
-	}
+  const toggleNewCommentStatus = (status) => {
+    setNewCommentOccurred(status);
+  };
 
   const toggleNewCommentActionStatus = (status) => {
-    setNewCommentActionOccurred(status)
-  }
+    setNewCommentActionOccurred(status);
+  };
 
   useEffect(() => {
     const getPostData = async () => {
@@ -30,17 +31,16 @@ export default function SinglePostPage({ post, onSigninToggle }) {
         setCustomPost(data.data);
       } else {
         setCustomPost(post);
+        console.log("no user");
       }
     };
 
     getPostData();
 
-		document.body.style.overflow = "hidden";
-		return () => {
+    document.body.style.overflow = "hidden";
+    return () => {
       document.body.style.overflow = "visible"; // Reset body overflow
     };
-
-
   }, []);
 
   useEffect(() => {
@@ -65,15 +65,20 @@ export default function SinglePostPage({ post, onSigninToggle }) {
       setVoteActionOccurred(false);
     }
 
-		if (newCommentOccurred) {
-			setNewCommentOccurred(false);
-		}
+    if (newCommentOccurred) {
+      setNewCommentOccurred(false);
+    }
 
     if (newCommentActionOccurred) {
-			setNewCommentActionOccurred(false);
-		}
-
-  }, [user, saveActionOccurred, voteActionOccurred, newCommentOccurred, newCommentActionOccurred]);
+      setNewCommentActionOccurred(false);
+    }
+  }, [
+    user,
+    saveActionOccurred,
+    voteActionOccurred,
+    newCommentOccurred,
+    newCommentActionOccurred,
+  ]);
 
   const handleVoteClick = async (id, value) => {
     if (!user) {
@@ -152,8 +157,8 @@ export default function SinglePostPage({ post, onSigninToggle }) {
           }}
           handleSaveClick={() => handleSaveClick(customPost.id)}
           handleUnsaveClick={() => handleUnsaveClick(customPost.id)}
-					toggleNewCommentStatus={toggleNewCommentStatus}
-          toggleNewCommentActionStatus = {toggleNewCommentActionStatus}
+          toggleNewCommentStatus={toggleNewCommentStatus}
+          toggleNewCommentActionStatus={toggleNewCommentActionStatus}
         />
       </div>
     </div>

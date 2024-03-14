@@ -10,7 +10,7 @@ export default function UpvoteButton({ onUpVoteClick }) {
     return(
         <div onClick={(event) => {handleClick(event)}}>
             <VoteButton>
-                <span class="upvote-icon glyphicon glyphicon-arrow-up"></span>
+                <span className="upvote-icon glyphicon glyphicon-arrow-up"></span>
             </VoteButton>
         </div>
     )

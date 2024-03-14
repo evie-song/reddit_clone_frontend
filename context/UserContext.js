@@ -31,7 +31,7 @@ export const UserProvider = ({ children }) => {
     setVotedComments(data.votedComments);
   };
 
-	// update the votedComments state and the userInfo cookie value. 
+	// update the votedComments state and the userInfo cookie value
   const updateVotedComments = (commentId, voteStatus) => {
     // Update the state
     setVotedComments((prevVotedComments) => ({
@@ -40,7 +40,7 @@ export const UserProvider = ({ children }) => {
     }));
 
 		// Update the value in the cookies
-		console.log(Cookies.get("userInfo"))
+    const cookieValue = JSON.parse(Cookies.get('userInfo'));
     cookieValue.votedComments[commentId] = voteStatus;
     Cookies.set('userInfo', JSON.stringify(cookieValue))
   };

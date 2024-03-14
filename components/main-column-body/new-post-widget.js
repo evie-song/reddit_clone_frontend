@@ -28,7 +28,7 @@ export default function NewPostWidget({ onSigninToggle }) {
           <input 
             type='text' 
             placeholder='Create Post'
-            className={isHovered && styles.inputIsHovered}
+            className={isHovered ? styles.inputIsHovered : undefined}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onClick={handleClick}

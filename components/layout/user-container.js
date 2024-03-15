@@ -4,16 +4,19 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import FullLengthButton from "../button-tag-icons/full-length-button";
 import MaterialIcon from "../button-tag-icons/material-icon";
+import { UserContext } from "../../context/UserContext";
 
 export default function UserContainer({ handleSigninToggle }) {
   const [isHovered, setIsHovered] = useState(false);
 
   const { user, logout, showUserOptions, setShowUserOptions } = useContext(AuthContext);
+  const { removeUserInfo } = useContext(UserContext)
 
   const handleLogout = (event) => {
     event.stopPropagation();
     event.preventDefault();
     logout();
+    removeUserInfo();
   };
 
   const toggleUserOptionWindow = () => {

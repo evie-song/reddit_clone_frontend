@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
-import { createContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { AuthContext } from "./AuthContext";
 
 export const UserContext = createContext();
 
@@ -12,17 +13,18 @@ export const UserProvider = ({ children }) => {
 
   // get initial data from cookies if exist
   const [savedPosts, setSavedPosts] = useState(
-    () => getUserInfoFromCookies()?.savedPostIds || []
+    getUserInfoFromCookies() ? getUserInfoFromCookies().savedPostIds : []
   );
 
-  const [votedPosts, setVotedPosts] = useState(
+  const [votedPosts, setVotedPosts] = useState( 
     getUserInfoFromCookies() ? getUserInfoFromCookies().votedPosts : {}
   );
 
-  const [votedComments, setVotedComments] = useState(
+  const [votedComments, setVotedComments] = useState( 
     getUserInfoFromCookies() ? getUserInfoFromCookies().votedComments : {}
   );
 
+  // set user info for logins
   const setUserInfo = (data) => {
     // set states and cookies
     Cookies.set("userInfo", JSON.stringify(data));
@@ -30,6 +32,14 @@ export const UserProvider = ({ children }) => {
     setVotedPosts(data.votedPosts);
     setVotedComments(data.votedComments);
   };
+
+  // remove user info for logouts
+  const removeUserInfo = (data) => {
+    Cookies.remove("userInfo")
+    setSavedPosts([])
+    setVotedComments({})
+    setVotedPosts({})
+  }
 
 	// update the votedComments state and the userInfo cookie value
   const updateVotedComments = (commentId, voteStatus) => {
@@ -59,15 +69,34 @@ export const UserProvider = ({ children }) => {
     Cookies.set('userInfo', JSON.stringify(cookieValue))
   };
 
+
+  // updated the savedPost state and the userInfo cookie value
+  const updateSavedPosts = (postId, isSaving) => {
+
+    // if it is saving, add the id to the state, if not, remove it from the list
+      const updatedSavedPosts = isSaving? [...savedPosts, postId] : savedPosts.filter((id => id !== postId))
+
+    setSavedPosts(updatedSavedPosts)
+
+    // Update the value in the cookies
+    const cookieValue = JSON.parse(Cookies.get('userInfo'));
+    cookieValue.savedPostIds = updatedSavedPosts;
+    Cookies.set('userInfo', JSON.stringify(cookieValue));
+
+  }
+
   return (
     <UserContext.Provider
       value={{
         savedPosts,
         setUserInfo,
+        removeUserInfo,
         votedComments,
         votedPosts,
         updateVotedComments,
         updateVotedPosts,
+        updateSavedPosts,
+
       }}
     >
       {children}

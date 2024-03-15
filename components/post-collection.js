@@ -1,11 +1,9 @@
-import Link from "next/link";
 import PostWidgetContainer from "./main-column-body/post-widget-container";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import PopupWindow from "./popup-window";
 import PopupPostPage from "./post-page/popup-post-page";
 import { useRouter } from "next/navigation";
-import { id } from "date-fns/locale";
 import PostWidget from "./main-column-body/post-widget";
 import { handlePostVote } from "./utils/app-helper";
 import { calculateVoteCountAndStatus } from "./utils/utils-helper";
@@ -14,8 +12,6 @@ const PostCollection = ({ posts, onSigninToggle }) => {
   const { user } = useContext(AuthContext);
   const [customPosts, setCustomPosts] = useState([]);
 
-	const [voteActionOccurred, setVoteActionOccurred] = useState(false);
-  const [saveActionOccurred, setSaveActionOccurred] = useState(false);
   const [postPopupIsOpen, setPostPopupIsOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState(0);
 	const [newCommentOccurred, setNewCommentOccurred] = useState(false);
@@ -43,16 +39,10 @@ const PostCollection = ({ posts, onSigninToggle }) => {
 
     getPostData();
 
-    if (saveActionOccurred) {
-      setSaveActionOccurred(false);
-    }
-		if (voteActionOccurred) {
-      setVoteActionOccurred(false);
-    }
 		if (newCommentOccurred) {
 			setNewCommentOccurred(false);
 		}
-  }, [user, saveActionOccurred, voteActionOccurred, newCommentOccurred]);
+  }, [user, newCommentOccurred]);
 
   function handlePostClick(id) {
     setSelectedPostId(id);
@@ -85,47 +75,6 @@ const PostCollection = ({ posts, onSigninToggle }) => {
     })
     setCustomPosts(updatedPosts)
   }
-
-
-  const handleSaveClick = async (id) => {
-    if (!user) {
-      onSigninToggle(true);
-    } else {
-      try {
-        const payload = { postId: id, applicationUserId: user.userId };
-        const res = await fetch("/api/savedpost", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await res.json();
-        setSaveActionOccurred(true);
-      } catch (error) {
-        console.error("error saving the post", error);
-        throw error;
-      }
-    }
-  };
-
-  const handleUnsaveClick = async (id) => {
-    if (!user) {
-      onSigninToggle(true);
-    } else {
-      try {
-        const payload = { postId: id, applicationUserId: user.userId };
-        const res = await fetch("/api/savedpost", {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await res.json();
-        setSaveActionOccurred(true);
-      } catch (error) {
-        console.error("error unsaving the post", error);
-        throw error;
-      }
-    }
-  };
 
   return (
     <div>

@@ -12,18 +12,17 @@ import {
     getVoteClass,
 } from "../utils/utils-helper";
 import { UserContext } from "../../context/UserContext";
-import { handlePostVote } from "../utils/app-helper";
+import { handlePostSaveAndUnsave, handlePostVote } from "../utils/app-helper";
+import Cookies from "js-cookie";
 
 export default function PostWidget({
     post,
-    handleSaveClick,
-    handleUnsaveClick,
     updateVoteCountInCollection,
 }) {
     const [postVoteCount, setPostVoteCount] = useState(post.totalVote);
 
     const { user } = useContext(AuthContext);
-    const { savedPosts } = useContext(UserContext);
+    const { savedPosts, updateSavedPosts } = useContext(UserContext);
     const { votedPosts, updateVotedPosts } = useContext(UserContext);
 
     const sampleData = {
@@ -34,18 +33,26 @@ export default function PostWidget({
         },
     };
 
+    console.log(Cookies.get('userInfo',), savedPosts)
     // update the local vote count state whenever post updates.  
     useEffect(() => {
         setPostVoteCount(post.totalVote);
     }, [post]);
 
     
-
-    const handleSaveBtnClick = (event) => {
+    // post save related var and functions 
+    const saveStatus = savedPosts.includes(post.id) 
+    
+    const handleSaveAndUnsaveClick = async (event, isSaving) => {
         event.stopPropagation();
         event.preventDefault();
-        handleSaveClick();
-    };
+
+        // update the backend 
+        await handlePostSaveAndUnsave(post.id, user.userId, isSaving)
+
+        // update the context savedPosts
+        updateSavedPosts(post.id, isSaving)
+    }
 
     const handleUnsaveBtnClick = (event) => {
         event.stopPropagation();
@@ -142,8 +149,8 @@ export default function PostWidget({
                         addText="Share"
                         additionalClass="padding-right-4 padding-y-4"
                     />
-                    {post.isSaved && (
-                        <div onClick={(event) => handleUnsaveBtnClick(event)}>
+                    {saveStatus && (
+                        <div onClick={(event) => handleSaveAndUnsaveClick(event, false)}>
                             <HeaderIcon
                                 marginRight="4px"
                                 iconName="favorite"
@@ -155,8 +162,8 @@ export default function PostWidget({
                             />
                         </div>
                     )}
-                    {!post.isSaved && (
-                        <div onClick={(event) => handleSaveBtnClick(event)}>
+                    {!saveStatus && (
+                        <div onClick={(event) => handleSaveAndUnsaveClick(event, true)}>
                             <HeaderIcon
                                 marginRight="4px"
                                 iconName="favorite_border"

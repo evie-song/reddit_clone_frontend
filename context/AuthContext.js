@@ -72,7 +72,6 @@ export const AuthProvider = ({ children }) => {
         // router.push('/')
         setUser(null)
         Cookies.remove('user')
-        Cookies.remove('userInfo')
         // Make a request to your backend API to invalidate the user session
         // Example: const response = await fetch('/api/logout');
         // Handle the response and reset the user state

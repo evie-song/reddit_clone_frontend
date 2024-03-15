@@ -8,8 +8,6 @@ import CommentDisplay from "../comment/comment-display";
 
 export default function PostPageContent({
   post,
-  handleSaveClick,
-  handleUnsaveClick,
   toggleNewCommentStatus,
   toggleNewCommentActionStatus,
   updateVoteCountInCollection,
@@ -23,8 +21,6 @@ export default function PostPageContent({
           <PostWidget
             updateVoteCountInCollection={updateVoteCountInCollection}
             post={post}
-            handleSaveClick={handleSaveClick}
-            handleUnsaveClick={handleUnsaveClick}
           />
           {user && (
             <div style={{ margin: "24px 40px 24px 48px" }}>

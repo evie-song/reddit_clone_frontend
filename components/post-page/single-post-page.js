@@ -5,7 +5,6 @@ import { AuthContext } from "../../context/AuthContext";
 
 export default function SinglePostPage({ post, onSigninToggle }) {
   const [customPost, setCustomPost] = useState("");
-  const [saveActionOccurred, setSaveActionOccurred] = useState(false);
   const [newCommentOccurred, setNewCommentOccurred] = useState(false);
   const [newCommentActionOccurred, setNewCommentActionOccurred] =
     useState(false);
@@ -54,10 +53,6 @@ export default function SinglePostPage({ post, onSigninToggle }) {
 
     getPostData();
 
-    if (saveActionOccurred) {
-      setSaveActionOccurred(false);
-    }
-
     if (newCommentOccurred) {
       setNewCommentOccurred(false);
     }
@@ -67,50 +62,9 @@ export default function SinglePostPage({ post, onSigninToggle }) {
     }
   }, [
     user,
-    saveActionOccurred,
     newCommentOccurred,
     newCommentActionOccurred,
   ]);
-
-  const handleSaveClick = async (id) => {
-    if (!user) {
-      onSigninToggle(true);
-    } else {
-      try {
-        const payload = { postId: id, applicationUserId: user.userId };
-        const res = await fetch("/api/savedpost", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await res.json();
-        setSaveActionOccurred(true);
-      } catch (error) {
-        console.error("error saving the post", error);
-        throw error;
-      }
-    }
-  };
-
-  const handleUnsaveClick = async (id) => {
-    if (!user) {
-      onSigninToggle(true);
-    } else {
-      try {
-        const payload = { postId: id, applicationUserId: user.userId };
-        const res = await fetch("/api/savedpost", {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-        const data = await res.json();
-        setSaveActionOccurred(true);
-      } catch (error) {
-        console.error("error unsaving the post", error);
-        throw error;
-      }
-    }
-  };
 
   return (
     <div className={styles.backgroundLayer}>
@@ -118,8 +72,6 @@ export default function SinglePostPage({ post, onSigninToggle }) {
         { customPost && (
           <PostPageContent
             post={customPost}
-            handleSaveClick={() => handleSaveClick(customPost.id)}
-            handleUnsaveClick={() => handleUnsaveClick(customPost.id)}
             toggleNewCommentStatus={toggleNewCommentStatus}
             toggleNewCommentActionStatus={toggleNewCommentActionStatus}
           />

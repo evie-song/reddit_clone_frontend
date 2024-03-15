@@ -20,11 +20,7 @@ export const handleCommentVote = async (
   }
 };
 
-export const handlePostVote = async (
-  postId,
-  voteValue,
-  applicationUserId
-) => {
+export const handlePostVote = async (postId, voteValue, applicationUserId) => {
   try {
     const payload = { postId, voteValue, applicationUserId };
     const res = await fetch("/api/VoteRegistration/", {
@@ -37,6 +33,25 @@ export const handlePostVote = async (
     }
   } catch (error) {
     console.error("error updating the vote count", error);
+    throw error;
+  }
+};
+
+export const handlePostSaveAndUnsave = async (postId, applicationUserId, isSaving) => {
+  try {
+    const payload = { postId, applicationUserId };
+    const requestType = isSaving? "POST" : "DELETE"
+    const res = await fetch("/api/savedpost", {
+      method: requestType,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+    }
+  } catch (error) {
+    console.error("error saving the post", error);
     throw error;
   }
 };

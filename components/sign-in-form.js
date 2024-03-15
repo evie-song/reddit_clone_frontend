@@ -4,17 +4,25 @@ import styles from "../styles/sign-in-form.module.css";
 import Link from "next/link";
 import FullLengthButton from "./button-tag-icons/full-length-button";
 import MaterialIcon from "./button-tag-icons/material-icon";
+import UserContainer from "./layout/user-container";
+import { UserContext } from "../context/UserContext";
+import { ModalContext } from "../context/ModalContext";
+import { getUserInfo } from "./utils/app-helper";
 
-function SignInForm({ onClose, switchToSignup, signinOrSignup }) {
+
+function SignInForm({}) {
+
+  const [signinOrSignup, setSigninOrSignup] = useState("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [error, setError] = useState('');
 
-  const { user, signin, register, signinAlert, setSigninAlert } =
+  const { signin, register, signinAlert, setSigninAlert } =
     useContext(AuthContext);
+  const { setUserInfo } = useContext(UserContext);
+  const { handleSigninWindowToggle } = useContext(ModalContext)
 
   const handleSwitchBtn = (option) => {
-    switchToSignup(option);
+    setSigninOrSignup(option)
     setEmail("");
     setPassword("");
     setSigninAlert("");
@@ -27,9 +35,19 @@ function SignInForm({ onClose, switchToSignup, signinOrSignup }) {
 
     const res = await signin(credentials);
 
+    // if signin is successful, fetch and set the userdata and close the signin modal
     if (res != false) {
-      onClose(res);
+      const userInfo = await getUserInfo(res)
+      if (userInfo === undefined) {
+        debugger 
+        console.log("userdata is undefined")
+      } else {
+        setUserInfo(userInfo)
+      }
+      
+      handleSigninWindowToggle(false)
     }
+
   };
 
   const handleSignUp = async (e) => {
@@ -42,12 +60,14 @@ function SignInForm({ onClose, switchToSignup, signinOrSignup }) {
     };
 
     await register(credentials);
+
+    
   };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <button onClick={() => onClose(false)} className={styles.closeButton}>
+        <button onClick={()=> handleSigninWindowToggle(false)} className={styles.closeButton}>
           <MaterialIcon
             iconName="close"
             fontSize="24px"

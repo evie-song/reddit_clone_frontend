@@ -23,7 +23,7 @@ const CommentDisplay = ({
   const [showEditor, setShowEditor] = useState(false);
 
   const { user } = useContext(AuthContext);
-  const {  votedComments, setUserInfo, updateVotedComments } = useContext(UserContext)
+  const {  votedComments, updateVotedComments } = useContext(UserContext)
 
   const voteStatus = votedComments[comment.id] ? votedComments[comment.id] : 0
 

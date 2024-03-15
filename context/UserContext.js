@@ -8,7 +8,11 @@ export const UserProvider = ({ children }) => {
   // helper method to retrieve data from Cookies.
   const getUserInfoFromCookies = () => {
     const userInfo = Cookies.get("userInfo");
-    return userInfo ? JSON.parse(userInfo) : null;
+    if (userInfo === 'undefined') {
+      debugger
+      Cookies.remove('userInfo')
+    }
+    return (userInfo !== undefined) ? JSON.parse(userInfo) : null;
   };
 
   // get initial data from cookies if exist
@@ -96,7 +100,6 @@ export const UserProvider = ({ children }) => {
         updateVotedComments,
         updateVotedPosts,
         updateSavedPosts,
-
       }}
     >
       {children}

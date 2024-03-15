@@ -5,12 +5,15 @@ import { AuthContext } from "../../context/AuthContext";
 import FullLengthButton from "../button-tag-icons/full-length-button";
 import MaterialIcon from "../button-tag-icons/material-icon";
 import { UserContext } from "../../context/UserContext";
+import { ModalContext } from "../../context/ModalContext";
 
-export default function UserContainer({ handleSigninToggle }) {
+export default function UserContainer({ }) {
   const [isHovered, setIsHovered] = useState(false);
 
   const { user, logout, showUserOptions, setShowUserOptions } = useContext(AuthContext);
   const { removeUserInfo } = useContext(UserContext)
+
+  const { handleSigninWindowToggle } = useContext(ModalContext)
 
   const handleLogout = (event) => {
     event.stopPropagation();
@@ -26,7 +29,7 @@ export default function UserContainer({ handleSigninToggle }) {
   if (!user) {
     return (
       <div>
-        <div onClick={() => handleSigninToggle(true)}>
+        <div onClick={() => handleSigninWindowToggle(true)}>
           <FullLengthButton
             backgroundColor="#D93A00"
             color="white"

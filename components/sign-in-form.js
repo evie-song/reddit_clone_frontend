@@ -4,7 +4,6 @@ import styles from "../styles/sign-in-form.module.css";
 import Link from "next/link";
 import FullLengthButton from "./button-tag-icons/full-length-button";
 import MaterialIcon from "./button-tag-icons/material-icon";
-import UserContainer from "./layout/user-container";
 import { UserContext } from "../context/UserContext";
 import { ModalContext } from "../context/ModalContext";
 import { getUserInfo } from "./utils/app-helper";
@@ -60,7 +59,6 @@ function SignInForm({}) {
     };
 
     await register(credentials);
-
     
   };
 

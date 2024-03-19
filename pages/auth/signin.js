@@ -6,16 +6,14 @@ import styles from '../../styles/signin.module.css';
 import SignUpForm from "../../components/sign-up-form";
 
 
-export default function Signin({onClose, toggleSigninOrSignup, signinOrSignup}) {
+export default function Signin({}) {
     const {user} = useContext(AuthContext)
 
     return (
         <div className={styles.backgroundLayer}>
             <div style={{height: "100%"}}>
-                <SignInForm onClose={onClose} switchToSignup={toggleSigninOrSignup} signinOrSignup={signinOrSignup}/>
+                <SignInForm/>
             </div>
         </div>
-    
     )
-    
 }

@@ -3,7 +3,7 @@ import { AuthContext } from "../../context/AuthContext";
 import styles from "../../styles/comment/comment-editor.module.css";
 import FullLengthButton from "../button-tag-icons/full-length-button";
 
-const CommentEditor = ({ postId, commentId, toggleNewCommentStatus }) => {
+const CommentEditor = ({ postId, commentId, handleCommentCountUpdate, updateCommentCountInCollection }) => {
 	const [isfocused, setIsFocused] = useState(false)
   const [content, setContent] = useState("");
   const { user } = useContext(AuthContext);
@@ -32,14 +32,14 @@ const CommentEditor = ({ postId, commentId, toggleNewCommentStatus }) => {
         console.log("success");
         setContent("");
 				setIsFocused(false);
-				toggleNewCommentStatus()
+        updateCommentCountInCollection?.(postId)
+        handleCommentCountUpdate?.()
       } else {
         console.log("failed");
       }
     } catch (error) {}
   };
 
-  // console.log(postId, commentId)
 
   return (
     <div className={styles.container}>

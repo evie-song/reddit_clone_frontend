@@ -1,18 +1,39 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "../../styles/post-page/post-page-content.module.css";
 import PostWidget from "../main-column-body/post-widget";
 import CommunityWidget from "./community-widget";
 import { AuthContext } from "../../context/AuthContext";
 import CommentEditor from "../comment/comment-editor";
 import CommentDisplay from "../comment/comment-display";
+import { getCommentsByPost } from "../utils/app-helper";
 
 export default function PostPageContent({
   post,
-  toggleNewCommentStatus,
-  toggleNewCommentActionStatus,
   updateVoteCountInCollection,
+  handleCommentCountUpdate,
+  updateCommentCountInCollection
 }) {
   const { user } = useContext(AuthContext);
+  const [comments, setComments] = useState(null);
+
+  const postId = post.id
+  const commentCount = post.commentCount;
+
+  useEffect(()=> {
+    const fetchData = async () => {
+      try {
+        const data = await getCommentsByPost(postId);
+        setComments(data)
+      } catch(error) {
+        console.error('Error fetching comments:', error);
+      }
+    }
+
+    fetchData();
+
+    // return ()=> {};
+
+  }, [postId, commentCount])
 
   return (
     <div className={styles.body}>
@@ -26,21 +47,20 @@ export default function PostPageContent({
             <div style={{ margin: "24px 40px 24px 48px" }}>
               <CommentEditor
                 postId={post.id}
-                toggleNewCommentStatus={() => toggleNewCommentStatus(true)}
+                handleCommentCountUpdate={handleCommentCountUpdate}
+                updateCommentCountInCollection={updateCommentCountInCollection}
               />
             </div>
           )}
-          {post.comments &&
-            post.comments.map((comment) => {
+          {comments &&
+            comments.map((comment) => {
               return (
                 <div style={{ margin: "16px 16px 0 10px" }} key={comment.id}>
                   <CommentDisplay
                     comment={comment}
                     isChildComment={true}
-                    toggleNewCommentStatus={() => toggleNewCommentStatus(true)}
-                    toggleNewCommentActionStatus={() =>
-                      toggleNewCommentActionStatus(true)
-                    }
+                    handleCommentCountUpdate = {handleCommentCountUpdate}
+                    updateCommentCountInCollection={updateCommentCountInCollection}
                   />
                 </div>
               );

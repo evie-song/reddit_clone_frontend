@@ -63,3 +63,17 @@ export const getUserInfo = async (userId) => {
     return userInfo;
   }
 };
+
+export const getCommentsByPost = async (postId) => {
+  try {
+    const res = await fetch(`/api/Comment/GetByPostId/${postId}`)
+    if (res.ok) {
+      const data = await res.json();
+      return data
+    }
+
+  } catch (error) {
+    console.error("error saving the post", error);
+    throw error;
+  }
+}

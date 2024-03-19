@@ -1,48 +1,24 @@
 import PostWidgetContainer from "./main-column-body/post-widget-container";
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { useEffect, useState } from "react";
 import PopupWindow from "./popup-window";
 import PopupPostPage from "./post-page/popup-post-page";
 import { useRouter } from "next/navigation";
 import PostWidget from "./main-column-body/post-widget";
-import { handlePostVote } from "./utils/app-helper";
-import { calculateVoteCountAndStatus } from "./utils/utils-helper";
 
-const PostCollection = ({ posts, onSigninToggle }) => {
-  const { user } = useContext(AuthContext);
+const PostCollection = ({ posts }) => {
   const [customPosts, setCustomPosts] = useState([]);
 
   const [postPopupIsOpen, setPostPopupIsOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState(0);
-	const [newCommentOccurred, setNewCommentOccurred] = useState(false);
-
 
   const router = useRouter();
 
-	const toggleNewCommentStatus = (status) => {
-		setNewCommentOccurred(status);
-	}
-
   // update the posts data to show saved and vote status after user is logged in.
   useEffect(() => {
-    const getPostData = async () => {
-      if (user) {
-        const url = "/api/post/getbyuser/" + user.userId;
-        const res = await fetch(url, { method: "GET" });
-        const data = await res.json();
-				// console.log(data.data);
-        setCustomPosts(data.data);
-      } else {
-        setCustomPosts(posts);
-      }
-    };
 
-    getPostData();
-
-		if (newCommentOccurred) {
-			setNewCommentOccurred(false);
-		}
-  }, [user, newCommentOccurred]);
+    setCustomPosts(posts);
+    
+  }, []);
 
   function handlePostClick(id) {
     setSelectedPostId(id);
@@ -59,12 +35,6 @@ const PostCollection = ({ posts, onSigninToggle }) => {
     window.history.pushState({}, "", "/");
   }
 
-	// const handleVoteClick = async (id, value) => {
-	// 	if (!user) {
-  //     onSigninToggle(true);
-	// 	}
-	// }
-
   const updateVoteCountInCollection = (id, vote) => {
     
     const updatedPosts = customPosts.map(post => {
@@ -76,6 +46,19 @@ const PostCollection = ({ posts, onSigninToggle }) => {
     setCustomPosts(updatedPosts)
   }
 
+  const updateCommentCountInCollection = (postId) => {
+    
+    const updatedPosts = customPosts.map(post => {
+      if (post.id === postId) {
+        const newCount = post['commentCount'] + 1
+        return {...post, ['commentCount']: newCount}
+      } 
+      return post;
+    })
+
+    setCustomPosts(updatedPosts)
+  }
+
   return (
     <div>
       <PopupWindow isOpen={postPopupIsOpen}>
@@ -83,9 +66,7 @@ const PostCollection = ({ posts, onSigninToggle }) => {
           post={customPosts.find((post) => post.id === selectedPostId)}
           onClose={closePostPopup}
           updateVoteCountInCollection = {updateVoteCountInCollection}
-          handleSaveClick={() => handleSaveClick(selectedPostId)}
-          handleUnsaveClick={() => handleUnsaveClick(selectedPostId)}
-					toggleNewCommentStatus={toggleNewCommentStatus}
+          updateCommentCountInCollection={updateCommentCountInCollection}
 
         />
       </PopupWindow>
@@ -98,8 +79,6 @@ const PostCollection = ({ posts, onSigninToggle }) => {
                 <PostWidget
                   updateVoteCountInCollection = {updateVoteCountInCollection}
                   post={post}
-                  handleSaveClick={() => handleSaveClick(post.id)}
-                  handleUnsaveClick={() => handleUnsaveClick(post.id)}
                 />
               </PostWidgetContainer>
             </div>

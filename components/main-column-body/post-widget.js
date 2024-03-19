@@ -13,11 +13,11 @@ import {
 } from "../utils/utils-helper";
 import { UserContext } from "../../context/UserContext";
 import { handlePostSaveAndUnsave, handlePostVote } from "../utils/app-helper";
-import Cookies from "js-cookie";
 import { ModalContext } from "../../context/ModalContext";
 
 export default function PostWidget({ post, updateVoteCountInCollection }) {
   const [postVoteCount, setPostVoteCount] = useState(post.totalVote);
+  const [postCommentCount, setPostCommentCount] = useState(post.commentCount)
 
   const { user } = useContext(AuthContext);
   const { savedPosts, updateSavedPosts } = useContext(UserContext);
@@ -32,10 +32,10 @@ export default function PostWidget({ post, updateVoteCountInCollection }) {
     },
   };
 
-  console.log(Cookies.get("userInfo"), savedPosts);
   // update the local vote count state whenever post updates.
   useEffect(() => {
     setPostVoteCount(post.totalVote);
+    setPostCommentCount(post.commentCount);
   }, [post]);
 
   // post save related var and functions
@@ -133,7 +133,7 @@ export default function PostWidget({ post, updateVoteCountInCollection }) {
             linkUrl=""
             fontSize="20px"
             padding="4px"
-            addText={`${post.commentCount} Comments`}
+            addText={`${postCommentCount} Comments`}
             additionalClass="padding-right-4 padding-y-4"
           />
           <HeaderIcon

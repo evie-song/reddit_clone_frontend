@@ -14,8 +14,8 @@ import { getVoteClass } from "../utils/utils-helper";
 const CommentDisplay = ({
   comment,
   isChildComment,
-  toggleNewCommentStatus,
-  toggleNewCommentActionStatus,
+  handleCommentCountUpdate,
+  updateCommentCountInCollection
 }) => {
   
   const [voteCount, setVoteCount] = useState(comment.totalVoteCount)
@@ -31,7 +31,6 @@ const CommentDisplay = ({
 
   const handleCommentSubmit = () => {
     setShowEditor(false);
-    toggleNewCommentStatus();
   };
 
   const handleVoteClick = async (value) => {
@@ -124,7 +123,8 @@ const CommentDisplay = ({
               <CommentEditor
                 postId={comment.postId}
                 commentId={comment.id}
-                toggleNewCommentStatus={handleCommentSubmit}
+                handleCommentCountUpdate={handleCommentCountUpdate}
+                updateCommentCountInCollection={updateCommentCountInCollection}
               />
             </div>
           )}
@@ -135,9 +135,9 @@ const CommentDisplay = ({
                     <div style={{ marginLeft: "-12px" }} key={cc.id}>
                       <CommentDisplay
                         comment={cc}
-                        toggleNewCommentStatus={handleCommentSubmit}
                         handleCommentVote={handleCommentVote}
-                        toggleNewCommentActionStatus={toggleNewCommentActionStatus}
+                        handleCommentCountUpdate={handleCommentCountUpdate}
+                        updateCommentCountInCollection={updateCommentCountInCollection}
                       />
                     </div>
                   );

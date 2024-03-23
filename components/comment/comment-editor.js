@@ -1,7 +1,6 @@
 import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import styles from "../../styles/comment/comment-editor.module.css";
-import FullLengthButton from "../button-tag-icons/full-length-button";
 
 const CommentEditor = ({ postId, commentId, handleCommentCountUpdate, updateCommentCountInCollection }) => {
 	const [isfocused, setIsFocused] = useState(false)

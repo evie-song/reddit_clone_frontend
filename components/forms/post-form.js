@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 import styles from '../../styles/forms/post-form.module.css';
 import MaterialIcon from '../button-tag-icons/material-icon';
-import { userAgent } from 'next/server';
 import { AuthContext } from '../../context/AuthContext';
+import QuillEditor from '../quill-editor';
 
 export default function PostForm({ addPost, communityData }) {
-    
+
+    const [quillContent, setQuillContent] = useState('')
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [communityTitle, setCommunityTitle] = useState('Choose a community')
@@ -15,14 +16,15 @@ export default function PostForm({ addPost, communityData }) {
 
     const communities = communityData;
 
+    console.log(quillContent)
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(user)
-
         // Create a new Post object
         const newPost = {
             title,
-            content,
+            content: quillContent,
             communityId: parseInt(communityId),
             userId: user.userId,
             applicationUserId: user.userId,
@@ -30,6 +32,8 @@ export default function PostForm({ addPost, communityData }) {
 
         // Send a POST request to your API
         const response = await addPost(newPost);
+
+
 
         // Handle the response as needed (e.g., show success message or errors)
     };
@@ -77,18 +81,20 @@ export default function PostForm({ addPost, communityData }) {
                     <div 
                         className={`${styles.communityChoiceWrapper} ${showCommunityDropdown && styles.show} ${!showCommunityDropdown && styles.hide}`}
                     >
-                        <div className={`d-flex align-items-center ${styles.communityChoiceHeader} margin-bottom-8`}>
+                        <div className={`d-flex align-items-center ${styles.communityChoiceHeader}`}>
                             <div style={{color: "#878a8c"}}>Your communities</div>
                             <div style={{color: "#0079d3"}}>Create New</div>
                         </div>
                         {communities.map((community => {
                             return (
                                 <div
+                                    key={community.id}
                                     data-id={community.id}
                                     data-title={community.title}
                                     onClick={(event) => handleCummunitySelect(event)}
+                                    className={styles.communityChoice}
                                 >
-                                    <div className='d-flex align-items-center margin-bottom-8'>
+                                    <div className='d-flex align-items-center'>
                                         <MaterialIcon iconName={"face"} fontSize={"28px"} padding={"0 8px 0 0"}/>
                                         <div className=''>
                                             <div className={styles.communityTitle}>{community.title}</div>
@@ -135,17 +141,11 @@ export default function PostForm({ addPost, communityData }) {
                                 <div className={styles.titleInputCount}>0/300</div>
                             </div>
 
-                            <div className='position-relative d-flex align-items-center'>
-                                <textarea 
-                                    placeholder='Text (opional)' 
-                                    className={styles.contentInput}
-                                    id="content"
-                                    value={content}
-                                    onChange={(e) => setContent(e.target.value)}
-                                    required
-                                >
-                                </textarea>
+                            <div className='position-relative mb-3 quill-editor-wrapper'>
+                                    <QuillEditor onChange={setQuillContent}/>
                             </div>
+
+
                             <div className={`d-flex margin-bottom-8 ${styles.tagContainer}`}>
                                 <div className={styles.tagBtn}>
                                     <i className={`material-icons ${styles.addTagIcon}`}>add</i>

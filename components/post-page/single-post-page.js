@@ -5,10 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 export default function SinglePostPage({ post }) {
   const [customPost, setCustomPost] = useState("");
-    useState(false);
-  const { user } = useContext(AuthContext);
-  const postId = post?.id;
-
+  
   useEffect(() => {
 
     const getPostData = () => {

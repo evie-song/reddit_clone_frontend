@@ -29,11 +29,10 @@ export default function Submit({communityData}) {
         });
 
         if (response.ok) {
-            // Handle success (e.g., navigate to the post details page)
-            // You can also display a success message
-            console.log("success")
-            // redirect to home page for now
-            router.push('/')
+            const data = await response.json()
+            const postId = data.data["id"]
+            // redirect to new post page
+            router.push(`/posts/${postId}`)
 
         } else {
             // Handle errors (e.g., display error messages)

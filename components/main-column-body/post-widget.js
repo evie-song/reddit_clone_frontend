@@ -14,6 +14,7 @@ import {
 import { UserContext } from "../../context/UserContext";
 import { handlePostSaveAndUnsave, handlePostVote } from "../utils/app-helper";
 import { ModalContext } from "../../context/ModalContext";
+import he from 'he';
 
 export default function PostWidget({ post, updateVoteCountInCollection }) {
   const [postVoteCount, setPostVoteCount] = useState(post.totalVote);
@@ -23,6 +24,8 @@ export default function PostWidget({ post, updateVoteCountInCollection }) {
   const { savedPosts, updateSavedPosts } = useContext(UserContext);
   const { votedPosts, updateVotedPosts } = useContext(UserContext);
   const { handleSigninWindowToggle } = useContext(ModalContext);
+
+  const decodedContent = he.decode(post.content)
 
   const sampleData = {
     post_tag: {
@@ -123,7 +126,10 @@ export default function PostWidget({ post, updateVoteCountInCollection }) {
             />
           </div>
           <div className={`${styles.postBody} post-body`}>
-            {post && post.content}
+            {post && 
+            
+            <div dangerouslySetInnerHTML={{ __html: decodedContent }}></div>
+            }
           </div>
         </div>
         <div className={`${styles.postActionContainer}`}>

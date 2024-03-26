@@ -125,6 +125,9 @@ const CommentDisplay = ({
                 commentId={comment.id}
                 handleCommentCountUpdate={handleCommentCountUpdate}
                 updateCommentCountInCollection={updateCommentCountInCollection}
+                handleEditorHide={() => {
+                  setShowEditor(false)
+                }}
               />
             </div>
           )}

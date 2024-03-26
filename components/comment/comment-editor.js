@@ -2,7 +2,7 @@ import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import styles from "../../styles/comment/comment-editor.module.css";
 
-const CommentEditor = ({ postId, commentId, handleCommentCountUpdate, updateCommentCountInCollection }) => {
+const CommentEditor = ({ postId, commentId, handleCommentCountUpdate, updateCommentCountInCollection, handleEditorHide }) => {
 	const [isfocused, setIsFocused] = useState(false)
   const [content, setContent] = useState("");
   const { user } = useContext(AuthContext);
@@ -31,6 +31,7 @@ const CommentEditor = ({ postId, commentId, handleCommentCountUpdate, updateComm
         console.log("success");
         setContent("");
 				setIsFocused(false);
+        handleEditorHide();
         updateCommentCountInCollection?.(postId)
         handleCommentCountUpdate?.()
       } else {

@@ -11,29 +11,28 @@ export default function PostPageContent({
   post,
   updateVoteCountInCollection,
   handleCommentCountUpdate,
-  updateCommentCountInCollection
+  updateCommentCountInCollection,
 }) {
   const { user } = useContext(AuthContext);
   const [comments, setComments] = useState(null);
 
-  const postId = post.id
+  const postId = post.id;
   const commentCount = post.commentCount;
 
-  useEffect(()=> {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getCommentsByPost(postId);
-        setComments(data)
-      } catch(error) {
-        console.error('Error fetching comments:', error);
+        setComments(data);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
       }
-    }
+    };
 
     fetchData();
 
     // return ()=> {};
-
-  }, [postId, commentCount])
+  }, [postId, commentCount]);
 
   return (
     <div className={styles.body}>
@@ -52,23 +51,27 @@ export default function PostPageContent({
               />
             </div>
           )}
-          {comments &&
-            comments.map((comment) => {
-              return (
-                <div style={{ margin: "16px 16px 0 10px" }} key={comment.id}>
-                  <CommentDisplay
-                    comment={comment}
-                    isChildComment={true}
-                    handleCommentCountUpdate = {handleCommentCountUpdate}
-                    updateCommentCountInCollection={updateCommentCountInCollection}
-                  />
-                </div>
-              );
-            })}
+          <div className="mb-5">
+            {comments &&
+              comments.map((comment) => {
+                return (
+                  <div style={{ margin: "16px 16px 0 10px" }} key={comment.id}>
+                    <CommentDisplay
+                      comment={comment}
+                      isChildComment={true}
+                      handleCommentCountUpdate={handleCommentCountUpdate}
+                      updateCommentCountInCollection={
+                        updateCommentCountInCollection
+                      }
+                    />
+                  </div>
+                );
+              })}
+          </div>
         </div>
       </div>
       <div className={styles.rightColumn}>
-        <CommunityWidget />
+        <CommunityWidget communityName={post.communityName} communityId={post.communityId} />
       </div>
     </div>
   );

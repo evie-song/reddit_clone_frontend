@@ -3,7 +3,7 @@
     display: flex;
     justify-content: space-between;
     overflow: hidden;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 .voteContainer {

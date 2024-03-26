@@ -4,7 +4,7 @@ import MaterialIcon from '../button-tag-icons/material-icon';
 import { AuthContext } from '../../context/AuthContext';
 import QuillEditor from '../quill-editor';
 
-export default function PostForm({ addPost, communityData }) {
+export default function PostForm({ addPost, communityData, subredditName, subredditId }) {
 
     const [quillContent, setQuillContent] = useState('')
     const [title, setTitle] = useState('');
@@ -16,9 +16,15 @@ export default function PostForm({ addPost, communityData }) {
 
     const communities = communityData;
 
-    console.log(quillContent)
-
-
+    useEffect(() => {
+        if (typeof subredditId !== 'undefined' && typeof subredditId !== 'undefined')
+        {
+            setCommunityId(subredditId);
+            setCommunityTitle(subredditName);
+        }
+        
+    }, [])
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Create a new Post object

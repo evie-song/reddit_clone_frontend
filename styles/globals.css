@@ -19,6 +19,19 @@ a {
   text-decoration: none;
 }
 
+h1 {
+  font-size: 20px;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+h3 {
+  font-size: 16px;
+}
+
+
 button {
   border: none;
   padding: 0;
@@ -158,6 +171,7 @@ body {
   overflow-wrap: break-word;
   word-wrap: break-word !important;
   word-break: break-word;
+  pointer-events: none;
 }
 
 .post-widget-wrapper .post-body {

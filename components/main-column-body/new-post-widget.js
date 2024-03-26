@@ -4,17 +4,19 @@ import styles from '../../styles/main-column-body/new-post-widget.module.css';
 import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import { AuthContext } from '../../context/AuthContext';
+import { ModalContext } from '../../context/ModalContext';
 
 export default function NewPostWidget({ onSigninToggle }) {
   const [isHovered, setIsHovered] = useState(false)
   const router = useRouter()
 
   const { user } = useContext(AuthContext)
+  const { handleSigninWindowToggle } = useContext(ModalContext)
 
 
   function handleClick() {
     if (!user) {
-      onSigninToggle(true)
+      handleSigninWindowToggle(true)
     } else {
       setIsHovered(false);
       router.push('/posts/submit')

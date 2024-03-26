@@ -64,7 +64,7 @@ const ShortPostWidget = ({
             post.downVoted && "downvoted"
           }`}
         >
-          <span>{post.upVote - post.downVote}</span>
+          <span>{post.totalVote}</span>
         </div>
         <div className={post.downVoted && "downvoted"}>
           <DownvoteButton onDownVoteClick={onDownVoteClick} />
@@ -76,7 +76,7 @@ const ShortPostWidget = ({
           <div className={styles.postImgContainer}>
             <MaterialIcon iconName="library_books" />
           </div>
-          <div>
+          <div className={styles.postBodyContainer}>
             <div className={`${styles.postContentWrapper}`}>
               <div className={`${styles.postTitle}`}>
                 <span>

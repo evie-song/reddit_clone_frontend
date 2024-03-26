@@ -185,7 +185,9 @@ const UserPage = ({ filter, onSigninToggle }) => {
     <div>
       <div className={styles.body}>
         <div className={styles.header}>
-          <HeaderTitle name="Overview" />
+          <div className="d-none">
+            <HeaderTitle name="Overview" />
+          </div>
           <div
             className={styles.headerTitleWrapper}
             onClick={() => {
@@ -197,8 +199,12 @@ const UserPage = ({ filter, onSigninToggle }) => {
               customClass={postFilter == "posts" ? "header-title-selected" : ""}
             />
           </div>
-          <HeaderTitle name="Comments" />
-          <HeaderTitle name="History" />
+          <div className="d-none">
+            <HeaderTitle name="Comments" />
+          </div>
+          <div className="d-none">
+            <HeaderTitle name="History" />
+          </div>
           <div
             className={styles.headerTitleWrapper}
             onClick={() => {
@@ -210,7 +216,9 @@ const UserPage = ({ filter, onSigninToggle }) => {
               customClass={postFilter == "saved" ? "header-title-selected" : ""}
             />
           </div>
-          <HeaderTitle name="Hidden" />
+          <div className="d-none">
+            <HeaderTitle name="Hidden" />{" "}
+          </div>
           <div
             className={styles.headerTitleWrapper}
             onClick={() => {

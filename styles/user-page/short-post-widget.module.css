@@ -111,4 +111,8 @@
 	border-radius: 4px;
 }
 
+.postBodyContainer {
+	max-width: calc(100% - 96px);
+}
+
 

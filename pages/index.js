@@ -5,7 +5,7 @@ import IndexBody from '../components/index-body';
 
 
 export async function getServerSideProps() {
-  const res = await fetch("http://localhost:5142/api/post/getall");
+  const res = await fetch("http://localhost:5142/api/post/getall/1");
   const data = await res.json();
   return {
       props: {

@@ -25,7 +25,7 @@ export default function PostWidget({ post, updateVoteCountInCollection }) {
   const { votedPosts, updateVotedPosts } = useContext(UserContext);
   const { handleSigninWindowToggle } = useContext(ModalContext);
 
-  const decodedContent = he.decode(post.content)
+  const decodedContent = post.content? he.decode(post.content) : <p></p>
 
   const sampleData = {
     post_tag: {

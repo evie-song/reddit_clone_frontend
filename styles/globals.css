@@ -154,6 +154,12 @@ body {
   margin-bottom: 16px;
 }
 
+.post-body a{
+  overflow-wrap: break-word;
+  word-wrap: break-word !important;
+  word-break: break-word;
+}
+
 .post-widget-wrapper .post-body {
   background-image: linear-gradient(black, #FFFFFF);
   background-size: 100%;

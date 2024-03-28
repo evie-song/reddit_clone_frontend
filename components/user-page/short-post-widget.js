@@ -3,22 +3,29 @@ import styles from "../../styles/user-page/short-post-widget.module.css";
 import MaterialIcon from "../button-tag-icons/material-icon";
 import PostTag from "../button-tag-icons/post-tag";
 import { useState, useEffect, useContext } from "react";
-import { useRouter } from "next/router";
 import UpvoteButton from "../button-tag-icons/upvote-button";
 import DownvoteButton from "../button-tag-icons/downvote-button";
-import UserContainer from "../layout/user-container";
 import { AuthContext } from "../../context/AuthContext";
 import {CalculateDate} from "../utils/utils-helper";
+import he from 'he';
+import { UserContext } from "../../context/UserContext";
+import { handlePostSaveAndUnsave, handlePostVote } from "../utils/app-helper";
+import { getVoteClass, calculateVoteCountAndStatus } from "../utils/utils-helper";
 
 const ShortPostWidget = ({
-  post,
-  onUpVoteClick,
-  onDownVoteClick,
-  handleSaveClick,
-  handleUnsaveClick,
+  post
 }) => {
+  const [postVoteCount, setPostVoteCount] = useState(post.totalVote);
   const { user } = useContext(AuthContext);
   const [showContent, setShowContent] = useState(false);
+  const decodedContent = post.content? he.decode(post.content) : <p></p>
+
+  const { savedPosts, updateSavedPosts } = useContext(UserContext);
+  const saveStatus = savedPosts.includes(post.id);
+
+  const { votedPosts, updateVotedPosts } = useContext(UserContext)
+  const voteStatus = votedPosts[post.id] ? votedPosts[post.id] : 0;
+  const voteClass = getVoteClass(voteStatus);
 
   const sampleData = {
     channel_name: "r/SantaBarbara",
@@ -28,18 +35,6 @@ const ShortPostWidget = ({
       background_color: "#0079D3",
     },
     user_name: "u/lsquallhart",
-  };
-
-  const handleSaveBtnClick = (event) => {
-    event.stopPropagation();
-    event.preventDefault();
-    handleSaveClick();
-  };
-
-  const handleUnsaveBtnClick = (event) => {
-    event.stopPropagation();
-    event.preventDefault();
-    handleUnsaveClick();
   };
 
   const handleShowContentClick = (event) => {
@@ -53,21 +48,47 @@ const ShortPostWidget = ({
     event.preventDefault();
     setShowContent(false);
   };
+
+  const handleSaveAndUnsaveClick = async(event, isSaving) =>{
+    event.stopPropagation();
+    event.preventDefault();
+
+    await handlePostSaveAndUnsave(post.id, user.userId, isSaving)
+
+    updateSavedPosts(post.id, isSaving)
+  }
+
+
+  const handlePostVoteClick = async (value) => {
+    await handlePostVote(post.id, value, user.userId);
+    const { newVote, newStatus } = calculateVoteCountAndStatus(
+      postVoteCount,
+      voteStatus,
+      value
+    );
+
+    console.log(newVote)
+
+    setPostVoteCount(newVote);
+
+    // update the context votedPosts
+    updateVotedPosts(post.id, newStatus);
+
+  }
+
   return (
     <div className={`${styles.container}`}>
-      <div className={`${styles.voteContainer} vote-container`}>
-        <div className={post.upVoted && "upvoted"}>
-          <UpvoteButton onUpVoteClick={onUpVoteClick} />
+      <div className={`${styles.voteContainer} vote-container ${voteClass}`}>
+        <div>
+          <UpvoteButton onUpVoteClick={() => handlePostVoteClick(1)} />
         </div>
         <div
-          className={`${styles.voteCount} ${post.upVoted && "upvoted"} ${
-            post.downVoted && "downvoted"
-          }`}
+          className={`${styles.voteCount} vote-count`}
         >
-          <span>{post.totalVote}</span>
+          <span>{postVoteCount}</span>
         </div>
-        <div className={post.downVoted && "downvoted"}>
-          <DownvoteButton onDownVoteClick={onDownVoteClick} />
+        <div>
+          <DownvoteButton onDownVoteClick={() => handlePostVoteClick(-1)} />
         </div>
       </div>
 
@@ -158,8 +179,8 @@ const ShortPostWidget = ({
                 addText="Share"
                 additionalClass="padding-right-4 padding-y-4"
               />
-              {post.isSaved && (
-                <div onClick={(event) => handleUnsaveBtnClick(event)}>
+              {saveStatus && (
+                <div onClick={(event) => handleSaveAndUnsaveClick(event, false)}>
                   <HeaderIcon
                     marginRight="4px"
                     iconName="favorite"
@@ -171,8 +192,8 @@ const ShortPostWidget = ({
                   />
                 </div>
               )}
-              {!post.isSaved && (
-                <div onClick={(event) => handleSaveBtnClick(event)}>
+              {!saveStatus && (
+                <div onClick={(event) => handleSaveAndUnsaveClick(event, true)}>
                   <HeaderIcon
                     marginRight="4px"
                     iconName="favorite_border"
@@ -196,7 +217,7 @@ const ShortPostWidget = ({
           </div>
         </div>
         {showContent && (
-          <div className={`${styles.postBody}`}>{post && post.content}</div>
+          <div className={`${styles.postBody}`}>{post && <div dangerouslySetInnerHTML={{ __html: decodedContent }}></div>}</div>
         )}
       </div>
     </div>

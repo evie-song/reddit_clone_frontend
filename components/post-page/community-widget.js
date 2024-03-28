@@ -15,7 +15,7 @@ export default function CommunityWidget({ communityName, communityId }) {
     if (!user) {
       handleSigninWindowToggle(true);
     } else {
-      router.push("/posts/submit");
+      router.push(`/posts/submit/${communityId}`);
     }
   }
 

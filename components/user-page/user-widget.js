@@ -1,7 +1,7 @@
 import styles from "../../styles/user-page/user-widget.module.css";
 import FullLengthButton from "../button-tag-icons/full-length-button";
 import MaterialIcon from "../button-tag-icons/material-icon";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { ModalContext } from "../../context/ModalContext";
 import { useRouter } from "next/router";
@@ -10,16 +10,23 @@ const UserWidget = () => {
   const { user } = useContext(AuthContext);
   const { handleSigninWindowToggle } = useContext(ModalContext);
   const router = useRouter();
+  const [username, setUsername] = useState("")
 
   function handleClick() {
     if (!user) {
       handleSigninWindowToggle(true);
     } else {
+      const username = user.username.split("@")[0]
       router.push("/posts/submit");
     }
   }
 
-  const username = user.username.split("@")[0]
+  useEffect(()=>{
+    if (user) {
+      setUsername(user.username.split("@")[0])
+    }
+  }, [user])
+
 
   return (
     <div>

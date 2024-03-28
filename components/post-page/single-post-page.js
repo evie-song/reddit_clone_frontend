@@ -21,6 +21,7 @@ export default function SinglePostPage({ post }) {
   }, []);
 
   const updatePostCommentCount = () => {
+    console.log('update comment count')
     const newCommentCount = customPost.commentCount + 1
     setCustomPost(prevState => ({
       ...prevState, commentCount : newCommentCount}));

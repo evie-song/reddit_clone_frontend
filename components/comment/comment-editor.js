@@ -29,9 +29,10 @@ const CommentEditor = ({ postId, commentId, handleCommentCountUpdate, updateComm
 
       if (response.ok) {
         console.log("success");
+        console.log(updateCommentCountInCollection)
         setContent("");
 				setIsFocused(false);
-        handleEditorHide();
+        handleEditorHide?.();
         updateCommentCountInCollection?.(postId)
         handleCommentCountUpdate?.()
       } else {

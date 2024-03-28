@@ -99,6 +99,7 @@ const PostCollection = ({ posts }) => {
   };
 
   const updateCommentCountInCollection = (postId) => {
+    console.log("update comment count in collection")
     const updatedPosts = customPosts.map((post) => {
       if (post.id === postId) {
         const newCount = post["commentCount"] + 1;

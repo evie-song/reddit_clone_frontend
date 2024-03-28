@@ -1,18 +1,16 @@
 import styles from "../../styles/layout/user-container.module.css";
 import Link from "next/link";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import FullLengthButton from "../button-tag-icons/full-length-button";
 import MaterialIcon from "../button-tag-icons/material-icon";
 import { UserContext } from "../../context/UserContext";
 import { ModalContext } from "../../context/ModalContext";
 
-export default function UserContainer({ }) {
+export default function UserContainer({isDarkMode, toggleDarkMode }) {
   const [isHovered, setIsHovered] = useState(false);
-
   const { user, logout, showUserOptions, setShowUserOptions } = useContext(AuthContext);
   const { removeUserInfo } = useContext(UserContext)
-
   const { handleSigninWindowToggle } = useContext(ModalContext)
 
   const handleLogout = (event) => {
@@ -92,7 +90,7 @@ export default function UserContainer({ }) {
             <div className={`${styles.sectionHeaderTitle}`}>View Options</div>
           </div>
           <div className={styles.optionLine}>
-            <div className={styles.optionTitle}>Dark Mode</div>
+            <div onClick={toggleDarkMode} className={styles.optionTitle}>{isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}</div>
           </div>
         </div>
 

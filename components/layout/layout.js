@@ -14,6 +14,13 @@ export const siteTitle = "Reddit Clone";
 export default function Layout({ children, home }) {
   const { signinWindowOpen } = useContext(ModalContext);
   const { setShowUserOptions } = useContext(AuthContext);
+  const [isDarkMode, setIsDarkMode] = useState(false)
+
+  const toggleDarkMode = () => {
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode)
+    localStorage.setItem("darkMode", newMode)
+  }
 
   const handleClickOutsideUserOption = (event) => {
     if (!event.target.closest(".user-option-window")) {
@@ -22,6 +29,10 @@ export default function Layout({ children, home }) {
   };
 
   useEffect(() => {
+
+    const savedMode = localStorage.getItem('darkMode') === 'true';
+    setIsDarkMode(savedMode);
+
     document.addEventListener("click", handleClickOutsideUserOption);
     return () => {
       document.removeEventListener("click", handleClickOutsideUserOption);
@@ -29,7 +40,7 @@ export default function Layout({ children, home }) {
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} layout ${isDarkMode? "dark-mode" : "light-mode"}`}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -46,8 +57,9 @@ export default function Layout({ children, home }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
-      <NavBar />
+      <NavBar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}/>
       <main>
+        <div>{isDarkMode? "is dark mode": "is light mode" }</div>
         <PopupWindow isOpen={signinWindowOpen}>
           <Signin />
         </PopupWindow>

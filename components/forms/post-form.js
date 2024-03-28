@@ -24,6 +24,12 @@ export default function PostForm({ addPost, communityData, selectedCommunityId }
         }
         
     }, [])
+
+    // const getRandomNumber = async () => {
+    //     const count = Math.floor(Math.random() * 1000000) + 1;
+    //     return count;
+    // };
+    
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -104,7 +110,7 @@ export default function PostForm({ addPost, communityData, selectedCommunityId }
                                         <MaterialIcon iconName={"face"} fontSize={"28px"} padding={"0 8px 0 0"}/>
                                         <div className=''>
                                             <div className={styles.communityTitle}>{community.title}</div>
-                                            <div className={styles.communityMember}>8238404 members</div>
+                                            <div className={styles.communityMember}>10,031 members</div>
                                         </div>
                                     </div>
                                 </div>

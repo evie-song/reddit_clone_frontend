@@ -84,7 +84,7 @@ export default function PostWidget({ post, updateVoteCountInCollection }) {
 
   return (
     <div
-      className={`${styles.container}`}
+      className={`${styles.container} post-widget-container`}
       // onClick={() => directToPost(post.id)}
     >
       <div className={`${styles.voteContainer} vote-container ${voteClass}`}>

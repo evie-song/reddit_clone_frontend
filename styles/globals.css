@@ -1,5 +1,26 @@
 @import 'quill/dist/quill.snow.css';
 
+:root {
+  --gray-900: #030303;
+  --gray-800: #161617;
+  --gray-700:  #1a1a1b;
+  --gray-600: #272729;
+
+}
+
+
+.dark-mode {
+  background-color: var(--gray-900);
+}
+
+.dark-mode .post-widget-container {
+  background-color: var(--gray-700);
+}
+
+
+
+
+
 html,
 body {
   padding: 0;
@@ -355,3 +376,6 @@ a {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+
+

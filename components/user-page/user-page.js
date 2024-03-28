@@ -11,6 +11,7 @@ const UserPage = ({ filter, onSigninToggle }) => {
   const [userPosts, setUserPosts] = useState([]);
   const { user } = useContext(AuthContext);
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   // filter values can be "saved", "upvoted", "downvoted" "posts"
   const [postFilter, setPostFilter] = useState(filter);
@@ -33,22 +34,18 @@ const UserPage = ({ filter, onSigninToggle }) => {
     }
   }, []);
 
-  useEffect(() => {
-    if (user) {
-      const getPostData = async () => {
-        const url = "/api/ApplicationUser/" + user.userId + "/" + postFilter;
-        const res = await fetch(url, { method: "GET" });
-        const data = await res.json();
-        // console.log(data);
-        setUserPosts(data);
-      };
-
-      getPostData();
-    }
-  }, [user, postFilter]);
-
-  const handleTitleClick = (title) => {
+  const handleTitleClick = async (title) => {
+    const getPostData = async () => {
+      const url = "/api/ApplicationUser/" + user.userId + "/" + title;
+      const res = await fetch(url, { method: "GET" });
+      const data = await res.json();
+      // console.log(data);
+      setUserPosts(data);
+    };
     if (postFilter != title) {
+      setIsLoading(true);
+      await getPostData();
+      setIsLoading(false);
       setPostFilter(title);
       window.history.pushState({}, "", `/user/${user.userId}/${title}`);
     }
@@ -108,7 +105,7 @@ const UserPage = ({ filter, onSigninToggle }) => {
           <div
             className={styles.headerTitleWrapper}
             onClick={() => {
-            handleTitleClick("downvoted")
+              handleTitleClick("downvoted");
             }}
           >
             <HeaderTitle
@@ -122,17 +119,30 @@ const UserPage = ({ filter, onSigninToggle }) => {
 
         <div className={`d-flex justify-content-between ${styles.mainBody}`}>
           <div className={`${styles.postContainer} flex-grow-1`}>
-            {userPosts.map((post) => {
-              return (
-                <div onClick={()=> {router.push(`/posts/${post.id}`)}} key={post.id} style={{ marginBottom: "3px" }}>
-                  <PostWidgetContainer>
-                    <ShortPostWidget
-                      post={post}
-                    />
-                  </PostWidgetContainer>
+            {isLoading && (
+              <div>
+                <div class="loading-container">
+                  <div class="loading-spinner"></div>
+                  <div>&nbsp;&nbsp;&nbsp;fetching posts...</div>
                 </div>
-              );
-            })}
+              </div>
+            )}
+            {!isLoading &&
+              userPosts.map((post) => {
+                return (
+                  <div
+                    onClick={() => {
+                      router.push(`/posts/${post.id}`);
+                    }}
+                    key={post.id}
+                    style={{ marginBottom: "3px" }}
+                  >
+                    <PostWidgetContainer>
+                      <ShortPostWidget post={post} />
+                    </PostWidgetContainer>
+                  </div>
+                );
+              })}
           </div>
           <div className={styles.rightColumn}>
             <UserWidget />

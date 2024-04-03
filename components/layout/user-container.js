@@ -45,8 +45,8 @@ export default function UserContainer({isDarkMode, toggleDarkMode }) {
       <div
         className={`${
           styles.container
-        } d-flex justify-content-between align-items-center ${
-          isHovered ? styles.isHovered : styles.notHovered
+        } d-flex justify-content-between align-items-center user-container ${
+          isHovered ? "is-hovered" : styles.notHovered
         }`}
         onClick={toggleUserOptionWindow}
         onMouseEnter={() => setIsHovered(true)}
@@ -64,8 +64,8 @@ export default function UserContainer({isDarkMode, toggleDarkMode }) {
         {/* <i className='material-icons'>keyboard_arrow_down</i> */}
       {/* </Link> */}
       </div>
-      <div className={`${styles.userOptionContainer} ${!showUserOptions && "d-none"} `}>
-        <div className={`${styles.section} ${styles.sectionBorder}`}>
+      <div className={`${styles.userOptionContainer} ${!showUserOptions && "d-none"} user-option-container`}>
+        <div className={`${styles.section} section-border`}>
           <div className={`${styles.sectionHeader}`}>
             <div className={`${styles.sectionHeaderIcon}`}>
               <MaterialIcon iconName={"person_pin"} fontSize={"20px"} />
@@ -74,22 +74,22 @@ export default function UserContainer({isDarkMode, toggleDarkMode }) {
           </div>
 
           <a href={`/user/${user.userId}/posts`}>
-            <div className={styles.optionLine}>
+            <div className={`${styles.optionLine} option-line`}>
               <div className={styles.optionTitle}>Profile</div>
             </div>
           </a>
-          <div className={styles.optionLine}>
+          <div className={`${styles.optionLine} option-line`}>
             <div className={styles.optionTitle}>User Setting</div>
           </div>
         </div>
-        <div className={`${styles.section} ${styles.sectionBorder}`}>
+        <div className={`${styles.section} section-border`}>
           <div className={`${styles.sectionHeader}`}>
             <div className={`${styles.sectionHeaderIcon}`}>
               <MaterialIcon iconName={"remove_red_eye"} fontSize={"20px"} />
             </div>
             <div className={`${styles.sectionHeaderTitle}`}>View Options</div>
           </div>
-          <div className={styles.optionLine}>
+          <div className={`${styles.optionLine} option-line`}>
             <div onClick={toggleDarkMode} className={styles.optionTitle}>{isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}</div>
           </div>
         </div>
@@ -99,7 +99,7 @@ export default function UserContainer({isDarkMode, toggleDarkMode }) {
             onClick={(event) => {
               handleLogout(event);
             }}
-            className={styles.optionLine}
+            className={`${styles.optionLine} option-line`}
           >
             <div className={styles.optionTitle}>Log Out</div>
           </div>

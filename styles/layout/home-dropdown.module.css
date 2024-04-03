@@ -7,14 +7,6 @@
     font-weight: 500;
 }
 
-.isHovered {
-    border: 1px solid #edeff1;
-  }
-  
-  .notHovered {
-    border: 1px solid transparent;
-  }
-
   .container {
     padding: 4px 8px;
     box-sizing: border-box;

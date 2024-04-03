@@ -8,7 +8,7 @@ export default function HomeDropdown() {
     return (
         <Link 
             href="/" 
-            className={ `${styles.container} d-flex justify-content-between align-items-center ${isHovered? styles.isHovered : styles.notHovered}`}
+            className={ `${styles.container} home-dropdown d-flex justify-content-between align-items-center ${isHovered? "is-hovered" : "not-hovered" }`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >

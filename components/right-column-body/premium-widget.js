@@ -6,7 +6,7 @@ import { withRouter } from "next/router";
 
 export default function PremiumWidget(){
     return (
-        <div className={`d-flex flex-column ${styles.container}`}>
+        <div className={`d-flex flex-column ${styles.container} premium-widget-container`}>
             <div className="d-flex flex-row align-items-center margin-bottom-8 }">
                 <div className="">
                     <MaterialIcon iconName={"assistant"} fontSize={"24px"} padding={"0"} customClass={"premium-icon"} />

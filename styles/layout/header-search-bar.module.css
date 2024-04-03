@@ -18,17 +18,6 @@
     font-size: 14px;
 }
 
-
-.notHovered {
-    background: #f6f7f8;
-    border: 1px solid rgb(237, 239, 241);
-}
-
-.hovered {
-    background: white;
-    border: 1px solid #0079d3;
-}
-
 .container form {
     display: flex;
     align-items: center;

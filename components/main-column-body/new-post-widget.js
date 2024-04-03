@@ -24,13 +24,13 @@ export default function NewPostWidget({ onSigninToggle }) {
   }
 
   return (
-    <div className={` ${styles.container}`}>
+    <div className={` ${styles.container} new-post-widget-container`}>
       <MaterialIcon iconName="person_pin" fontSize="38px" padding="" />
       <form className='flex-fill'>
           <input 
             type='text' 
             placeholder='Create Post'
-            className={isHovered ? styles.inputIsHovered : undefined}
+            className={isHovered ? "is-hovered" : ""}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             onClick={handleClick}

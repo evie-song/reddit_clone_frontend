@@ -31,10 +31,6 @@
     color: #a8aaab;
   }
 
-  .isHovered {
-    border: 1px solid #edeff1;
-  }
-  
   .notHovered {
     border: 1px solid transparent;
   }
@@ -45,8 +41,6 @@
     width: 252px;
     right: 10px;
     top: 50px;
-    border: 1px solid rgb(237, 239, 241);
-    background-color: rgb(255, 255, 255);
     border-radius: 4px;
 
   }
@@ -54,10 +48,6 @@
   .section {
     padding: 12px 0;
 
-  }
-
-  .sectionBorder {
-    border-bottom: 1px solid rgb(237, 239, 241);
   }
 
   .sectionHeader {
@@ -91,13 +81,8 @@
 
   }
 
-  .optionLine:hover {
-    background-color: rgba(0, 0, 0, 0.04);
-
-  }
 
   .optionTitle {
-    color: rgb(28, 28, 28);
     font-size: 14px;
     font-weight: 500;
     line-height: 18px;

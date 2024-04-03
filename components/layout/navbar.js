@@ -8,7 +8,7 @@ import HomeDropdown from './home-dropdown';
 
 export default function NavBar({ isDarkMode, toggleDarkMode}){
     return (
-        <div className={`${styles.navbar} position-fixed top-0 start-0 end-0 d-flex justify-content-between align-items-center`}>
+        <div className={`navbar-container ${styles.navbar} position-fixed top-0 start-0 end-0 d-flex justify-content-between align-items-center`}>
             <Link href="/" className={`${styles.logoContainer} d-flex align-items-center`}>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" className={styles.redditIcon}>
                     <g>
@@ -17,7 +17,7 @@ export default function NavBar({ isDarkMode, toggleDarkMode}){
                     </g>
                 </svg>
                 <svg className={styles.redditLogo} viewBox="0 0 57 18" xmlns="http://www.w3.org/2000/svg">
-                    <g fill="#1c1c1c">
+                    <g className='reddit-logo'>
                         <path d="M54.63,16.52V7.68h1a1,1,0,0,0,1.09-1V6.65a1,1,0,0,0-.93-1.12H54.63V3.88a1.23,1.23,0,0,0-1.12-1.23,1.2,1.2,0,0,0-1.27,1.11V5.55h-1a1,1,0,0,0-1.09,1v.07a1,1,0,0,0,.93,1.12h1.13v8.81a1.19,1.19,0,0,0,1.19,1.19h0a1.19,1.19,0,0,0,1.25-1.12A.17.17,0,0,0,54.63,16.52Z"></path>
                         <circle fill="#FF4500" cx="47.26" cy="3.44" r="2.12"></circle>
                         <path d="M48.44,7.81a1.19,1.19,0,1,0-2.38,0h0v8.71a1.19,1.19,0,0,0,2.38,0Z"></path>

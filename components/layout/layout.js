@@ -20,6 +20,14 @@ export default function Layout({ children, home }) {
     const newMode = !isDarkMode;
     setIsDarkMode(newMode)
     localStorage.setItem("darkMode", newMode)
+
+    if (newMode === true) {
+      document.body.classList.add('dark-mode')
+      document.body.classList.remove('light-mode')
+    } else {
+      document.body.classList.add('light-mode')
+      document.body.classList.remove('dark-mode')
+    }
   }
 
   const handleClickOutsideUserOption = (event) => {
@@ -32,6 +40,14 @@ export default function Layout({ children, home }) {
 
     const savedMode = localStorage.getItem('darkMode') === 'true';
     setIsDarkMode(savedMode);
+
+    if (savedMode) {
+      document.body.classList.add('dark-mode')
+      document.body.classList.remove('light-mode')
+    } else {
+      document.body.classList.add('light-mode')
+      document.body.classList.remove('dark-mode')
+    }
 
     document.addEventListener("click", handleClickOutsideUserOption);
     return () => {

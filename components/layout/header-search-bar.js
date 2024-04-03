@@ -6,7 +6,7 @@ export default function HeaderSearchBar(){
 
     return (
         <div 
-            className={ `${styles.container} ${ishovered? styles.hovered : styles.notHovered}`}
+            className={ ` header-search-bar-container ${styles.container} ${ishovered? "is-hovered" :"not-hovered"}`}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >

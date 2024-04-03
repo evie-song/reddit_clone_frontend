@@ -18,7 +18,7 @@ export default function HomeWidget() {
     }
   }
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} home-widget-container`}>
       <div className={styles.headerImg}></div>
       <div className={styles.titleDiv}>
         <div className={styles.titleImg}></div>
@@ -28,7 +28,7 @@ export default function HomeWidget() {
         Your personal Reddit frontpage. Come here to check in with your favorite
         communities.
       </div>
-      <div className={styles.lineBreak}></div>
+      <div className={`${styles.lineBreak} break-line`}></div>
       <div onClick={handleClick}>
         {" "}
         <FullLengthButton

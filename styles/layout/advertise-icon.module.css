@@ -11,11 +11,3 @@
     margin-right: 4px;
     font-size: 20px;
   }
-  
-  .isHovered {
-    background: #d4d7d9;
-  }
-
-  .notHovered {
-    background: #edeff1;
-  }

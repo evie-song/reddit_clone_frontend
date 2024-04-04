@@ -29,7 +29,7 @@ export default function SinglePostPage({ post }) {
 
 
   return (
-    <div className={styles.backgroundLayer}>
+    <div className={`${styles.backgroundLayer} single-post-page-background-layer`}>
       <div className={styles.container}>
         { customPost && (
           <PostPageContent

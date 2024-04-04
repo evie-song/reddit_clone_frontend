@@ -1,5 +1,4 @@
 .body {
-    background-color: #dae0e6;
     display: flex;
     justify-content: center;
     max-width: 100%;
@@ -20,7 +19,6 @@
 
 .mainColumnBody {
     height: 100%;
-    background-color: white;
     border-radius: 4px;
     overflow: hidden;
 }

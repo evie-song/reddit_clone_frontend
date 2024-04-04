@@ -35,9 +35,9 @@ export default function PostPageContent({
   }, [postId, commentCount]);
 
   return (
-    <div className={styles.body}>
+    <div className={`${styles.body} post-page-content-body`}>
       <div className={styles.mainColumn}>
-        <div className={styles.mainColumnBody}>
+        <div className={`${styles.mainColumnBody} post-page-content-main-column-body`}>
           <PostWidget
             updateVoteCountInCollection={updateVoteCountInCollection}
             post={post}

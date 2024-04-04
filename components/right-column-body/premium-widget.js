@@ -17,7 +17,7 @@ export default function PremiumWidget(){
                 </div>
             </div>
             <div>
-                <FullLengthButton text={"Try Now"} color={"white"} backgroundColor={"rgb(255, 69, 0)"} border={"1px solid white"} />
+                <FullLengthButton text={"Try Now"} color={"white"} backgroundColor={"rgb(255, 69, 0)"}  />
             </div>
         </div>
     )

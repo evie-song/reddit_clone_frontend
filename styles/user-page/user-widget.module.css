@@ -1,7 +1,5 @@
 .container {
   padding: 12px;
-  background-color: rgb(255, 255, 255);
-  border: 1px solid rgb(204, 204, 204);
   border-radius: 4px;
   margin-bottom: 16px;
   width: 312px;
@@ -9,7 +7,6 @@
 }
 
 .headerImg {
-  background-color: #34a8ff;
   border-radius: 3px 3px 0 0;
   height: 94px;
   margin: -12px -12px 10px;
@@ -36,7 +33,6 @@
   font-size: 22px;
   font-weight: 500;
   line-height: 26px;
-  color: #222222;
 }
 
 .usernameSmall {
@@ -51,7 +47,6 @@
   font-size: 14px;
   font-weight: 500;
   line-height: 18px;
-  color: #222222;
 	margin-bottom: 4px;
 }
 

@@ -117,8 +117,8 @@ const CommentDisplay = ({
           {user && (
             <div
               className={`${!showEditor && "d-none"} ${
-                showEditor && styles.subEditor
-              }`}
+                showEditor && styles.subEditor} ${
+                  showEditor && "sub-editor"} `}
             >
               <CommentEditor
                 postId={comment.postId}

@@ -18,14 +18,13 @@
 }
 
 
-
-
 .dark-mode {
   background-color: var(--gray-900);
 }
 
-.dark-mode .post-widget-wrapper .vote-container {
-  background-color: var(--gray-800);
+.dark-mode .post-widget-wrapper .vote-container,
+.dark-mode .short-post-widget-container .vote-container {
+  background-color: var(--gray-800) !important;
 }
 
 .dark-mode .post-widget-container,
@@ -33,8 +32,74 @@
 .dark-mode .home-widget-container,
 .dark-mode .new-post-widget-container,
 .dark-mode .navbar-container,
-.dark-mode .user-option-container  {
+.dark-mode .user-option-container,
+.dark-mode .community-container,
+.dark-mode .community-choice-wrapper,
+.dark-mode .post-form-container,
+.dark-mode .user-widget-container,
+.dark-mode .post-page-content-main-column-body,
+.dark-mode .comment-editor-container textarea,
+.dark-mode .community-widget,
+.dark-mode .user-page-header,
+.dark-mode .short-post-widget-container {
   background-color: var(--gray-700);
+}
+
+.dark-mode .post-widget-wrapper,
+.dark-mode .new-post-widget-container,
+.dark-mode .premium-widget-container,
+.dark-mode .home-widget-container,
+.dark-mode .new-post-widget-container input,
+.dark-mode .home-widget-container .break-line,
+.dark-mode .navbar-container,
+.dark-mode .home-dropdown.is-hovered,
+.dark-mode .user-container.is-hovered,
+.dark-mode .user-option-container,
+.dark-mode .community-container,
+.dark-mode .community-choice-wrapper,
+.dark-mode .ql-container.ql-snow,
+.dark-mode .ql-toolbar.ql-snow,
+.dark-mode .post-form-title-input,
+.dark-mode .user-widget-container,
+.dark-mode .comment-editor-wrapper,
+.dark-mode .community-widget  {
+  border: 1px solid #343536;
+}
+
+.dark-mode .user-widget-header-img {
+  background:linear-gradient(0deg, #1a1a1b 0%, rgba(0, 0, 0, 0.00) 111.72%), #0045AC;;
+}
+
+.dark-mode .community-widget-line-break {
+  border-bottom: 1px #343536 solid;
+}
+
+.dark-mode,
+.dark-mode .ad-icon-container,
+.dark-mode .header-search-bar-container input,
+.dark-mode .user-option-container a,
+.dark-mode .home-dropdown {
+  color: #D7DADC;
+}
+
+.dark-mode .comment-editor-option-container {
+  background-color:#272729;
+}
+
+.dark-mode .comment-editor-input-border {
+  border-color: rgb(237, 239, 241);
+}
+
+.dark-mode .single-post-page-background-layer{
+  background-color: #191919;
+}
+
+.dark-mode .post-page-content-body {
+  background-color: #030303;
+}
+
+.dark-mode .post-form-header-container {
+  border-bottom: 1px solid #343536;
 }
 
 .dark-mode .new-post-widget-container input{
@@ -47,33 +112,19 @@
   
 }
 
-
-
 .dark-mode .header-search-bar-container.is-hovered {
   background: var(--gray-700);
   border: 1px solid #d7dadc;
 }
 
-
-.dark-mode .ad-icon-container.not-hovered {
+.dark-mode .ad-icon-container.not-hovered,
+.dark-mode .header-icon-container.is-hovered  {
   background-color: var(--gray-500);
 }
 
-.dark-mode .ad-icon-container.is-hovered {
+.dark-mode .ad-icon-container.is-hovered,
+.dark-mode .community-choice:hover {
   background-color: var(--gray-400);
-}
-
-.dark-mode .post-widget-wrapper,
-.dark-mode .new-post-widget-container,
-.dark-mode .premium-widget-container,
-.dark-mode .home-widget-container,
-.dark-mode .new-post-widget-container input,
-.dark-mode .home-widget-container .break-line,
-.dark-mode .navbar-container,
-.dark-mode .home-dropdown.is-hovered,
-.dark-mode .user-container.is-hovered,
-.dark-mode .user-option-container  {
-  border: 1px solid #343536;
 }
 
 .dark-mode .new-post-widget-container input.is-hovered {
@@ -81,13 +132,6 @@
   background-color: #1A1A1B;
 }
 
-.dark-mode,
-.dark-mode .ad-icon-container,
-.dark-mode .header-search-bar-container input,
-.dark-mode .user-option-container a,
-.dark-mode .home-dropdown {
-  color: #D7DADC;
-}
 
 .dark-mode .post-widget-wrapper .post-body {
   background-image: linear-gradient(#FFFFFF, #1a1a1b );
@@ -102,16 +146,68 @@ body.dark-mode {
 
 }
 
-.light-mode .post-widget-wrapper .vote-container {
-  background: var(--white-800);
+.dark-mode .user-option-container .option-line:hover {
+  background-color: #232324;
+}
+
+.light-mode .post-widget-wrapper .vote-container,
+.light-mode .short-post-widget-container .vote-container  {
+  background: var(--white-800) !important;
+}
+
+.dark-mode .post-form-option-container {
+  border-top: 1px solid #343536;
+  background-color: #272729;
+}
+
+.dark-mode .post-form-type {
+  border-color:#343536;
+}
+
+.dark-mode .threadline {
+  border-right: 2px #343536 solid ;
+}
+
+.dark-mode .sub-editor {
+  border-left: 2px #343536 solid ;
 }
 
 .light-mode .post-widget-container,
 .light-mode .premium-widget-container,
 .light-mode .home-widget-container,
 .light-mode .new-post-widget-container,
-.light-mode .navbar-container {
+.light-mode .navbar-container,
+.light-mode .community-container,
+.light-mode .community-choice-wrapper,
+.light-mode .post-form-container,
+.light-mode .user-page-header,
+.light-mode .short-post-widget,
+.light-mode .short-post-widget-container {
   background: var(--white-700);
+}
+
+.light-mode .post-widget-wrapper,
+.light-mode .new-post-widget-container,
+.light-mode .premium-widget-container,
+.light-mode .home-widget-container,
+.light-mode .home-widget-container .break-line {
+  border: 1px solid #cccccc;
+}
+
+.light-mode .community-container,
+.light-mode .community-choice-wrapper {
+  border: 1px solid rgb(237, 239, 241);
+
+}
+
+.light-mode .community-choice:hover {
+  background-color: #f6f7f8;
+}
+
+
+.light-mode,
+.light-mode .user-option-container a {
+  color: rgb(28, 28, 28);
 }
 
 .light-mode .new-post-widget-container input {
@@ -140,14 +236,6 @@ body.dark-mode {
   color: #1c1c1c;
 }
 
-.light-mode .post-widget-wrapper,
-.light-mode .new-post-widget-container,
-.light-mode .premium-widget-container,
-.light-mode .home-widget-container,
-.light-mode .home-widget-container .break-line {
-  border: 1px solid #cccccc;
-}
-
 .light-mode .new-post-widget-container input,
 .light-mode .user-container.is-hovered {
   border: 1px solid #edeff1;
@@ -158,10 +246,6 @@ body.dark-mode {
   background-color: white;
 }
 
-.light-mode,
-.light-mode .user-option-container a {
-  color: rgb(28, 28, 28);
-}
 
 .light-mode .post-widget-wrapper .post-body {
   background-image: linear-gradient(black, #FFFFFF);
@@ -189,7 +273,6 @@ body.dark-mode {
   border: 1px solid transparent;
 }
 
-
 body.light-mode {
   background-color: #dae0e6;;
 }
@@ -210,7 +293,75 @@ body.light-mode {
   fill: #ffffff;
 }
 
+.light-mode .post-form-option-container {
+  border-top: 1px solid #F6F7F8;
+  background-color: #f6f7f8;
+}
 
+.light-mode .post-form-type {
+  border-color: #EDEFF1;
+}
+
+.light-mode .ql-container.ql-snow,
+.light-mode .ql-toolbar.ql-snow,
+.light-mode .post-form-title-input {
+  border: 1px solid #EDEFF1;
+}
+
+.light-mode .post-form-header-container {
+  border-bottom: 1px solid #edeff1;
+}
+
+.light-mode .user-widget-container {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(204, 204, 204);
+}
+
+.light-mode .user-widget-header-img {
+  background-color: #34a8ff;
+}
+
+.light-mode .header-icon-container.is-hovered {
+  background: #e8e8e8;
+}
+
+.light-mode .post-page-content-body {
+  background-color: #dae0e6;
+}
+
+.light-mode .post-page-content-main-column-body {
+  background-color: white;
+}
+
+.light-mode .threadline {
+  border-right: 2px rgb(237, 239, 241) solid ;
+}
+
+.light-mode .sub-editor {
+  border-left: 2px rgb(237, 239, 241) solid ;
+}
+
+.light-mode .comment-editor-wrapper {
+  border: 1px solid rgb(237, 239, 241);
+}
+
+.light-mode .comment-editor-input-border {
+  border-color: rgb(26, 26, 27);
+}
+
+.light-mode .comment-editor-option-container {
+  background-color:#f6f7f8;
+}
+
+.light-mode .community-widget {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(204, 204, 204);
+}
+
+.light-mode .community-widget-line-break {
+  border-bottom: 1px rgb(239 239 239) solid;
+
+}
 
 html,
 body {
@@ -505,9 +656,7 @@ body {
   /* height: 100%; */
 }
 
-.threadline {
-  border-right: 2px rgb(237, 239, 241) solid ;
-}
+
 
 a {
   text-decoration: none !important;
@@ -526,7 +675,6 @@ a {
 
 .ql-container.ql-snow {
   min-height: 122px;
-  border: 1px solid #EDEFF1;
   border-bottom-left-radius: 4px;
   font-size: 14px;
   font-weight: 400;
@@ -535,7 +683,6 @@ a {
 }
 
 .ql-toolbar.ql-snow {
-  border: 1px solid #EDEFF1;
   border-top-right-radius: 4px;
   border-top-left-radius: 4px;
 

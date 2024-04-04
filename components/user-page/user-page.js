@@ -54,7 +54,7 @@ const UserPage = ({ filter, onSigninToggle }) => {
   return (
     <div>
       <div className={styles.body}>
-        <div className={styles.header}>
+        <div className={`${styles.header} user-page-header`}>
           <div className="d-none">
             <HeaderTitle name="Overview" />
           </div>

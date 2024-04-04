@@ -20,7 +20,7 @@ export default function CommunityWidget({ communityName, communityId }) {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} community-widget`}>
       <div className={styles.headerImg}></div>
       <div className={styles.titleDiv}>
         <MaterialIcon iconName="mood" padding="2px" fontSize="54px" />
@@ -45,7 +45,7 @@ export default function CommunityWidget({ communityName, communityId }) {
         />
         <span className={styles.creationDate}>Created Mar 24, 2008</span>
       </div>
-      <div className={styles.lineBreak}></div>
+      <div className={`${styles.lineBreak} community-widget-line-break`}></div>
       <div className={`${styles.infoDiv} d-flex justify-content-between`}>
         <div className="">
           <div className={styles.infoNum}>5.8m</div>
@@ -63,7 +63,7 @@ export default function CommunityWidget({ communityName, communityId }) {
           <div className={styles.infoDesc}>Ranked by Size</div>
         </div>
       </div>
-      <div className={styles.lineBreak}></div>
+      <div className={`${styles.lineBreak} community-widget-line-break`}></div>
       <div onClick={handleClick}>
         <FullLengthButton
           text="Create Post"
@@ -73,7 +73,7 @@ export default function CommunityWidget({ communityName, communityId }) {
           customClass={"margin-bottom-8"}
         />
       </div>
-      <div className={styles.lineBreak}></div>
+      <div className={`${styles.lineBreak} community-widget-line-break`}></div>
       <div
         className={`d-flex justify-content-between align-items-center ${styles.optionsDiv}`}
       >

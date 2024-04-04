@@ -77,7 +77,7 @@ const ShortPostWidget = ({
   }
 
   return (
-    <div className={`${styles.container}`}>
+    <div className={`${styles.container} short-post-widget-container`}>
       <div className={`${styles.voteContainer} vote-container ${voteClass}`}>
         <div>
           <UpvoteButton onUpVoteClick={() => handlePostVoteClick(1)} />

@@ -90,7 +90,7 @@ export default function UserContainer({isDarkMode, toggleDarkMode }) {
             <div className={`${styles.sectionHeaderTitle}`}>View Options</div>
           </div>
           <div className={`${styles.optionLine} option-line`}>
-            <div onClick={toggleDarkMode} className={styles.optionTitle}>{isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}</div>
+            <div onClick={toggleDarkMode} className={`${styles.optionTitle}`}>{isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}</div>
           </div>
         </div>
 

@@ -30,8 +30,8 @@ const UserWidget = () => {
 
   return (
     <div>
-      <div className={styles.container}>
-        <div className={styles.headerImg}></div>
+      <div className={`${styles.container} user-widget-container`}>
+        <div className={`${styles.headerImg} user-widget-header-img`}></div>
         <div className={styles.body}>
           <div className={styles.avatarDiv}>
             <img src="/images/avatar.png" alt="avatar img" />

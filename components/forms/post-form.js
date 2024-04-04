@@ -24,12 +24,6 @@ export default function PostForm({ addPost, communityData, selectedCommunityId }
         }
         
     }, [])
-
-    // const getRandomNumber = async () => {
-    //     const count = Math.floor(Math.random() * 1000000) + 1;
-    //     return count;
-    // };
-    
     
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -72,7 +66,7 @@ export default function PostForm({ addPost, communityData, selectedCommunityId }
     // if (user) {
         return (
             <div className={styles.container}>
-                <div className={styles.headerContainer}>
+                <div className={`${styles.headerContainer} post-form-header-container`}>
                     <div className={styles.headerTitle}>Create a Post </div>
                     <div className={styles.draftBtn}>
                         <div className={styles.draftTitle}>DRAFT</div>
@@ -83,7 +77,7 @@ export default function PostForm({ addPost, communityData, selectedCommunityId }
                     className={`${styles.communityDiv} community-wrapper`}
                 >
                     <div 
-                        className={styles.communityContainer}
+                        className={`${styles.communityContainer} community-container`}
                         onClick={() => setShowCommunityDropdown(true)}
                     >
                         <div className={styles.circle}></div>
@@ -91,7 +85,7 @@ export default function PostForm({ addPost, communityData, selectedCommunityId }
                         <i className={`material-icons ${styles.dropdownIcon}`}>keyboard_arrow_down</i>
                     </div>
                     <div 
-                        className={`${styles.communityChoiceWrapper} ${showCommunityDropdown && styles.show} ${!showCommunityDropdown && styles.hide}`}
+                        className={`${styles.communityChoiceWrapper} ${showCommunityDropdown && styles.show} ${!showCommunityDropdown && styles.hide} community-choice-wrapper`}
                     >
                         <div className={`d-flex align-items-center ${styles.communityChoiceHeader}`}>
                             <div style={{color: "#878a8c"}}>Your communities</div>
@@ -104,7 +98,7 @@ export default function PostForm({ addPost, communityData, selectedCommunityId }
                                     data-id={community.id}
                                     data-title={community.title}
                                     onClick={(event) => handleCummunitySelect(event)}
-                                    className={styles.communityChoice}
+                                    className={`${styles.communityChoice} community-choice`}
                                 >
                                     <div className='d-flex align-items-center'>
                                         <MaterialIcon iconName={"face"} fontSize={"28px"} padding={"0 8px 0 0"}/>
@@ -118,21 +112,21 @@ export default function PostForm({ addPost, communityData, selectedCommunityId }
                         }))}  
                     </div>
                 </div>
-                <div className={styles.formContainer}>
+                <div className={`${styles.formContainer} post-form-container`}>
                     <div className={`d-flex justify-content-evenly ${styles.formSelect}`}>
-                        <div className={`${styles.formType}`} style={{borderWidth: "0 1px 1px 0"}}>
+                        <div className={`${styles.formType} post-form-type`} style={{borderWidth: "0 1px 1px 0"}}>
                             <i className={`material-icons ${styles.formTypeIcon}`}>format_list_bulleted	</i>
                             <div className={`${styles.formTypeName}`}>Post</div>
                         </div>
-                        <div className={`${styles.formType}`} style={{borderWidth: "0 1px 1px 0"}}>
+                        <div className={`${styles.formType} post-form-type`} style={{borderWidth: "0 1px 1px 0"}}>
                             <i className={`material-icons ${styles.formTypeIcon}`}>image</i>
                             <div className={`${styles.formTypeName}`}>Image & Video</div>
                         </div>
-                        <div className={`${styles.formType}`} style={{borderWidth: "0 0 1px 0"}}>
+                        <div className={`${styles.formType} post-form-type`} style={{borderWidth: "0 0 1px 0"}}>
                             <i className={`material-icons ${styles.formTypeIcon}`}>insert_link</i>
                             <div className={`${styles.formTypeName}`}>Link</div>
                         </div>
-                        <div className={`${styles.formType}`} style={{borderWidth: "0 0 1px 1px"}}>
+                        <div className={`${styles.formType} post-form-type`} style={{borderWidth: "0 0 1px 1px"}}>
                             <i className={`material-icons ${styles.formTypeIcon}`}>poll</i>
                             <div className={`${styles.formTypeName}`}>Poll</div>
                         </div>
@@ -143,7 +137,7 @@ export default function PostForm({ addPost, communityData, selectedCommunityId }
                                 <textarea 
                                     maxLength={300} 
                                     placeholder='Title' 
-                                    className={styles.titleInput}
+                                    className={`${styles.titleInput} post-form-title-input`}
                                     id="title"
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
@@ -185,10 +179,10 @@ export default function PostForm({ addPost, communityData, selectedCommunityId }
                             </div>
                         </form>
                     </div>
-                    <div className={styles.optionContainer}>
+                    <div className={`${styles.optionContainer} post-form-option-container`}>
                         <div className={`d-flex align-items-center margin-bottom-8`}>
                             <input type='checkbox' className={styles.notificationCheckbox}></input>
-                            <div>Send me post reply notifications</div>
+                            <div>&nbsp;&nbsp;Send me post reply notifications</div>
                         </div>
                         <div className='d-flex align-items-center'>
                             <div className='margin-right-8'style={{color: "#0079D3"}}>Connect accounts to share your post</div>

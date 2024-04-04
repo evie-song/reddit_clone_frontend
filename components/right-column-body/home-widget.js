@@ -42,7 +42,6 @@ export default function HomeWidget() {
       <FullLengthButton
         text="Create Community"
         color="rgb(0 121 211)"
-        backgroundColor="white"
         border={"1px solid rgb(0 121 211)"}
       />
     </div>

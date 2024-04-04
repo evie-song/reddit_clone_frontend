@@ -21,7 +21,7 @@ export default function HeaderIcon({ additionalClass, iconName, iconText, linkUr
         <button
             style={{marginRight: marginRight ? marginRight: 0}} 
             href={linkUrl} 
-            className={` ${styles.headerIconContainer} d-flex align-items-center ${isHovered && styles.headerIconHovered} ${additionalClass}`} 
+            className={` ${styles.headerIconContainer} d-flex align-items-center header-icon-container ${isHovered? "is-hovered" : ""} ${additionalClass}`} 
             onMouseEnter={() => {setIsHovered(true); setTimeout(() => {
                 setIsHovered((current)=>{
                     if (current) {

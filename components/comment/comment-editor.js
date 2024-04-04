@@ -43,12 +43,12 @@ const CommentEditor = ({ postId, commentId, handleCommentCountUpdate, updateComm
 
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} comment-editor-container`}>
       <div className={styles.userDiv}>
         Comment as <span className={styles.username}>{user.username}</span>
       </div>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <div className={`${styles.wrapper} ${isfocused && styles.inputBorder}`} >
+        <div className={`${styles.wrapper} ${isfocused && "comment-editor-input-border"} comment-editor-wrapper`} >
           <div>
             <input type="hidden" value={postId} name="postId" />
             {commentId && (
@@ -63,10 +63,10 @@ const CommentEditor = ({ postId, commentId, handleCommentCountUpdate, updateComm
               value={content}
               onChange={(e) => setContent(e.target.value)}
               required
-              className={styles.contentInput}
+              className={`${styles.contentInput}`}
             ></textarea>
           </div>
-          <div className={styles.optionContainer}>
+          <div className={`${styles.optionContainer} comment-editor-option-container`}>
             <div></div>
             <button type="submit" className={styles.submitBtn}>
               Comment

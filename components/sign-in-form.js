@@ -64,8 +64,8 @@ function SignInForm({}) {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <button onClick={()=> handleSigninWindowToggle(false)} className={styles.closeButton}>
+      <div className={`${styles.container} signin-form-container`}>
+        <button onClick={()=> handleSigninWindowToggle(false)} className={`${styles.closeButton} signin-form-close-btn`}>
           <MaterialIcon
             iconName="close"
             fontSize="24px"

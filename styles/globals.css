@@ -82,6 +82,21 @@
   color: #D7DADC;
 }
 
+.dark-mode .signin-form-container {
+  background-color: var(--gray-800);
+}
+
+.dark-mode .dark-mode-btn {
+  justify-content: flex-end;
+  background-color: #0079d3;
+  border-color:  white;
+
+}
+
+.dark-mode .signin-form-close-btn {
+  background-color: var(--gray-600);
+}
+
 .dark-mode .comment-editor-option-container {
   background-color:#272729;
 }
@@ -182,7 +197,8 @@ body.dark-mode {
 .light-mode .post-form-container,
 .light-mode .user-page-header,
 .light-mode .short-post-widget,
-.light-mode .short-post-widget-container {
+.light-mode .short-post-widget-container,
+.light-mode .signin-form-container {
   background: var(--white-700);
 }
 
@@ -204,9 +220,19 @@ body.dark-mode {
   background-color: #f6f7f8;
 }
 
+.light-mode .signin-form-close-btn {
+  background-color: #eaedef;
+}
+
+.light-mode .dark-mode-btn {
+  justify-content: flex-start;
+  background-color: #e8e8e8;
+  border-color: transparent;
+}
 
 .light-mode,
-.light-mode .user-option-container a {
+.light-mode .user-option-container a,
+.signin-label .login-input {
   color: rgb(28, 28, 28);
 }
 

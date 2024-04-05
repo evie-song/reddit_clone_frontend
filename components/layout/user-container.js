@@ -89,8 +89,16 @@ export default function UserContainer({isDarkMode, toggleDarkMode }) {
             </div>
             <div className={`${styles.sectionHeaderTitle}`}>View Options</div>
           </div>
-          <div className={`${styles.optionLine} option-line`}>
-            <div onClick={toggleDarkMode} className={`${styles.optionTitle}`}>{isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}</div>
+          <div onClick={toggleDarkMode} className={`${styles.optionLine} option-line justify-content-between align-items-center`}>
+            <div className={`${styles.optionTitle} `}>
+              <div>Dark Mode</div>
+              
+            </div>
+            <div>
+              <div className={`${styles.darkModeBtn} dark-mode-btn`}>
+                <div className={`${styles.darkModeBtnRing}`}></div>
+              </div>
+            </div>
           </div>
         </div>
 

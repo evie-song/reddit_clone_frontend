@@ -78,13 +78,33 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-
   }
-
 
   .optionTitle {
     font-size: 14px;
     font-weight: 500;
     line-height: 18px;
     text-decoration: none !important;
+  }
+
+  .darkModeBtn {
+    align-items: center;
+    display: flex;
+    border-radius: 100px;
+    cursor: pointer;
+    position: relative;
+    border-width: 2.25px;
+    height: 24px;
+    width: 37.5px;
+    border-style: solid;
+    /* transition: border-color .15s linear, background-color .15s linear; */
+  }
+
+  .darkModeBtnRing {
+    height: 19.5px;
+    width: 19.5px;
+    background-color: #fff;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 2px 3px 0 rgba(0,0,0,.2);
+    transition: left .15s linear;
+    border-radius: 57%;
   }

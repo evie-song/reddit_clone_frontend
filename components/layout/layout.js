@@ -75,7 +75,6 @@ export default function Layout({ children, home }) {
 
       <NavBar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode}/>
       <main>
-        <div>{isDarkMode? "is dark mode": "is light mode" }</div>
         <PopupWindow isOpen={signinWindowOpen}>
           <Signin />
         </PopupWindow>
